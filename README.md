@@ -2,7 +2,11 @@
 
 mrsys.online is a web site for the Movie Recommender System.
 
-This is a group project in the second year of BSC Artificial Intelligence.
+This is a group project in the second year of BSC Artificial Intelligence at University of Liverpool.
+
+*Copyright &copy; 2017 mrsys.online. All rights reserved.*
+
+## People
 
 All contributors in this project are:
 
