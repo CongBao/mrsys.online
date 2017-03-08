@@ -25,7 +25,7 @@ import org.hibernate.annotations.Type;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class User implements Serializable {
 
-	private static final long serialVersionUID = 8444390802308795412L;
+	private static final long serialVersionUID = 594848709084066969L;
 
 	@Id
 	@Column(name = "user_id")
@@ -43,7 +43,7 @@ public class User implements Serializable {
 	
 	@Column(name = "mail_verified")
 	@Type(type = "yes_no")
-	private boolean mailVerified = false;
+	private Boolean mailVerified = false;
 	
 	@ManyToOne(targetEntity = Role.class)
 	@JoinColumn(name = "role_id", referencedColumnName = "role_id", nullable = false)
@@ -61,7 +61,7 @@ public class User implements Serializable {
 	public User() {
 	}
 
-	public User(Integer id, String account, String password, String email, boolean mailVerified, Role role,
+	public User(Integer id, String account, String password, String email, Boolean mailVerified, Role role,
 			Set<Movie> movies, Set<Rating> ratings) {
 		super();
 		this.id = id;
@@ -106,11 +106,11 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
-	public boolean isMailVerified() {
+	public Boolean isMailVerified() {
 		return mailVerified;
 	}
 
-	public void setMailVerified(boolean mailVerified) {
+	public void setMailVerified(Boolean mailVerified) {
 		this.mailVerified = mailVerified;
 	}
 
