@@ -19,15 +19,15 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Rating implements Serializable {
 
-	private static final long serialVersionUID = 4129958619460012035L;
+	private static final long serialVersionUID = 3980640951983814720L;
 
 	@Id
 	@Column(name = "rating_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "rate", nullable = false)
-	private Float rate;
+	@Column(name = "rating", nullable = false)
+	private Float rating;
 	
 	@ManyToOne(targetEntity = User.class)
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
@@ -40,10 +40,10 @@ public class Rating implements Serializable {
 	public Rating() {
 	}
 
-	public Rating(Integer id, Float rate, User user, Movie movie) {
+	public Rating(Integer id, Float rating, User user, Movie movie) {
 		super();
 		this.id = id;
-		this.rate = rate;
+		this.rating = rating;
 		this.user = user;
 		this.movie = movie;
 	}
@@ -56,12 +56,12 @@ public class Rating implements Serializable {
 		this.id = id;
 	}
 
-	public Float getRate() {
-		return rate;
+	public Float getRating() {
+		return rating;
 	}
 
-	public void setRate(Float rate) {
-		this.rate = rate;
+	public void setRating(Float rating) {
+		this.rating = rating;
 	}
 
 	public User getUser() {
