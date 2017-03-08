@@ -1,6 +1,6 @@
 # mrsys.online
 
-mrsys.online is a web site for the Movie Recommender System.
+[mrsys.online](https://www.mrsys.online/) is a web site for the Movie Recommender System.
 
 This is a group project in the second year of BSC Artificial Intelligence at University of Liverpool.
 
