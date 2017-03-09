@@ -3,6 +3,8 @@ package online.mrsys.movierecommender.service.impl;
 import java.util.List;
 
 import online.mrsys.movierecommender.dao.FavoriteDao;
+import online.mrsys.movierecommender.dao.MovieDao;
+import online.mrsys.movierecommender.dao.RatingDao;
 import online.mrsys.movierecommender.dao.RoleDao;
 import online.mrsys.movierecommender.dao.UserDao;
 import online.mrsys.movierecommender.domain.Favorite;
@@ -14,20 +16,30 @@ import online.mrsys.movierecommender.vo.UserBean;
 
 public class UserManagerImpl implements UserManager {
 	
-	private UserDao userDao;
-	private RoleDao roleDao;
 	private FavoriteDao favoriteDao;
+	private MovieDao movieDao;
+	private RatingDao ratingDao;
+	private RoleDao roleDao;
+	private UserDao userDao;
+	
+	public void setFavoriteDao(FavoriteDao favoriteDao) {
+		this.favoriteDao = favoriteDao;
+	}
 
-	public void setUserDao(UserDao userDao) {
-		this.userDao = userDao;
+	public void setMovieDao(MovieDao movieDao) {
+		this.movieDao = movieDao;
+	}
+
+	public void setRatingDao(RatingDao ratingDao) {
+		this.ratingDao = ratingDao;
 	}
 
 	public void setRoleDao(RoleDao roleDao) {
 		this.roleDao = roleDao;
 	}
 
-	public void setFavoriteDao(FavoriteDao favoriteDao) {
-		this.favoriteDao = favoriteDao;
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
 	}
 
 	@Override
@@ -109,7 +121,7 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public List<Favorite> getFavoritesById(int id) {
+	public List<Favorite> getFavoritesByUser(User user) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -44,7 +44,7 @@ public interface UserManager {
 	
 	RoleBean getRoleBeanByAccount(String account);
 	
-	List<Favorite> getFavoritesById(int id);
+	List<Favorite> getFavoritesByUser(User user);
 	
 	void deleteUser(User user);
 	

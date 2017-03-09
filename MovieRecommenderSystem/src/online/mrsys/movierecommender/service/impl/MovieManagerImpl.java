@@ -2,8 +2,11 @@ package online.mrsys.movierecommender.service.impl;
 
 import java.util.List;
 
+import online.mrsys.movierecommender.dao.FavoriteDao;
 import online.mrsys.movierecommender.dao.MovieDao;
 import online.mrsys.movierecommender.dao.RatingDao;
+import online.mrsys.movierecommender.dao.RoleDao;
+import online.mrsys.movierecommender.dao.UserDao;
 import online.mrsys.movierecommender.domain.Movie;
 import online.mrsys.movierecommender.domain.Rating;
 import online.mrsys.movierecommender.domain.User;
@@ -12,8 +15,15 @@ import online.mrsys.movierecommender.vo.MovieBean;
 
 public class MovieManagerImpl implements MovieManager {
 	
+	private FavoriteDao favoriteDao;
 	private MovieDao movieDao;
 	private RatingDao ratingDao;
+	private RoleDao roleDao;
+	private UserDao userDao;
+
+	public void setFavoriteDao(FavoriteDao favoriteDao) {
+		this.favoriteDao = favoriteDao;
+	}
 
 	public void setMovieDao(MovieDao movieDao) {
 		this.movieDao = movieDao;
@@ -21,6 +31,14 @@ public class MovieManagerImpl implements MovieManager {
 
 	public void setRatingDao(RatingDao ratingDao) {
 		this.ratingDao = ratingDao;
+	}
+
+	public void setRoleDao(RoleDao roleDao) {
+		this.roleDao = roleDao;
+	}
+
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
 	}
 
 	@Override
