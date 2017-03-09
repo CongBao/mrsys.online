@@ -33,7 +33,7 @@ public class Movie implements Serializable {
 	@Column(name = "year", nullable = false)
 	private Integer year;
 	
-	@Column(name = "title", nullable = false, length = 64)
+	@Column(name = "title", nullable = false, length = 256)
 	private String title;
 	
 	@ManyToMany(targetEntity = User.class)
