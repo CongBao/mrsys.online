@@ -106,6 +106,12 @@ public class MovieManagerImpl implements MovieManager {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public List<Movie> recommendMoviesToUser(User user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public List<Rating> getRatingsByUser(User user) {

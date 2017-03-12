@@ -31,6 +31,8 @@ public interface MovieManager {
 	
 	List<Movie> getMoviesByTitle(String title);
 	
+	List<Movie> recommendMoviesToUser(User user); // call *.function.MovieRecommender to process
+	
 	List<Rating> getRatingsByUser(User user);
 	
 	List<Rating> getRatingsByMovie(Movie movie);
