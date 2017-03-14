@@ -14,7 +14,7 @@ public interface MovieManager {
 	 * 
 	 * @param movie
 	 *            the movie record to be added
-	 * @return if the operation succeed
+	 * @return if the operation succeeds
 	 */
 	boolean addMovie(Movie movie);
 
@@ -23,25 +23,25 @@ public interface MovieManager {
 	 * 
 	 * @param rating
 	 *            the rating record to be added
-	 * @return if the operation succeed
+	 * @return if the operation succeeds
 	 */
 	boolean addRating(Rating rating);
 
 	/**
-	 * Check if a movie is exist in database.
+	 * Check if a movie is existing in database.
 	 * 
 	 * @param movie
 	 *            the movie to be checked
-	 * @return if the movie is exist in database
+	 * @return if the movie is existing in database
 	 */
 	boolean isMovieExist(Movie movie);
 
 	/**
-	 * Check if a rating record is exist in database.
+	 * Check if a rating record is existing in database.
 	 * 
 	 * @param rating
 	 *            the rating record to be checked
-	 * @return if the rating record is exist in database
+	 * @return if the rating record is existing in database
 	 */
 	boolean isRatingExist(Rating rating);
 
@@ -68,7 +68,7 @@ public interface MovieManager {
 	Movie updateTitle(Movie origin, String title);
 
 	/**
-	 * Update the rating value of a rating record
+	 * Update the rating value of a rating record.
 	 * 
 	 * @param origin
 	 *            the rating record to be updated

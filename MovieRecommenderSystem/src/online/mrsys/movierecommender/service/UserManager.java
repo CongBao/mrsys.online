@@ -51,16 +51,16 @@ public interface UserManager {
 	 * 
 	 * @param favorite
 	 *            the favorite record to be added
-	 * @return if the operation succeed
+	 * @return if the operation succeeds
 	 */
 	boolean addFavorite(Favorite favorite);
 
 	/**
-	 * Check if a user is exist in database.
+	 * Check if a user is existing in database.
 	 * 
 	 * @param user
 	 *            the user to be checked
-	 * @return if the user is exist in database
+	 * @return if the user is existing in database
 	 */
 	boolean isUserExist(User user);
 
@@ -103,7 +103,7 @@ public interface UserManager {
 	 * @param origin
 	 *            the user to be updated
 	 * @param verified
-	 *            the new mail verify state of user
+	 *            the new mail verifies state of user
 	 * @return the user record after updating
 	 */
 	User updateMailVerifyState(User origin, boolean verified);
