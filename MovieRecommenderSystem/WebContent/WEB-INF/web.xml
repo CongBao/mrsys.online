@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	id="WebApp_ID" version="3.1">
 
-	<display-name>MovieRecommenderSystem</display-name>
+	<display-name>Movie Recommender System</display-name>
 
 	<filter>
 		<filter-name>struts2</filter-name>
@@ -28,5 +28,9 @@
 		<error-code>404</error-code>
 		<location>/res/html/PageNotFound.html</location>
 	</error-page>
+	
+	<welcome-file-list>
+		<welcome-file>index</welcome-file>
+	</welcome-file-list>
 
 </web-app>
