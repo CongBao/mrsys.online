@@ -13,7 +13,18 @@
 	<constant name="struts.action.extension" value="" />
 	<constant name="struts.action.excludePattern" value="/res/.*?" />
 	
-	<package name="default" extends="struts-default" abstract="true"></package>
+	<package name="default" extends="struts-default" abstract="true">
+	
+		<global-results>
+			<result name="error">/WEB-INF/content/error.jsp</result>
+		</global-results>
+	
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="online.mrsys.movierecommender.exception.MRException" />
+			<exception-mapping result="error" exception="java.lang.Exception" />
+		</global-exception-mappings>
+	
+	</package>
 	
 	<package name="root" extends="default">
 	

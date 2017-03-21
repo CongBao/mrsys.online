@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Index</title>
+<title>Error</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/res/css/bootstrap.min.css" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/res/js/jquery-3.2.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/res/js/bootstrap.min.js"></script>
@@ -16,8 +16,18 @@
 	<header><%@include file="header.jsp"%></header>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12">
-				<h1>Index</h1>
+			<div class="col-md-12 text-center">
+				<h1>Error Page</h1>
+				<table class="table table-striped table-bordered">
+					<tr>
+						<th class="text-center">Exception Type</th>
+						<th class="text-center">Exception Message</th>
+					</tr>
+					<tr>
+						<td><s:property value="exception.class" /></td>
+						<td><s:property value="exception.message" /></td>
+					</tr>
+				</table>
 			</div>
 		</div>
 	</div>
