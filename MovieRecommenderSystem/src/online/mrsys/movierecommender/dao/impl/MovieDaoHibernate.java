@@ -13,6 +13,12 @@ public class MovieDaoHibernate extends BaseDaoHibernate<Movie> implements MovieD
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public Movie findByImdb(Integer imdb) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public List<Movie> findByYear(Integer year) {

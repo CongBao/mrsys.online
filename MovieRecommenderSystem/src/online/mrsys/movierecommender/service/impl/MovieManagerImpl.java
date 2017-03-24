@@ -94,6 +94,18 @@ public class MovieManagerImpl implements MovieManager {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public Movie getMovieByImdb(int imdb) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MovieBean getMovieBeanByImdb(int imdb) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public List<Movie> getMoviesByYear(int year) {

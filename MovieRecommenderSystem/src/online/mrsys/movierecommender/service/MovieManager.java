@@ -97,6 +97,24 @@ public interface MovieManager {
 	MovieBean getMovieBeanById(int id);
 
 	/**
+	 * Obtain a movie record by the movie's imdb id.
+	 * 
+	 * @param imdb
+	 *            the imdb id of movie
+	 * @return the movie record obtained
+	 */
+	Movie getMovieByImdb(int imdb);
+
+	/**
+	 * Obtain a movie bean instance by the movie's imdb id
+	 * 
+	 * @param imdb
+	 *            the imdb id of movie
+	 * @return the movie bean instance obtained
+	 */
+	MovieBean getMovieBeanByImdb(int imdb);
+
+	/**
 	 * Obtain a list of movie records by year.
 	 * 
 	 * @param year
@@ -121,7 +139,9 @@ public interface MovieManager {
 	 *            the user to be recommended
 	 * @return a list of recommended movies
 	 */
-	List<Movie> recommendMoviesToUser(User user); // call *.function.MovieRecommender to process
+	List<Movie> recommendMoviesToUser(User user); // call
+													// *.function.MovieRecommender
+													// to process
 
 	/**
 	 * Obtain a list of rating records of a user.

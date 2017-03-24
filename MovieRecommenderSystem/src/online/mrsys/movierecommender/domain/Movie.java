@@ -23,12 +23,15 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Movie implements Serializable {
 
-	private static final long serialVersionUID = -6753131595535925807L;
+	private static final long serialVersionUID = -3637666384453512991L;
 
 	@Id
 	@Column(name = "movie_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@Column(name = "imdb")
+	private Integer imdb;
 	
 	@Column(name = "year", nullable = false)
 	private Integer year;
@@ -48,9 +51,10 @@ public class Movie implements Serializable {
 	public Movie() {
 	}
 
-	public Movie(Integer id, Integer year, String title, Set<User> users, Set<Rating> ratings) {
+	public Movie(Integer id, Integer imdb, Integer year, String title, Set<User> users, Set<Rating> ratings) {
 		super();
 		this.id = id;
+		this.imdb = imdb;
 		this.year = year;
 		this.title = title;
 		this.users = users;
@@ -63,6 +67,14 @@ public class Movie implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Integer getImdb() {
+		return imdb;
+	}
+
+	public void setImdb(Integer imdb) {
+		this.imdb = imdb;
 	}
 
 	public Integer getYear() {

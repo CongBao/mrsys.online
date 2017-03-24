@@ -17,6 +17,15 @@ public interface MovieDao extends BaseDao<Movie> {
 	Movie findById(Integer id);
 
 	/**
+	 * Find a movie by imdb id.
+	 * 
+	 * @param imdb
+	 *            the imdb id
+	 * @return the movie record found
+	 */
+	Movie findByImdb(Integer imdb);
+
+	/**
 	 * Find a list of movie records by year.
 	 * 
 	 * @param year
