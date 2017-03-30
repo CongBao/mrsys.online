@@ -13,13 +13,13 @@ public class FavoriteDaoHibernate extends BaseDaoHibernate<Favorite> implements 
 	@Override
 	public List<Favorite> findByUser(User user) {
 		// TODO Auto-generated method stub
-		return null;
+		return find("select f from Favorite f where f.user_id = ?0", user.getId());
 	}
 
 	@Override
 	public List<Favorite> findByMovie(Movie movie) {
 		// TODO Auto-generated method stub
-		return null;
+		return find("select f from Favorite f where f.movie_id = ?0", movie.getId());
 	}
 
 }
