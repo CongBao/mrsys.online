@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:p="http://www.springframework.org/schema/p"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans 
-	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 	
-	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
-		destroy-method="close"
-		p:driverClass="com.mysql.jdbc.Driver"
-		p:jdbcUrl="jdbc:mysql://localhost:3306/mrsys"
-		p:user="[username]"
-		p:password="[password]"
-		p:maxPoolSize="200"
-		p:minPoolSize="2"
-		p:initialPoolSize="2"
-		p:maxIdleTime="20"/>
+	<bean id="dataSource"
+          class="com.mchange.v2.c3p0.ComboPooledDataSource"
+          destroy-method="close"
+          p:driverClass="com.mysql.jdbc.Driver"
+          p:jdbcUrl="jdbc:mysql://localhost:3306/mrsys"
+          p:user="baocong"
+          p:password="960723"
+          p:maxPoolSize="200"
+          p:minPoolSize="2"
+          p:initialPoolSize="2"
+          p:maxIdleTime="20"/>
 		
 	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
-		p:dataSource-ref="dataSource">
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
+          p:dataSource-ref="dataSource">
 		<property name="annotatedClasses">
 			<list>
 				<value>online.mrsys.movierecommender.domain.Favorite</value>
@@ -40,27 +41,29 @@
 		</property>
 	</bean>
 	
-	<bean id="daoTemplate" abstract="true" lazy-init="true"
-		p:sessionFactory-ref="sessionFactory"/>
+	<bean id="daoTemplate"
+          abstract="true"
+          lazy-init="true"
+          p:sessionFactory-ref="sessionFactory"/>
 		
 	<bean id="favoriteDao"
-		class="online.mrsys.movierecommender.dao.impl.FavoriteDaoHibernate"
-		parent="daoTemplate"/>
+          class="online.mrsys.movierecommender.dao.impl.FavoriteDaoHibernate"
+          parent="daoTemplate"/>
 		
 	<bean id="movieDao"
-		class="online.mrsys.movierecommender.dao.impl.MovieDaoHibernate"
-		parent="daoTemplate"/>
+          class="online.mrsys.movierecommender.dao.impl.MovieDaoHibernate"
+          parent="daoTemplate"/>
 		
 	<bean id="ratingDao"
-		class="online.mrsys.movierecommender.dao.impl.RatingDaoHibernate"
-		parent="daoTemplate"/>
+          class="online.mrsys.movierecommender.dao.impl.RatingDaoHibernate"
+          parent="daoTemplate"/>
 		
 	<bean id="roleDao"
-		class="online.mrsys.movierecommender.dao.impl.RoleDaoHibernate"
-		parent="daoTemplate"/>
+          class="online.mrsys.movierecommender.dao.impl.RoleDaoHibernate"
+          parent="daoTemplate"/>
 		
 	<bean id="userDao"
-		class="online.mrsys.movierecommender.dao.impl.UserDaoHibernate"
-		parent="daoTemplate"/>
+          class="online.mrsys.movierecommender.dao.impl.UserDaoHibernate"
+          parent="daoTemplate"/>
 	
 </beans>

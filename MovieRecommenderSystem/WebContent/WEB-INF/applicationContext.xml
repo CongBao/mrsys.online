@@ -1,44 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans 
-	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-	http://www.springframework.org/schema/tx 
-	http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
-	http://www.springframework.org/schema/aop 
-	http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+                           http://www.springframework.org/schema/tx 
+                           http://www.springframework.org/schema/tx/spring-tx-4.0.xsd 
+                           http://www.springframework.org/schema/aop 
+                           http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
 	
-	<bean id="managerTemplate" abstract="true" lazy-init="true"
-		p:favoriteDao-ref="favoriteDao"
-		p:movieDao-ref="movieDao"
-		p:ratingDao-ref="ratingDao"
-		p:roleDao-ref="roleDao"
-		p:userDao-ref="userDao"/>
+	<bean id="managerTemplate"
+          abstract="true"
+          lazy-init="true"
+          p:favoriteDao-ref="favoriteDao"
+          p:movieDao-ref="movieDao"
+          p:ratingDao-ref="ratingDao"
+          p:roleDao-ref="roleDao"
+          p:userDao-ref="userDao"/>
 		
 	<bean id="userManager"
-		class="online.mrsys.movierecommender.service.impl.UserManagerImpl"
-		parent="managerTemplate"/>
+          class="online.mrsys.movierecommender.service.impl.UserManagerImpl"
+          parent="managerTemplate"/>
 		
 	<bean id="movieManager"
-		class="online.mrsys.movierecommender.service.impl.MovieManagerImpl"
-		parent="managerTemplate"/>
+          class="online.mrsys.movierecommender.service.impl.MovieManagerImpl"
+          parent="managerTemplate"/>
 		
-	<bean id="transactionManager" class= "org.springframework.orm.hibernate4.HibernateTransactionManager"
-		p:sessionFactory-ref="sessionFactory"/>	
-	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+	<bean id="transactionManager"
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager"
+          p:sessionFactory-ref="sessionFactory"/>
+
+	<tx:advice id="txAdvice"
+               transaction-manager="transactionManager">
 		<tx:attributes>
 			<tx:method name="get*" read-only="true"/>
 			<tx:method name="*"/>
 		</tx:attributes>
 	</tx:advice>
+	
 	<aop:config>
 		<aop:pointcut id="mrPointcut"
-			expression="bean(userManager) or bean(movieManager)"/>
+                      expression="bean(userManager) or bean(movieManager)"/>
 		<aop:advisor advice-ref="txAdvice" 
-			pointcut-ref="mrPointcut"/>
+                     pointcut-ref="mrPointcut"/>
 	</aop:config>
 	
 </beans>

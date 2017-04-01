@@ -5,10 +5,10 @@ import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 
 public class LoginInterceptor extends AbstractInterceptor {
 
-	@Override
-	public String intercept(ActionInvocation invocation) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public String intercept(ActionInvocation invocation) throws Exception {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

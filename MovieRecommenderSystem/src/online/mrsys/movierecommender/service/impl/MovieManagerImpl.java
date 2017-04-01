@@ -15,15 +15,14 @@ import online.mrsys.movierecommender.vo.MovieBean;
 
 public class MovieManagerImpl implements MovieManager {
 
-	private FavoriteDao favoriteDao;
 	private MovieDao movieDao;
 	private RatingDao ratingDao;
-	private RoleDao roleDao;
-	private UserDao userDao;
-
-	public void setFavoriteDao(FavoriteDao favoriteDao) {
-		this.favoriteDao = favoriteDao;
-	}
+	@SuppressWarnings("unused")
+    private FavoriteDao favoriteDao;
+	@SuppressWarnings("unused")
+    private RoleDao roleDao;
+	@SuppressWarnings("unused")
+    private UserDao userDao;
 
 	public void setMovieDao(MovieDao movieDao) {
 		this.movieDao = movieDao;
@@ -31,6 +30,10 @@ public class MovieManagerImpl implements MovieManager {
 
 	public void setRatingDao(RatingDao ratingDao) {
 		this.ratingDao = ratingDao;
+	}
+	
+	public void setFavoriteDao(FavoriteDao favoriteDao) {
+	    this.favoriteDao = favoriteDao;
 	}
 
 	public void setRoleDao(RoleDao roleDao) {
