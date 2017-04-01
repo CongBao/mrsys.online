@@ -14,8 +14,9 @@ public class MovieBeanConverter extends StrutsTypeConverter {
 		MovieBean movieBean = new MovieBean();
 		String[] data = values[0].split(",");
 		movieBean.setId(Integer.parseInt(data[0]));
-		movieBean.setYear(Integer.parseInt(data[1]));
-		movieBean.setTitle(data[2]);
+		movieBean.setImdb(Integer.parseInt(data[1]));
+		movieBean.setYear(Integer.parseInt(data[2]));
+		movieBean.setTitle(data[3]);
 		return movieBean;
 	}
 
