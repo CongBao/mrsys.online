@@ -17,7 +17,7 @@ public interface UserManager {
 	int REGISTER_FAIL = -1;
 	int REGISTER_USER = 0;
 	int REGISTER_ADMIN = 1;
-	
+
 	int ADMIN = 1;
 	int USER = 2;
 
@@ -59,14 +59,24 @@ public interface UserManager {
 	boolean addFavorite(Favorite favorite);
 
 	/**
-	 * Check if a user is existing in database.
-	 * The check is based on user's account.
+	 * Check if a user is existing in database. The check is based on user's
+	 * account.
 	 * 
 	 * @param user
 	 *            the user to be checked
 	 * @return if the user is existing in database
 	 */
 	boolean isUserExist(User user);
+
+	/**
+	 * Check if a favorite record is existing in database. The check is based on
+	 * favorite id.
+	 * 
+	 * @param favorite
+	 *            the favorite record to be checked
+	 * @return if the favorite record is existing in database
+	 */
+	boolean isFavoriteExist(Favorite favorite);
 
 	/**
 	 * Update the account record of a user.

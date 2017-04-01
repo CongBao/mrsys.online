@@ -61,19 +61,37 @@ public class UserManagerImpl implements UserManager {
 	public int validRegister(User user) throws Exception {
 		user.setPassword(PasswordValidator.calculate(user.getPassword(), user.getAccount()));
 		if (!isUserExist(user)) {
-			// TODO
+			if (user.getRole().getId() == ADMIN) {
+				if (userDao.save(user) != null) {
+					return REGISTER_ADMIN;
+				}
+			} else if (user.getRole().getId() == USER) {
+				if (userDao.save(user) != null) {
+					return REGISTER_USER;
+				}
+			}
 		}
-		return 0;
+		return REGISTER_FAIL;
 	}
 
 	@Override
 	public boolean addFavorite(Favorite favorite) {
-		// TODO Auto-generated method stub
+		if (!isFavoriteExist(favorite)) {
+			if (favoriteDao.save(favorite) != null) {
+				return true;
+			}
+		}
 		return false;
 	}
 
 	@Override
 	public boolean isUserExist(User user) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	@Override
+	public boolean isFavoriteExist(Favorite favorite) {
 		// TODO Auto-generated method stub
 		return false;
 	}
