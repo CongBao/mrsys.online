@@ -10,6 +10,15 @@ import online.mrsys.movierecommender.domain.User;
 public interface FavoriteDao extends BaseDao<Favorite> {
 
 	/**
+	 * Find a favorite record by id.
+	 * 
+	 * @param id
+	 *            the id of the favourite record
+	 * @return the favorite record found
+	 */
+	Favorite findById(Integer id);
+
+	/**
 	 * Find a list of favorite records by user.
 	 * 
 	 * @param user

@@ -9,6 +9,14 @@ import online.mrsys.movierecommender.domain.Movie;
 import online.mrsys.movierecommender.domain.User;
 
 public class FavoriteDaoHibernate extends BaseDaoHibernate<Favorite> implements FavoriteDao {
+	
+	@Override
+	public Favorite findById(Integer id) {
+		List<Favorite> favorites = find("select f from Favorite f where f.favorite_id = ?0", id);
+		if (favorites != null && favorites.size() >= 1)
+			return favorites.get(0);
+		return null;
+	}
 
 	@Override
 	public List<Favorite> findByUser(User user) {

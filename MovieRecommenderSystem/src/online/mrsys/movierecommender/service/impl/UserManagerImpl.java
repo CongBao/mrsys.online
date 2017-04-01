@@ -86,13 +86,17 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public boolean isUserExist(User user) {
-		// TODO Auto-generated method stub
+		if (userDao.findByAccount(user.getAccount()) != null) {
+			return true;
+		}
 		return false;
 	}
 	
 	@Override
 	public boolean isFavoriteExist(Favorite favorite) {
-		// TODO Auto-generated method stub
+		if (favoriteDao.findById(favorite.getId()) != null) {
+			return true;
+		}
 		return false;
 	}
 
