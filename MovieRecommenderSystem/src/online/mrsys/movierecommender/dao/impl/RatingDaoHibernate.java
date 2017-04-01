@@ -9,7 +9,14 @@ import online.mrsys.movierecommender.domain.Rating;
 import online.mrsys.movierecommender.domain.User;
 
 public class RatingDaoHibernate extends BaseDaoHibernate<Rating> implements RatingDao {
-
+    @Override
+	public Rating findById(Integer id){
+    	List<Rating> ratings = find("select r from Rating r where r.rating_id = ?0", id);
+		if (ratings != null && ratings.size() >= 1)
+			return ratings.get(0);
+		return null;
+    }
+	
 	@Override
 	public List<Rating> findByUser(User user) {
 		return find("select r from Rating r where r.user_id=?0", user.getId());
