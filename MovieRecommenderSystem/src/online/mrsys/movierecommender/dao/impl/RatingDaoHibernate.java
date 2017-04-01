@@ -13,13 +13,13 @@ public class RatingDaoHibernate extends BaseDaoHibernate<Rating> implements Rati
 	@Override
 	public List<Rating> findByUser(User user) {
 		// TODO Auto-generated method stub
-		return null;
+		return find("select r from Rating r where r.user_id=?0", user.getId());
 	}
 
 	@Override
 	public List<Rating> findByMovie(Movie movie) {
 		// TODO Auto-generated method stub
-		return null;
+		return find("select r from Rating r where r.movie_id=?0", movie.getId());
 	}
 
 }

@@ -11,12 +11,15 @@ public class UserDaoHibernate extends BaseDaoHibernate<User> implements UserDao 
 	@Override
 	public List<User> findByAccountAndPass(User user) {
 		// TODO Auto-generated method stub
-		return null;
+		return find("select u from User u where u.account = ?0 and u.password = ?1", user.getAccount(),
+				user.getPassword());
 	}
 
 	@Override
 	public User findByAccount(String account) {
-		// TODO Auto-generated method stub
+		List<User> users = find("select u from User u where u.account = ?0", account);
+		if (users != null && users.size() >= 1)
+			return users.get(0);
 		return null;
 	}
 
