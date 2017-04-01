@@ -8,6 +8,7 @@ import online.mrsys.movierecommender.domain.Rating;
 import online.mrsys.movierecommender.domain.User;
 
 public interface RatingDao extends BaseDao<Rating> {
+	Rating findById(Integer id);
 
 	/**
 	 * Find a list of rating records by user.
