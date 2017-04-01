@@ -17,6 +17,9 @@ public interface UserManager {
 	int REGISTER_FAIL = -1;
 	int REGISTER_USER = 0;
 	int REGISTER_ADMIN = 1;
+	
+	int ADMIN = 1;
+	int USER = 2;
 
 	/**
 	 * Check if a login request if valid.
@@ -30,7 +33,7 @@ public interface UserManager {
 	 *         <li>LOGIN_ADMIN = 1</li>
 	 *         </ul>
 	 */
-	int validLogin(User user);
+	int validLogin(User user) throws Exception;
 
 	/**
 	 * Check if a register request is valid.
@@ -44,7 +47,7 @@ public interface UserManager {
 	 *         <li>REGISTER_ADMIN = 1</li>
 	 *         </ul>
 	 */
-	int validRegister(User user);
+	int validRegister(User user) throws Exception;
 
 	/**
 	 * Add a favorite record to database.
@@ -57,6 +60,7 @@ public interface UserManager {
 
 	/**
 	 * Check if a user is existing in database.
+	 * The check is based on user's account.
 	 * 
 	 * @param user
 	 *            the user to be checked

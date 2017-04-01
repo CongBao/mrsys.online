@@ -10,6 +10,7 @@ import online.mrsys.movierecommender.dao.UserDao;
 import online.mrsys.movierecommender.domain.Favorite;
 import online.mrsys.movierecommender.domain.Role;
 import online.mrsys.movierecommender.domain.User;
+import online.mrsys.movierecommender.function.PasswordValidator;
 import online.mrsys.movierecommender.service.UserManager;
 import online.mrsys.movierecommender.vo.RoleBean;
 import online.mrsys.movierecommender.vo.UserBean;
@@ -43,14 +44,25 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public int validLogin(User user) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int validLogin(User user) throws Exception {
+		user.setPassword(PasswordValidator.calculate(user.getPassword(), user.getAccount()));
+		List<User> users = userDao.findByAccountAndPass(user);
+		if (users.size() >= 1) {
+			if (users.get(0).getRole().getId() == ADMIN) {
+				return LOGIN_ADMIN;
+			} else if (users.get(0).getRole().getId() == USER) {
+				return LOGIN_USER;
+			}
+		}
+		return LOGIN_FAIL;
 	}
 
 	@Override
-	public int validRegister(User user) {
-		// TODO Auto-generated method stub
+	public int validRegister(User user) throws Exception {
+		user.setPassword(PasswordValidator.calculate(user.getPassword(), user.getAccount()));
+		if (!isUserExist(user)) {
+			// TODO
+		}
 		return 0;
 	}
 
