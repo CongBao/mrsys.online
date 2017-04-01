@@ -14,7 +14,7 @@ import online.mrsys.movierecommender.service.MovieManager;
 import online.mrsys.movierecommender.vo.MovieBean;
 
 public class MovieManagerImpl implements MovieManager {
-	
+
 	private FavoriteDao favoriteDao;
 	private MovieDao movieDao;
 	private RatingDao ratingDao;
@@ -43,82 +43,101 @@ public class MovieManagerImpl implements MovieManager {
 
 	@Override
 	public boolean addMovie(Movie movie) {
-		// TODO Auto-generated method stub
-		return false;
+
+		if (isMovieExist(movie)) {
+			return false;
+		} else {
+			if (movieDao.save(movie) != null)
+				return true;
+			return false;
+		}
+
 	}
 
 	@Override
 	public boolean addRating(Rating rating) {
-		// TODO Auto-generated method stub
-		return false;
+
+		if (isRatingExist(rating)) {
+			return false;
+		} else {
+			if (ratingDao.save(rating) != null)
+				return true;
+			return false;
+		}
 	}
 
 	@Override
 	public boolean isMovieExist(Movie movie) {
-		// TODO Auto-generated method stub
+		if (movieDao.findById(movie.getImdb()) != null) {
+			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public boolean isRatingExist(Rating rating) {
-		// TODO Auto-generated method stub
+		if (ratingDao.findById(rating.getId()) != null) {
+			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public Movie updateYear(Movie origin, int year) {
-		// TODO Auto-generated method stub
-		return null;
+		Movie change = origin;
+		change.setYear(year);
+		movieDao.update(change);
+		return change;
 	}
 
 	@Override
 	public Movie updateTitle(Movie origin, String title) {
-		// TODO Auto-generated method stub
-		return null;
+		Movie change = origin;
+		change.setTitle(title);
+		movieDao.update(change);
+		return change;
 	}
 
 	@Override
 	public Rating updateRating(Rating origin, float rating) {
-		// TODO Auto-generated method stub
-		return null;
+		Rating change = origin;
+		change.setRating(rating);
+		ratingDao.update(change);
+		return change;
 	}
 
 	@Override
 	public Movie getMovieById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return movieDao.findById(id);
 	}
 
 	@Override
 	public MovieBean getMovieBeanById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		Movie movie = movieDao.findById(id);
+		return new MovieBean(movie.getId(), movie.getImdb(), movie.getYear(), movie.getTitle());
 	}
-	
+
 	@Override
 	public Movie getMovieByImdb(int imdb) {
-		// TODO Auto-generated method stub
-		return null;
+		return movieDao.findByImdb(imdb);
 	}
 
 	@Override
 	public MovieBean getMovieBeanByImdb(int imdb) {
-		// TODO Auto-generated method stub
-		return null;
+		Movie movie = movieDao.findByImdb(imdb);
+		return new MovieBean(movie.getId(), movie.getImdb(), movie.getYear(), movie.getTitle());
 	}
 
 	@Override
 	public List<Movie> getMoviesByYear(int year) {
-		// TODO Auto-generated method stub
-		return null;
+		return movieDao.findByYear(year);
 	}
 
 	@Override
 	public List<Movie> getMoviesByTitle(String title) {
-		// TODO Auto-generated method stub
-		return null;
+		return movieDao.findByTitle(title);
 	}
-	
+
 	@Override
 	public List<Movie> recommendMoviesToUser(User user) {
 		// TODO Auto-generated method stub
@@ -127,26 +146,24 @@ public class MovieManagerImpl implements MovieManager {
 
 	@Override
 	public List<Rating> getRatingsByUser(User user) {
-		// TODO Auto-generated method stub
-		return null;
+		return ratingDao.findByUser(user);
 	}
 
 	@Override
 	public List<Rating> getRatingsByMovie(Movie movie) {
-		// TODO Auto-generated method stub
-		return null;
+		return ratingDao.findByMovie(movie);
 	}
 
 	@Override
 	public void deleteMovie(Movie movie) {
-		// TODO Auto-generated method stub
-		
+		movieDao.delete(movie);
+
 	}
 
 	@Override
 	public void deleteRating(Rating rating) {
-		// TODO Auto-generated method stub
-		
+		ratingDao.delete(rating);
+
 	}
 
 }
