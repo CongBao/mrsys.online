@@ -15,6 +15,14 @@
 	
 	<package name="default" extends="struts-default" abstract="true">
 	
+		<interceptors>
+			<interceptor name="loginAuthority" class="online.mrsys.movierecommender.action.authority.LoginInterceptor" />
+			<interceptor-stack name="loginStack">
+				<interceptor-ref name="loginAuthority" />
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+	
 		<global-results>
 			<result name="error">/WEB-INF/content/error.jsp</result>
 		</global-results>
@@ -35,6 +43,12 @@
 		<action name="*">
 			<result>/WEB-INF/content/{1}.jsp</result>
 		</action>
+		
+	</package>
+	
+	<package name="user" extends="root" namespace="/user">
+	
+		<default-interceptor-ref name="loginStack" />
 		
 	</package>
 
