@@ -45,8 +45,9 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public int validLogin(User user) throws Exception {
-		user.setPassword(PasswordValidator.calculate(user.getPassword(), user.getAccount()));
-		List<User> users = userDao.findByAccountAndPass(user);
+		final User toValid = user;
+		toValid.setPassword(PasswordValidator.calculate(user.getPassword(), user.getAccount()));
+		List<User> users = userDao.findByAccountAndPass(toValid);
 		if (users.size() >= 1) {
 			if (users.get(0).getRole().getId() == ADMIN) {
 				return LOGIN_ADMIN;
@@ -59,14 +60,15 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public int validRegister(User user) throws Exception {
-		user.setPassword(PasswordValidator.calculate(user.getPassword(), user.getAccount()));
-		if (!isUserExist(user)) {
-			if (user.getRole().getId() == ADMIN) {
-				if (userDao.save(user) != null) {
+		final User toRegister = user;
+		toRegister.setPassword(PasswordValidator.calculate(user.getPassword(), user.getAccount()));
+		if (!isUserExist(toRegister)) {
+			if (toRegister.getRole().getId() == ADMIN) {
+				if (userDao.save(toRegister) != null) {
 					return REGISTER_ADMIN;
 				}
-			} else if (user.getRole().getId() == USER) {
-				if (userDao.save(user) != null) {
+			} else if (toRegister.getRole().getId() == USER) {
+				if (userDao.save(toRegister) != null) {
 					return REGISTER_USER;
 				}
 			}
@@ -101,75 +103,106 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public User updateAccount(User origin, String account) {
-		// TODO Auto-generated method stub
+	public User updateAccount(User origin, String account) throws Exception {
+		if (!isUserExist(origin)) {
+			final User change = origin;
+			change.setAccount(account);
+			change.setPassword(PasswordValidator.calculate(origin.getPassword(), account));
+			userDao.update(change);
+			return change;
+		}
 		return null;
 	}
 
 	@Override
-	public User updatePassword(User origin, String password) {
-		// TODO Auto-generated method stub
-		return null;
+	public User updatePassword(User origin, String password) throws Exception {
+		final User change = origin;
+		change.setPassword(PasswordValidator.calculate(password, origin.getAccount()));
+		userDao.update(change);
+		return change;
 	}
 
 	@Override
 	public User updateEmail(User origin, String email) {
-		// TODO Auto-generated method stub
-		return null;
+		final User change = origin;
+		change.setEmail(email);
+		userDao.update(change);
+		return change;
 	}
 
 	@Override
 	public User updateMailVerifyState(User origin, boolean verified) {
-		// TODO Auto-generated method stub
-		return null;
+		final User change = origin;
+		change.setMailVerified(verified);
+		userDao.update(change);
+		return change;
 	}
 
 	@Override
 	public User updateRole(User origin, int roleId) {
-		// TODO Auto-generated method stub
+		final User change = origin;
+		final Role role = roleDao.findById(roleId);
+		if (role != null) {
+			change.setRole(role);
+			userDao.update(change);
+			return change;
+		}
 		return null;
 	}
 
 	@Override
 	public User getUserByAccount(String account) {
-		// TODO Auto-generated method stub
-		return null;
+		return userDao.findByAccount(account);
 	}
 
 	@Override
 	public Role getRoleByAccount(String account) {
-		// TODO Auto-generated method stub
+		final User user = getUserByAccount(account);
+		if (user != null) {
+			return user.getRole();
+		}
 		return null;
 	}
 
 	@Override
 	public UserBean getUserBeanByAccount(String account) {
-		// TODO Auto-generated method stub
+		final User user = getUserByAccount(account);
+		if (user != null) {
+			return new UserBean(user.getId(), user.getAccount(), user.getEmail(), user.isMailVerified(), getRoleBeanByAccount(user.getAccount()));
+		}
 		return null;
 	}
 
 	@Override
 	public RoleBean getRoleBeanByAccount(String account) {
-		// TODO Auto-generated method stub
+		final Role role = getRoleByAccount(account);
+		if (role != null) {
+			return new RoleBean(role.getId(), role.getRole());
+		}
 		return null;
 	}
 
 	@Override
 	public List<Favorite> getFavoritesByUser(User user) {
-		// TODO Auto-generated method stub
-		return null;
+		return favoriteDao.findByUser(user);
 	}
 
 	@Override
-	public void deleteUser(User user) {
-		// TODO Auto-generated method stub
-		
+	public boolean deleteUser(User user) {
+		if (isUserExist(user)) {
+			userDao.delete(user);
+			return true;
+		}
+		return false;
 	}
 
 	@Override
-	public void deleteFavorite(Favorite favorite) {
-		// TODO Auto-generated method stub
-		
+	public boolean deleteFavorite(Favorite favorite) {
+		if (isFavoriteExist(favorite)) {
+			favoriteDao.delete(favorite);
+			return true;
+		}
+		return false;
 	}
 
 }

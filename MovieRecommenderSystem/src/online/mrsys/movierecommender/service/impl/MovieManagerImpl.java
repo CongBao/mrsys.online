@@ -63,7 +63,7 @@ public class MovieManagerImpl implements MovieManager {
 
 	@Override
 	public boolean isMovieExist(Movie movie) {
-		if (movieDao.findById(movie.getImdb()) != null) {
+		if (movieDao.findByImdb(movie.getImdb()) != null) {
 			return true;
 		}
 		return false;
@@ -79,7 +79,7 @@ public class MovieManagerImpl implements MovieManager {
 
 	@Override
 	public Movie updateYear(Movie origin, int year) {
-		Movie change = origin;
+		final Movie change = origin;
 		change.setYear(year);
 		movieDao.update(change);
 		return change;
@@ -87,7 +87,7 @@ public class MovieManagerImpl implements MovieManager {
 
 	@Override
 	public Movie updateTitle(Movie origin, String title) {
-		Movie change = origin;
+		final Movie change = origin;
 		change.setTitle(title);
 		movieDao.update(change);
 		return change;
@@ -95,7 +95,7 @@ public class MovieManagerImpl implements MovieManager {
 
 	@Override
 	public Rating updateRating(Rating origin, float rating) {
-		Rating change = origin;
+		final Rating change = origin;
 		change.setRating(rating);
 		ratingDao.update(change);
 		return change;
@@ -108,8 +108,11 @@ public class MovieManagerImpl implements MovieManager {
 
 	@Override
 	public MovieBean getMovieBeanById(int id) {
-		Movie movie = movieDao.findById(id);
-		return new MovieBean(movie.getId(), movie.getImdb(), movie.getYear(), movie.getTitle());
+		final Movie movie = getMovieById(id);
+		if (movie != null) {
+			return new MovieBean(movie.getId(), movie.getImdb(), movie.getYear(), movie.getTitle());
+		}
+		return null;
 	}
 
 	@Override
@@ -119,8 +122,11 @@ public class MovieManagerImpl implements MovieManager {
 
 	@Override
 	public MovieBean getMovieBeanByImdb(int imdb) {
-		Movie movie = movieDao.findByImdb(imdb);
-		return new MovieBean(movie.getId(), movie.getImdb(), movie.getYear(), movie.getTitle());
+		final Movie movie = movieDao.findByImdb(imdb);
+		if (movie != null) {
+			return new MovieBean(movie.getId(), movie.getImdb(), movie.getYear(), movie.getTitle());
+		}
+		return null;
 	}
 
 	@Override
@@ -150,15 +156,21 @@ public class MovieManagerImpl implements MovieManager {
 	}
 
 	@Override
-	public void deleteMovie(Movie movie) {
-		movieDao.delete(movie);
-
+	public boolean deleteMovie(Movie movie) {
+		if (isMovieExist(movie)) {
+			movieDao.delete(movie);
+			return true;
+		}
+		return false;
 	}
 
 	@Override
-	public void deleteRating(Rating rating) {
-		ratingDao.delete(rating);
-
+	public boolean deleteRating(Rating rating) {
+		if (isRatingExist(rating)) {
+			ratingDao.delete(rating);
+			return true;
+		}
+		return false;
 	}
 
 }

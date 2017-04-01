@@ -29,6 +29,7 @@ public interface MovieManager {
 
 	/**
 	 * Check if a movie is existing in database.
+	 * The check is based on imdb.
 	 * 
 	 * @param movie
 	 *            the movie to be checked
@@ -166,15 +167,17 @@ public interface MovieManager {
 	 * 
 	 * @param movie
 	 *            the movie record to be deleted
+	 * @return if the delete if successful
 	 */
-	void deleteMovie(Movie movie);
+	boolean deleteMovie(Movie movie);
 
 	/**
 	 * Delete a rating record in database.
 	 * 
 	 * @param rating
 	 *            the rating record to be deleted
+	 * @return if the delete is successful
 	 */
-	void deleteRating(Rating rating);
+	boolean deleteRating(Rating rating);
 
 }

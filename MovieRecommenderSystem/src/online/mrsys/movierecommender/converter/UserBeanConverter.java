@@ -17,11 +17,10 @@ public class UserBeanConverter extends StrutsTypeConverter {
 		String[] data = values[0].split(",");
 		userBean.setId(Integer.parseInt(data[0]));
 		userBean.setAccount(data[1]);
-		userBean.setPassword(data[2]);
-		userBean.setEmail(data[3]);
-		userBean.setMailVerified(Boolean.parseBoolean(data[4]));
-		roleBean.setId(Integer.parseInt(data[5]));
-		roleBean.setRole(data[6]);
+		userBean.setEmail(data[2]);
+		userBean.setMailVerified(Boolean.parseBoolean(data[3]));
+		roleBean.setId(Integer.parseInt(data[4]));
+		roleBean.setRole(data[5]);
 		userBean.setRole(roleBean);
 		return userBean;
 	}

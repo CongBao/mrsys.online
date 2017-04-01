@@ -87,7 +87,7 @@ public interface UserManager {
 	 *            the new account of user
 	 * @return the user record after updating
 	 */
-	User updateAccount(User origin, String account);
+	User updateAccount(User origin, String account) throws Exception;
 
 	/**
 	 * Update the password record of a user.
@@ -98,7 +98,7 @@ public interface UserManager {
 	 *            the new password of user
 	 * @return the user record after updating
 	 */
-	User updatePassword(User origin, String password);
+	User updatePassword(User origin, String password) throws Exception;
 
 	/**
 	 * Update the email record of a user.
@@ -183,15 +183,17 @@ public interface UserManager {
 	 * 
 	 * @param user
 	 *            the user to be deleted
+	 * @return if the delete is successful
 	 */
-	void deleteUser(User user);
+	boolean deleteUser(User user);
 
 	/**
 	 * Delete a favorite record in database.
 	 * 
 	 * @param favorite
 	 *            the favorite record to be deleted
+	 * @return if the delete is successful
 	 */
-	void deleteFavorite(Favorite favorite);
+	boolean deleteFavorite(Favorite favorite);
 
 }

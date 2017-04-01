@@ -4,11 +4,10 @@ import java.io.Serializable;
 
 public class UserBean implements Serializable {
 	
-	private static final long serialVersionUID = 4716427017733319718L;
+	private static final long serialVersionUID = 6762320425574412060L;
 	
 	private Integer id;
 	private String account;
-	private String password;
 	private String email;
 	private Boolean mailVerified;
 	private RoleBean role;
@@ -16,11 +15,10 @@ public class UserBean implements Serializable {
 	public UserBean() {
 	}
 
-	public UserBean(Integer id, String account, String password, String email, Boolean mailVerified, RoleBean role) {
+	public UserBean(Integer id, String account, String email, Boolean mailVerified, RoleBean role) {
 		super();
 		this.id = id;
 		this.account = account;
-		this.password = password;
 		this.email = email;
 		this.mailVerified = mailVerified;
 		this.role = role;
@@ -40,14 +38,6 @@ public class UserBean implements Serializable {
 
 	public void setAccount(String account) {
 		this.account = account;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public String getEmail() {
@@ -76,7 +66,7 @@ public class UserBean implements Serializable {
 
 	@Override
 	public String toString() {
-		return id + "," + account + "," + password + "," + email + "," + mailVerified + "," + role;
+		return id + "," + account + "," + email + "," + mailVerified + "," + role;
 	}
 
 }
