@@ -43,27 +43,22 @@ public class MovieManagerImpl implements MovieManager {
 
 	@Override
 	public boolean addMovie(Movie movie) {
-
-		if (isMovieExist(movie)) {
-			return false;
-		} else {
-			if (movieDao.save(movie) != null)
+		if (!isMovieExist(movie)) {
+			if (movieDao.save(movie) != null) {
 				return true;
-			return false;
+			}
 		}
-
+		return false;
 	}
 
 	@Override
 	public boolean addRating(Rating rating) {
-
-		if (isRatingExist(rating)) {
-			return false;
-		} else {
-			if (ratingDao.save(rating) != null)
+		if (!isRatingExist(rating)) {
+			if (ratingDao.save(rating) != null) {
 				return true;
-			return false;
+			}
 		}
+		return false;
 	}
 
 	@Override
