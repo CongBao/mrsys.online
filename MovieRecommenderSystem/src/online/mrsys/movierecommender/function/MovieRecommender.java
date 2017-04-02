@@ -22,8 +22,8 @@ public class MovieRecommender {
 	public List<Entry<Movie, Float>> recommend(User targetUser) {
 		// firstly find the negihbors and their similarities
 		List<Entry<User, Float>> neighbors = getNeighbors(targetUser);
-		HashMap<Movie, Float> estimatedRatings = new HashMap<>();
-		HashMap<Movie, Float> similarityTotal = new HashMap<>();
+		HashMap<Movie, Float> estimatedRatings = new HashMap<>(1500);
+		HashMap<Movie, Float> similarityTotal = new HashMap<>(1500);
 		// secondly estiamte the target user's ratings on all the movies that
 		// he/she hasn't rated
 		for (Entry<User, Float> neighborSimilarity : neighbors) {
@@ -89,7 +89,7 @@ public class MovieRecommender {
 	 * @return a list of neighbor-similarity pair
 	 */
 	private List<Entry<User, Float>> getNeighbors(User targetUser) {
-		HashMap<User, Float> neighbors = new HashMap<>();
+		HashMap<User, Float> neighbors = new HashMap<>(1500);
 		for (Rating rating : targetUser.getRatings()) {
 			Movie movie = rating.getMovie();
 			for (User neighbor : movie.getUsers()) {
