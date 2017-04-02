@@ -44,10 +44,6 @@
 			<result>/WEB-INF/content/{1}.jsp</result>
 		</action>
 		
-		<action name="test" class="online.mrsys.movierecommender.action.TestAction">
-		    <result>/WEB-INF/content/test.jsp</result>
-		</action>
-		
 	</package>
 	
 	<package name="user" extends="root" namespace="/user">

@@ -33,25 +33,18 @@
 			<value>
 				hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
 				hibernate.hbm2ddl.auto=update
-				hibernate.show_sql=false
+				hibernate.show_sql=true
 				hibernate.format_sql=true
 				hibernate.cache.use_second_level_cache=true
 				hibernate.cache.region.factory_class=org.hibernate.cache.ehcache.EhCacheRegionFactory
-				hibernate.enable_lazy_load_no_trans=true
 			</value>
-			<!-- 
-			    hibernate.show_sql=true
-			    no -> hibernate.enable_lazy_load_no_trans=true
-			 -->
 		</property>
 	</bean>
 	
 	<bean id="daoTemplate"
           abstract="true"
-          lazy-init="false"
+          lazy-init="true"
           p:sessionFactory-ref="sessionFactory"/>
-          
-          <!-- lazy-init="true" -->
 		
 	<bean id="favoriteDao"
           class="online.mrsys.movierecommender.dao.impl.FavoriteDaoHibernate"

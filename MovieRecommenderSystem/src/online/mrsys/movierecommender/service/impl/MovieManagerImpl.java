@@ -147,7 +147,6 @@ public class MovieManagerImpl implements MovieManager {
 
 	@Override
 	public List<Movie> recommendMoviesToUser(User user) {
-	    System.out.println("recommendMoviesToUser service called");
 		MovieRecommender recommender = MovieRecommender.getInstance();
 		List<Map.Entry<Movie, Float>> moviePair = recommender.recommend(user);
 		List<Movie> movies = new ArrayList<>(10);
@@ -155,7 +154,6 @@ public class MovieManagerImpl implements MovieManager {
 		for (int i = 0; i < num; i++) {
 		    movies.add(moviePair.get(i).getKey());
 		}
-		System.out.println("recommendMoviesToUser service completed");
 		return movies;
 	}
 

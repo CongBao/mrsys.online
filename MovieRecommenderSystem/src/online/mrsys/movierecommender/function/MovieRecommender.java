@@ -97,7 +97,7 @@ public class MovieRecommender {
 	 *            the target user
 	 * @return a list of neighbor-similarity pair
 	 */
-	private List<Entry<User, Float>> getNeighbors(User targetUser) {System.out.println("getNeighbors called");
+	private List<Entry<User, Float>> getNeighbors(User targetUser) {
 		HashMap<User, Float> neighbors = new HashMap<>(1500);
 		for (Rating rating : targetUser.getRatings()) {
 			Movie movie = rating.getMovie();
@@ -108,7 +108,7 @@ public class MovieRecommender {
 			}
 		}
 		List<Entry<User, Float>> results = new ArrayList<>(neighbors.entrySet());
-		Collections.sort(results, (o1, o2) -> o1.getValue().compareTo(o2.getValue()));System.out.println("getNeighbors completed");
+		Collections.sort(results, (o1, o2) -> o1.getValue().compareTo(o2.getValue()));
 		return results;
 	}
 	
