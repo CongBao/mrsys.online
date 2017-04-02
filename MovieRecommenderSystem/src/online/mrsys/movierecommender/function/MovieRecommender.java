@@ -11,6 +11,15 @@ import online.mrsys.movierecommender.domain.Rating;
 import online.mrsys.movierecommender.domain.User;
 
 public class MovieRecommender {
+    
+    private static MovieRecommender instance = new MovieRecommender();
+    
+    private MovieRecommender() {
+    }
+    
+    public static MovieRecommender getInstance() {
+        return instance;
+    }
 	
 	/**
 	 * Generate the recommendation list of the target user.
@@ -19,7 +28,7 @@ public class MovieRecommender {
 	 *            the target user
 	 * @return a list of movie-recommend pair
 	 */
-	public List<Entry<Movie, Float>> recommend(User targetUser) {
+	public List<Entry<Movie, Float>> recommend(User targetUser) {System.out.println("recommend called");
 		// firstly find the negihbors and their similarities
 		List<Entry<User, Float>> neighbors = getNeighbors(targetUser);
 		HashMap<Movie, Float> estimatedRatings = new HashMap<>(1500);
@@ -88,7 +97,7 @@ public class MovieRecommender {
 	 *            the target user
 	 * @return a list of neighbor-similarity pair
 	 */
-	private List<Entry<User, Float>> getNeighbors(User targetUser) {
+	private List<Entry<User, Float>> getNeighbors(User targetUser) {System.out.println("getNeighbors called");
 		HashMap<User, Float> neighbors = new HashMap<>(1500);
 		for (Rating rating : targetUser.getRatings()) {
 			Movie movie = rating.getMovie();
@@ -99,7 +108,7 @@ public class MovieRecommender {
 			}
 		}
 		List<Entry<User, Float>> results = new ArrayList<>(neighbors.entrySet());
-		Collections.sort(results, (o1, o2) -> o1.getValue().compareTo(o2.getValue()));
+		Collections.sort(results, (o1, o2) -> o1.getValue().compareTo(o2.getValue()));System.out.println("getNeighbors completed");
 		return results;
 	}
 	
