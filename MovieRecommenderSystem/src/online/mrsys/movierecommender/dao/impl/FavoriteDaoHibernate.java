@@ -12,7 +12,7 @@ public class FavoriteDaoHibernate extends BaseDaoHibernate<Favorite> implements 
 	
 	@Override
 	public Favorite findById(Integer id) {
-		List<Favorite> favorites = find("select f from Favorite f where f.favorite_id = ?0", id);
+		List<Favorite> favorites = find("select f from Favorite f where f.id = ?0", id);
 		if (favorites != null && favorites.size() >= 1)
 			return favorites.get(0);
 		return null;
@@ -20,12 +20,12 @@ public class FavoriteDaoHibernate extends BaseDaoHibernate<Favorite> implements 
 
 	@Override
 	public List<Favorite> findByUser(User user) {
-		return find("select f from Favorite f where f.user_id = ?0", user.getId());
+		return find("select f from Favorite f where f.id = ?0", user.getId());
 	}
 
 	@Override
 	public List<Favorite> findByMovie(Movie movie) {
-		return find("select f from Favorite f where f.movie_id = ?0", movie.getId());
+		return find("select f from Favorite f where f.id = ?0", movie.getId());
 	}
 
 }

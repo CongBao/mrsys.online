@@ -12,7 +12,7 @@ public class RatingDaoHibernate extends BaseDaoHibernate<Rating> implements Rati
 	
     @Override
 	public Rating findById(Integer id){
-    	List<Rating> ratings = find("select r from Rating r where r.rating_id = ?0", id);
+    	List<Rating> ratings = find("select r from Rating r where r.id = ?0", id);
 		if (ratings != null && ratings.size() >= 1)
 			return ratings.get(0);
 		return null;
@@ -20,12 +20,12 @@ public class RatingDaoHibernate extends BaseDaoHibernate<Rating> implements Rati
 	
 	@Override
 	public List<Rating> findByUser(User user) {
-		return find("select r from Rating r where r.user_id=?0", user.getId());
+		return find("select r from Rating r where r.user = ?0", user);
 	}
 
 	@Override
 	public List<Rating> findByMovie(Movie movie) {
-		return find("select r from Rating r where r.movie_id=?0", movie.getId());
+		return find("select r from Rating r where r.movie = ?0", movie);
 	}
 
 }

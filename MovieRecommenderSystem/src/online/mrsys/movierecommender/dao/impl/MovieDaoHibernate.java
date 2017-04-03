@@ -10,7 +10,7 @@ public class MovieDaoHibernate extends BaseDaoHibernate<Movie> implements MovieD
 
 	@Override
 	public Movie findById(Integer id) {
-		List<Movie> movies = find("select m from Movie m where m.movie_id = ?0", id);
+		List<Movie> movies = find("select m from Movie m where m.id = ?0", id);
 		if (movies != null && movies.size() >= 1)
 			return movies.get(0);
 		return null;

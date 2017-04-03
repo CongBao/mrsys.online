@@ -10,7 +10,7 @@ public class RoleDaoHibernate extends BaseDaoHibernate<Role> implements RoleDao 
 
 	@Override
 	public Role findById(Integer id) {
-		List<Role> roles = find("select r from Role r where r.role_id = ?0", id);
+		List<Role> roles = find("select r from Role r where r.id = ?0", id);
 		if (roles != null && roles.size() >= 1)
 			return roles.get(0);
 		return null;
