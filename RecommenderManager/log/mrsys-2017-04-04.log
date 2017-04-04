@@ -1,0 +1,411 @@
+Apr 04, 2017 4:30:12 PM online.mrsys.mrsysmanager.Scheduler subscribe
+SEVERE: Error when try to subscribe topic: RecommendedMovieList
+Client is not connected (32104)
+	at org.eclipse.paho.client.mqttv3.internal.ExceptionHelper.createMqttException(ExceptionHelper.java:31)
+	at org.eclipse.paho.client.mqttv3.internal.ClientComms.sendNoWait(ClientComms.java:177)
+	at org.eclipse.paho.client.mqttv3.MqttAsyncClient.subscribe(MqttAsyncClient.java:923)
+	at org.eclipse.paho.client.mqttv3.MqttClient.subscribe(MqttClient.java:340)
+	at org.eclipse.paho.client.mqttv3.MqttClient.subscribe(MqttClient.java:315)
+	at online.mrsys.mrsysmanager.Scheduler.subscribe(Scheduler.java:95)
+	at online.mrsys.mrsysmanager.Scheduler.main(Scheduler.java:166)
+
+Apr 04, 2017 4:30:45 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connecting to tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 4:30:46 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connection established
+Apr 04, 2017 4:30:46 PM online.mrsys.mrsysmanager.Scheduler subscribe
+INFO: Start subscribing topic: RecommendedMovieList
+Apr 04, 2017 4:42:49 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connecting to tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 4:42:49 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connection established
+Apr 04, 2017 4:42:49 PM online.mrsys.mrsysmanager.Scheduler subscribe
+INFO: Start subscribing topic: RecommendedMovieList
+Apr 04, 2017 4:42:53 PM online.mrsys.mrsysmanager.Scheduler$Handler connectionLost
+WARNING: Connection lost
+Connection lost (32109) - java.io.EOFException
+	at org.eclipse.paho.client.mqttv3.internal.CommsReceiver.run(CommsReceiver.java:164)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.io.EOFException
+	at java.io.DataInputStream.readByte(DataInputStream.java:267)
+	at org.eclipse.paho.client.mqttv3.internal.wire.MqttInputStream.readMqttWireMessage(MqttInputStream.java:92)
+	at org.eclipse.paho.client.mqttv3.internal.CommsReceiver.run(CommsReceiver.java:116)
+	... 1 more
+
+Apr 04, 2017 4:42:55 PM online.mrsys.mrsysmanager.Scheduler$Handler connectionLost
+WARNING: Connection lost
+Connection lost (32109) - java.io.EOFException
+	at org.eclipse.paho.client.mqttv3.internal.CommsReceiver.run(CommsReceiver.java:164)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.io.EOFException
+	at java.io.DataInputStream.readByte(DataInputStream.java:267)
+	at org.eclipse.paho.client.mqttv3.internal.wire.MqttInputStream.readMqttWireMessage(MqttInputStream.java:92)
+	at org.eclipse.paho.client.mqttv3.internal.CommsReceiver.run(CommsReceiver.java:116)
+	... 1 more
+
+Apr 04, 2017 4:42:58 PM online.mrsys.mrsysmanager.Scheduler$Handler connectionLost
+WARNING: Connection lost
+Connection lost (32109) - java.io.EOFException
+	at org.eclipse.paho.client.mqttv3.internal.CommsReceiver.run(CommsReceiver.java:164)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.io.EOFException
+	at java.io.DataInputStream.readByte(DataInputStream.java:267)
+	at org.eclipse.paho.client.mqttv3.internal.wire.MqttInputStream.readMqttWireMessage(MqttInputStream.java:92)
+	at org.eclipse.paho.client.mqttv3.internal.CommsReceiver.run(CommsReceiver.java:116)
+	... 1 more
+
+Apr 04, 2017 4:43:00 PM online.mrsys.mrsysmanager.Scheduler$Handler connectionLost
+WARNING: Connection lost
+Connection lost (32109) - java.io.EOFException
+	at org.eclipse.paho.client.mqttv3.internal.CommsReceiver.run(CommsReceiver.java:164)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.io.EOFException
+	at java.io.DataInputStream.readByte(DataInputStream.java:267)
+	at org.eclipse.paho.client.mqttv3.internal.wire.MqttInputStream.readMqttWireMessage(MqttInputStream.java:92)
+	at org.eclipse.paho.client.mqttv3.internal.CommsReceiver.run(CommsReceiver.java:116)
+	... 1 more
+
+Apr 04, 2017 4:43:02 PM online.mrsys.mrsysmanager.Scheduler$Handler connectionLost
+WARNING: Connection lost
+Connection lost (32109) - java.io.EOFException
+	at org.eclipse.paho.client.mqttv3.internal.CommsReceiver.run(CommsReceiver.java:164)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.io.EOFException
+	at java.io.DataInputStream.readByte(DataInputStream.java:267)
+	at org.eclipse.paho.client.mqttv3.internal.wire.MqttInputStream.readMqttWireMessage(MqttInputStream.java:92)
+	at org.eclipse.paho.client.mqttv3.internal.CommsReceiver.run(CommsReceiver.java:116)
+	... 1 more
+
+Apr 04, 2017 4:49:57 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connecting to tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 4:49:58 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connection established
+Apr 04, 2017 4:49:58 PM online.mrsys.mrsysmanager.Scheduler subscribe
+INFO: Start subscribing topic: RecommendedMovieList
+Apr 04, 2017 4:49:58 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 4:49:58 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 4:49:58 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried
+Apr 04, 2017 4:49:58 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried
+Apr 04, 2017 4:57:24 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connecting to tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 4:57:24 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connection established
+Apr 04, 2017 4:57:24 PM online.mrsys.mrsysmanager.Scheduler subscribe
+INFO: Start subscribing topic: RecommendedMovieList
+Apr 04, 2017 4:57:25 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 4:57:25 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 4:57:25 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried
+Apr 04, 2017 4:57:25 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried
+Apr 04, 2017 4:57:25 PM online.mrsys.mrsysmanager.Scheduler$Handler connectionLost
+WARNING: Connection lost
+Connection lost (32109) - java.io.EOFException
+	at org.eclipse.paho.client.mqttv3.internal.CommsReceiver.run(CommsReceiver.java:164)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.io.EOFException
+	at java.io.DataInputStream.readByte(DataInputStream.java:267)
+	at org.eclipse.paho.client.mqttv3.internal.wire.MqttInputStream.readMqttWireMessage(MqttInputStream.java:92)
+	at org.eclipse.paho.client.mqttv3.internal.CommsReceiver.run(CommsReceiver.java:116)
+	... 1 more
+
+Apr 04, 2017 4:59:11 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connecting to tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 4:59:11 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connection established
+Apr 04, 2017 4:59:11 PM online.mrsys.mrsysmanager.Scheduler subscribe
+INFO: Start subscribing topic: RecommendedMovieList
+Apr 04, 2017 4:59:11 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 4:59:11 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 4:59:11 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried
+Apr 04, 2017 4:59:11 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried
+Apr 04, 2017 4:59:12 PM online.mrsys.mrsysmanager.Scheduler$Handler connectionLost
+WARNING: Connection lost
+Connection lost (32109) - java.io.EOFException
+	at org.eclipse.paho.client.mqttv3.internal.CommsReceiver.run(CommsReceiver.java:164)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.io.EOFException
+	at java.io.DataInputStream.readByte(DataInputStream.java:267)
+	at org.eclipse.paho.client.mqttv3.internal.wire.MqttInputStream.readMqttWireMessage(MqttInputStream.java:92)
+	at org.eclipse.paho.client.mqttv3.internal.CommsReceiver.run(CommsReceiver.java:116)
+	... 1 more
+
+Apr 04, 2017 5:01:05 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connecting to tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 5:01:05 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connection established
+Apr 04, 2017 5:01:05 PM online.mrsys.mrsysmanager.Scheduler subscribe
+INFO: Start subscribing topic: RecommendedMovieList
+Apr 04, 2017 5:01:05 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 5:01:05 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 5:01:05 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried
+Apr 04, 2017 5:01:05 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried
+Apr 04, 2017 5:04:22 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connecting to tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 5:04:22 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connection established
+Apr 04, 2017 5:04:22 PM online.mrsys.mrsysmanager.Scheduler subscribe
+INFO: Start subscribing topic: RecommendedMovieList
+Apr 04, 2017 5:04:31 PM online.mrsys.mrsysmanager.Scheduler$Handler connectionLost
+WARNING: Connection lost
+Connection lost (32109) - java.io.EOFException
+	at org.eclipse.paho.client.mqttv3.internal.CommsReceiver.run(CommsReceiver.java:164)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.io.EOFException
+	at java.io.DataInputStream.readByte(DataInputStream.java:267)
+	at org.eclipse.paho.client.mqttv3.internal.wire.MqttInputStream.readMqttWireMessage(MqttInputStream.java:92)
+	at org.eclipse.paho.client.mqttv3.internal.CommsReceiver.run(CommsReceiver.java:116)
+	... 1 more
+
+Apr 04, 2017 5:10:26 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connecting to tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 5:10:26 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connection established
+Apr 04, 2017 5:10:26 PM online.mrsys.mrsysmanager.Scheduler subscribe
+INFO: Start subscribing topic: RecommendedMovieList
+Apr 04, 2017 5:10:26 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 5:10:26 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 5:10:26 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried
+Apr 04, 2017 5:10:26 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried
+Apr 04, 2017 5:10:36 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connecting to tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 5:10:36 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connection established
+Apr 04, 2017 5:10:36 PM online.mrsys.mrsysmanager.Scheduler subscribe
+INFO: Start subscribing topic: RecommendedMovieList
+Apr 04, 2017 5:10:40 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 5:10:40 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 5:10:40 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried
+Apr 04, 2017 5:10:40 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried
+Apr 04, 2017 5:15:07 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connecting to tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 5:15:07 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connection established
+Apr 04, 2017 5:15:07 PM online.mrsys.mrsysmanager.Scheduler subscribe
+INFO: Start subscribing topic: RecommendedMovieList
+Apr 04, 2017 5:15:11 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 5:15:12 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 5:15:12 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried
+Apr 04, 2017 5:15:12 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried
+Apr 04, 2017 5:16:59 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connecting to tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 5:17:00 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connection established
+Apr 04, 2017 5:17:00 PM online.mrsys.mrsysmanager.Scheduler subscribe
+INFO: Start subscribing topic: RecommendedMovieList
+Apr 04, 2017 5:17:03 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 5:17:03 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 5:17:03 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried
+Apr 04, 2017 5:17:03 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried
+Apr 04, 2017 5:17:03 PM online.mrsys.mrsysmanager.Scheduler disconnect
+INFO: Disconnecting from tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 5:17:03 PM online.mrsys.mrsysmanager.Scheduler disconnect
+INFO: Disconnected
+Apr 04, 2017 5:19:12 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connecting to tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 5:19:12 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connection established
+Apr 04, 2017 5:19:12 PM online.mrsys.mrsysmanager.Scheduler subscribe
+INFO: Start subscribing topic: RecommendedMovieList
+Apr 04, 2017 5:19:16 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 5:19:16 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 5:19:16 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried
+Apr 04, 2017 5:19:16 PM online.mrsys.mrsysmanager.Scheduler lambda$0
+INFO: Disconnecting from tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 5:19:16 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried
+Apr 04, 2017 5:19:16 PM online.mrsys.mrsysmanager.Scheduler lambda$0
+INFO: Disconnected
+Apr 04, 2017 5:20:17 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connecting to tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 5:20:17 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connection established
+Apr 04, 2017 5:20:17 PM online.mrsys.mrsysmanager.Scheduler subscribe
+INFO: Start subscribing topic: RecommendedMovieList
+Apr 04, 2017 5:20:17 PM online.mrsys.mrsysmanager.Scheduler lambda$0
+INFO: Disconnecting from tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 5:20:17 PM online.mrsys.mrsysmanager.Scheduler lambda$0
+INFO: Disconnected
+Apr 04, 2017 5:20:25 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connecting to tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 5:20:25 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connection established
+Apr 04, 2017 5:20:25 PM online.mrsys.mrsysmanager.Scheduler subscribe
+INFO: Start subscribing topic: RecommendedMovieList
+Apr 04, 2017 5:20:25 PM online.mrsys.mrsysmanager.Scheduler lambda$0
+INFO: Disconnecting from tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 5:20:25 PM online.mrsys.mrsysmanager.Scheduler lambda$0
+INFO: Disconnected
+Apr 04, 2017 5:20:29 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connecting to tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 5:20:29 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connection established
+Apr 04, 2017 5:20:29 PM online.mrsys.mrsysmanager.Scheduler subscribe
+INFO: Start subscribing topic: RecommendedMovieList
+Apr 04, 2017 5:20:29 PM online.mrsys.mrsysmanager.Scheduler lambda$0
+INFO: Disconnecting from tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 5:20:30 PM online.mrsys.mrsysmanager.Scheduler lambda$0
+INFO: Disconnected
+Apr 04, 2017 5:20:39 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connecting to tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 5:20:39 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connection established
+Apr 04, 2017 5:20:39 PM online.mrsys.mrsysmanager.Scheduler subscribe
+INFO: Start subscribing topic: RecommendedMovieList
+Apr 04, 2017 5:20:39 PM online.mrsys.mrsysmanager.Scheduler lambda$0
+INFO: Disconnecting from tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 5:20:39 PM online.mrsys.mrsysmanager.Scheduler lambda$0
+INFO: Disconnected
+Apr 04, 2017 5:21:04 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connecting to tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 5:21:04 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connection established
+Apr 04, 2017 5:21:04 PM online.mrsys.mrsysmanager.Scheduler subscribe
+INFO: Start subscribing topic: RecommendedMovieList
+Apr 04, 2017 5:21:04 PM online.mrsys.mrsysmanager.Scheduler lambda$0
+INFO: Disconnecting from tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 5:21:04 PM online.mrsys.mrsysmanager.Scheduler lambda$0
+INFO: Disconnected
+Apr 04, 2017 5:23:15 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connecting to tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 5:23:16 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connection established
+Apr 04, 2017 5:23:16 PM online.mrsys.mrsysmanager.Scheduler subscribe
+INFO: Start subscribing topic: RecommendedMovieList
+Apr 04, 2017 5:23:16 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 5:23:16 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 5:23:16 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried
+Apr 04, 2017 5:23:16 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried
+Apr 04, 2017 5:23:16 PM online.mrsys.mrsysmanager.Scheduler lambda$0
+INFO: Disconnecting from tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 5:23:16 PM online.mrsys.mrsysmanager.Scheduler lambda$0
+INFO: Disconnected
+Apr 04, 2017 5:24:46 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connecting to tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 5:24:46 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connection established
+Apr 04, 2017 5:24:46 PM online.mrsys.mrsysmanager.Scheduler subscribe
+INFO: Start subscribing topic: RecommendedMovieList
+Apr 04, 2017 5:24:46 PM online.mrsys.mrsysmanager.Scheduler lambda$0
+INFO: Disconnecting from tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 5:24:46 PM online.mrsys.mrsysmanager.Scheduler lambda$0
+INFO: Disconnected
+Apr 04, 2017 5:25:21 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connecting to tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 5:25:22 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connection established
+Apr 04, 2017 5:25:22 PM online.mrsys.mrsysmanager.Scheduler subscribe
+INFO: Start subscribing topic: RecommendedMovieList
+Apr 04, 2017 5:25:22 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 5:25:22 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 5:25:22 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried
+Apr 04, 2017 5:25:22 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried
+Apr 04, 2017 5:25:22 PM online.mrsys.mrsysmanager.Scheduler lambda$0
+INFO: Disconnecting from tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 5:25:22 PM online.mrsys.mrsysmanager.Scheduler lambda$0
+INFO: Disconnected
+Apr 04, 2017 5:26:01 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connecting to tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 5:26:01 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connection established
+Apr 04, 2017 5:26:01 PM online.mrsys.mrsysmanager.Scheduler subscribe
+INFO: Start subscribing topic: RecommendedMovieList
+Apr 04, 2017 5:26:01 PM online.mrsys.mrsysmanager.Scheduler lambda$0
+INFO: Disconnecting from tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 5:26:01 PM online.mrsys.mrsysmanager.Scheduler lambda$0
+INFO: Disconnected
+Apr 04, 2017 5:26:09 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connecting to tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 5:26:09 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connection established
+Apr 04, 2017 5:26:09 PM online.mrsys.mrsysmanager.Scheduler subscribe
+INFO: Start subscribing topic: RecommendedMovieList
+Apr 04, 2017 5:26:09 PM online.mrsys.mrsysmanager.Scheduler lambda$0
+INFO: Disconnecting from tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 5:26:10 PM online.mrsys.mrsysmanager.Scheduler lambda$0
+INFO: Disconnected
+Apr 04, 2017 5:26:37 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connecting to tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 5:26:38 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connection established
+Apr 04, 2017 5:26:38 PM online.mrsys.mrsysmanager.Scheduler subscribe
+INFO: Start subscribing topic: RecommendedMovieList
+Apr 04, 2017 5:26:45 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 5:26:45 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 5:26:45 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried
+Apr 04, 2017 5:26:45 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried
+Apr 04, 2017 5:26:59 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 5:26:59 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 5:26:59 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried
+Apr 04, 2017 5:26:59 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried
+Apr 04, 2017 5:27:20 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 5:27:20 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 5:27:20 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried
+Apr 04, 2017 5:27:20 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried
+Apr 04, 2017 5:28:07 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connecting to tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 5:28:07 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connection established
+Apr 04, 2017 5:28:07 PM online.mrsys.mrsysmanager.Scheduler subscribe
+INFO: Start subscribing topic: RecommendedMovieList
+Apr 04, 2017 5:28:12 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 5:28:12 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 5:28:12 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried
+Apr 04, 2017 5:28:12 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried

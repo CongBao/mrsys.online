@@ -1,17 +1,8 @@
 package online.mrsys.mrsysmanager;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
@@ -23,39 +14,26 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 import online.mrsys.common.remote.Protocol;
 
-public class Scheduler {
+public class ServerTest {
+    
+    private static final Logger logger = Logger.getLogger(ServerTest.class.getName());
 
-    private static final Logger logger = Logger.getLogger(Scheduler.class.getName());
-
-    private static final String clientId = "Scheduler";
+    private static final String clientId = "ServerTest";
 
     private final MqttClient client;
     private final MqttConnectOptions options;
 
     private final SimpleDateFormat formatter;
-
-    public Scheduler() throws MqttException {
+    
+    public ServerTest() throws MqttException {
         formatter = new SimpleDateFormat("yyyy-MM-dd");
-        initLogger();
         client = new MqttClient(Protocol.BROKER, clientId, new MemoryPersistence());
         client.setCallback(new Handler());
         options = new MqttConnectOptions();
         options.setAutomaticReconnect(true);
         options.setCleanSession(true);
     }
-
-    public void initLogger() {
-        try {
-            String date = formatter.format(new Date());
-            FileHandler fh = new FileHandler("log/" + Protocol.SYS_NAME + "-" + date + ".log", true);
-            fh.setLevel(Level.ALL);
-            fh.setFormatter(new SimpleFormatter());
-            logger.addHandler(fh);
-        } catch (SecurityException | IOException e) {
-            logger.log(Level.SEVERE, null, e);
-        }
-    }
-
+    
     public void connect() {
         try {
             logger.log(Level.INFO, "Connecting to {0} ...", Protocol.BROKER);
@@ -65,7 +43,7 @@ public class Scheduler {
             logger.log(Level.SEVERE, "Error when connecting to " + Protocol.BROKER, e);
         }
     }
-
+    
     public void disconnect() {
         if (client.isConnected()) {
             new Thread(() -> {
@@ -79,7 +57,7 @@ public class Scheduler {
             }).start();
         }
     }
-
+    
     public void publish(String protocol, String content) {
         String msg = protocol + content;
         MqttMessage message = new MqttMessage();
@@ -93,7 +71,7 @@ public class Scheduler {
             logger.log(Level.SEVERE, "Error when try to publish topic: " + Protocol.TOPIC, e);
         }
     }
-
+    
     public void subscribe() {
         try {
             client.subscribe(Protocol.TOPIC);
@@ -102,39 +80,12 @@ public class Scheduler {
             logger.log(Level.SEVERE, "Error when try to subscribe topic: " + Protocol.TOPIC, e);
         }
     }
-
+    
     private class Handler implements MqttCallback {
-
-        public void onRequested() {
-            final String date = formatter.format(new Date());
-            final File dir = new File("res/" + date);
-            final File[] files = dir.listFiles((FilenameFilter) (d, name) -> name.endsWith(Protocol.RES_SUFFIX));
-            for (File file : files) {
-                try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));) {
-                    // format: date!author!record1#record2#...
-                    StringBuilder sb = new StringBuilder();
-                    sb.append(date);
-                    sb.append("!");
-                    sb.append(file.getName().replaceFirst(Protocol.RES_SUFFIX, ""));
-                    sb.append("!");
-                    reader.lines().forEach(line -> {
-                        sb.append(line);
-                        sb.append("#");
-                    });
-                    publish(Protocol.RESULT, sb.toString());
-                } catch (IOException e) {
-                    logger.log(Level.SEVERE, null, e);
-                }
-            }
-        }
-
-        public void onConfirmed() {
-            final String cmd = "java -version";
-            try {
-                Runtime.getRuntime().exec(cmd);
-            } catch (IOException e) {
-                logger.log(Level.SEVERE, null, e);
-            }
+        
+        public void onResulted(String content) {
+            System.out.println(content);
+            publish(Protocol.CONFIRM, "OK");
 //            disconnect();
         }
 
@@ -150,10 +101,8 @@ public class Scheduler {
                 return;
             }
             String content = new String(message.getPayload(), "ISO-8859-1");
-            if (content.startsWith(Protocol.REQUEST)) {
-                onRequested();
-            } else if (content.startsWith(Protocol.CONFIRM)) {
-                onConfirmed();
+            if (content.startsWith(Protocol.RESULT)) {
+                onResulted(content.replaceFirst(Protocol.RESULT, ""));
             }
         }
 
@@ -161,14 +110,15 @@ public class Scheduler {
         public void deliveryComplete(IMqttDeliveryToken token) {
             logger.log(Level.INFO, "Message {0} deliveried", token.getTopics());
         }
-
+        
     }
 
     public static void main(String[] args) {
         try {
-            Scheduler scheduler = new Scheduler();
-            scheduler.connect();
-            scheduler.subscribe();
+            ServerTest test = new ServerTest();
+            test.connect();
+            test.subscribe();
+            test.publish(Protocol.REQUEST, "help");
         } catch (MqttException e) {
             e.printStackTrace();
         }
