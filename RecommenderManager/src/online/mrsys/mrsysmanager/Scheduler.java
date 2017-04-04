@@ -121,7 +121,7 @@ public class Scheduler {
         }
 
         public void onConfirmed() {
-            final String cmd = "java -version";
+            final String cmd = "java -version"; // TODO
             try {
                 Runtime.getRuntime().exec(cmd);
             } catch (IOException e) {
