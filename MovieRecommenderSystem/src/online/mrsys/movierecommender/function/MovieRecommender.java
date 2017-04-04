@@ -86,8 +86,8 @@ public class MovieRecommender {
     }
 
     private void publish(String protocol, String content) {
-        String msg = protocol + content;
-        MqttMessage message = new MqttMessage();
+        final String msg = protocol + content;
+        final MqttMessage message = new MqttMessage();
         message.setPayload(msg.getBytes());
         message.setQos(2);
         message.setRetained(true);
@@ -114,7 +114,8 @@ public class MovieRecommender {
         private boolean isRuning = false;
 
         public void onResulted(String content) {
-            System.out.println(content);
+            // content format: date!user!record1#record2#...
+            System.out.println(content);// TODO parse content as the movies recommended to users
             timeout = 1000;
             countdown();
         }

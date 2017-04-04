@@ -6,8 +6,13 @@ import java.io.FileInputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +37,7 @@ public class Scheduler {
     private final MqttClient client;
     private final MqttConnectOptions options;
 
-    private final SimpleDateFormat formatter;
+    private final DateFormat formatter;
 
     public Scheduler() throws MqttException {
         formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -46,8 +51,8 @@ public class Scheduler {
 
     public void initLogger() {
         try {
-            String date = formatter.format(new Date());
-            FileHandler fh = new FileHandler("log/" + Protocol.SYS_NAME + "-" + date + ".log", true);
+            final String date = formatter.format(new Date());
+            final FileHandler fh = new FileHandler("log/" + Protocol.SYS_NAME + "-" + date + ".log", true);
             fh.setLevel(Level.ALL);
             fh.setFormatter(new SimpleFormatter());
             logger.addHandler(fh);
@@ -81,8 +86,8 @@ public class Scheduler {
     }
 
     public void publish(String protocol, String content) {
-        String msg = protocol + content;
-        MqttMessage message = new MqttMessage();
+        final String msg = protocol + content;
+        final MqttMessage message = new MqttMessage();
         message.setPayload(msg.getBytes());
         message.setQos(2);
         message.setRetained(true);
@@ -105,7 +110,9 @@ public class Scheduler {
 
     private class Handler implements MqttCallback {
 
-        public void onRequested() {
+        public void onRequested(String content) {
+            // content format: date!user1#user2#...
+            System.out.println(content); // TODO parse content as the users to be recommended
             final String date = formatter.format(new Date());
             final File dir = new File("res/" + date);
             final File[] files = dir.listFiles((FilenameFilter) (d, name) -> name.endsWith(Protocol.RES_SUFFIX));
@@ -151,7 +158,7 @@ public class Scheduler {
             }
             String content = new String(message.getPayload(), "ISO-8859-1");
             if (content.startsWith(Protocol.REQUEST)) {
-                onRequested();
+                onRequested(content.replaceFirst(Protocol.REQUEST, ""));
             } else if (content.startsWith(Protocol.CONFIRM)) {
                 onConfirmed();
             }
@@ -163,15 +170,58 @@ public class Scheduler {
         }
 
     }
-
-    public static void main(String[] args) {
+    
+    private static long getTimeMillis(String time){
         try {
-            Scheduler scheduler = new Scheduler();
-            scheduler.connect();
-            scheduler.subscribe();
-        } catch (MqttException e) {
-            e.printStackTrace();
+            DateFormat dateFormat = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+            DateFormat dayFormat = new SimpleDateFormat("yy-MM-dd");
+            Date current = dateFormat.parse(dayFormat.format(new Date()) + " " + time);
+            return current.getTime();
+        } catch (ParseException e) {
+            logger.log(Level.SEVERE, "Error when parse date", e);
         }
+        return 0;
+    }
+    
+    private static String formatTime(long millis) {
+        final int ss = 1000;
+        final int mm = ss * 60;
+        final int HH = mm * 60;
+        final int dd = HH * 24;
+
+        long day = millis / dd;
+        long hour = (millis - day * dd) / HH;
+        long min = (millis - day * dd - hour * HH) / mm;
+        long sec = (millis - day * dd - hour * HH - min * mm) / ss;
+
+        return day + " d "
+        + (hour < 10 ? "0" + hour : hour) + " h "
+        + (min < 10 ? "0" + min : min) + " m "
+        + (sec < 10 ? "0" + sec : sec) + " s";
+    }
+    
+    public static void main(String[] args) {
+        String scheduleTime = "06:00:00";
+        if (args.length > 0) {
+            scheduleTime = args[0];
+        }
+        final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+        final long oneDay = 24 * 60 * 60 * 1000;
+        long initDelay = getTimeMillis(scheduleTime) - System.currentTimeMillis();
+        initDelay = initDelay > 0 ? initDelay : oneDay + initDelay;
+        logger.log(Level.INFO, "Mrsys scheduler will start at {0}, {1} from now", new Object[] {scheduleTime, formatTime(initDelay)});
+        executor.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Scheduler scheduler = new Scheduler();
+                    scheduler.connect();
+                    scheduler.subscribe();
+                } catch (MqttException e) {
+                    logger.log(Level.SEVERE, null, e);
+                }
+            }
+        }, initDelay, oneDay, TimeUnit.MILLISECONDS);
     }
 
 }
