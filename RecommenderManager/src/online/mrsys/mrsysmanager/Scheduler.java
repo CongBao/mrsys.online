@@ -135,7 +135,7 @@ public class Scheduler {
             } catch (IOException e) {
                 logger.log(Level.SEVERE, null, e);
             }
-//            disconnect();
+            disconnect();
         }
 
         @Override

@@ -15,7 +15,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import online.mrsys.common.remote.Protocol;
 
 public class ServerTest {
-    
+
     private static final Logger logger = Logger.getLogger(ServerTest.class.getName());
 
     private static final String clientId = "ServerTest";
@@ -24,7 +24,7 @@ public class ServerTest {
     private final MqttConnectOptions options;
 
     private final SimpleDateFormat formatter;
-    
+
     public ServerTest() throws MqttException {
         formatter = new SimpleDateFormat("yyyy-MM-dd");
         client = new MqttClient(Protocol.BROKER, clientId, new MemoryPersistence());
@@ -33,7 +33,7 @@ public class ServerTest {
         options.setAutomaticReconnect(true);
         options.setCleanSession(true);
     }
-    
+
     public void connect() {
         try {
             logger.log(Level.INFO, "Connecting to {0} ...", Protocol.BROKER);
@@ -43,21 +43,26 @@ public class ServerTest {
             logger.log(Level.SEVERE, "Error when connecting to " + Protocol.BROKER, e);
         }
     }
-    
+
     public void disconnect() {
-        if (client.isConnected()) {
-            new Thread(() -> {
-                try {
-                    logger.log(Level.INFO, "Disconnecting from {0} ...", Protocol.BROKER);
-                    client.disconnect();
-                    logger.log(Level.INFO, "Disconnected");
-                } catch (MqttException e) {
-                    logger.log(Level.SEVERE, "Error when disconnected from " + Protocol.BROKER, e);
-                }
-            }).start();
+        try {
+            logger.log(Level.INFO, "Disconnecting from {0} ...", Protocol.BROKER);
+            client.disconnect();
+            logger.log(Level.INFO, "Disconnected");
+        } catch (MqttException e) {
+            logger.log(Level.SEVERE, "Error when disconnected from " + Protocol.BROKER, e);
         }
     }
     
+    public void cleanBroker() {
+        try {
+            client.publish(Protocol.TOPIC, new byte[0], 2, true);
+            logger.log(Level.INFO, "Broker cleaned");
+        } catch (MqttException e) {
+            logger.log(Level.SEVERE, "Error when cleaning broker", e);
+        }
+    }
+
     public void publish(String protocol, String content) {
         String msg = protocol + content;
         MqttMessage message = new MqttMessage();
@@ -71,7 +76,7 @@ public class ServerTest {
             logger.log(Level.SEVERE, "Error when try to publish topic: " + Protocol.TOPIC, e);
         }
     }
-    
+
     public void subscribe() {
         try {
             client.subscribe(Protocol.TOPIC);
@@ -80,13 +85,39 @@ public class ServerTest {
             logger.log(Level.SEVERE, "Error when try to subscribe topic: " + Protocol.TOPIC, e);
         }
     }
-    
+
     private class Handler implements MqttCallback {
-        
+
+        private int timeout = 1000;
+        private boolean isRuning = false;
+
         public void onResulted(String content) {
             System.out.println(content);
-            publish(Protocol.CONFIRM, "OK");
-//            disconnect();
+            timeout = 1000;
+            countdown();
+        }
+
+        public void countdown() {
+            if (isRuning) {
+                return;
+            }
+            isRuning = true;
+            new Thread(() -> {
+                while (true) {
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                    }
+                    timeout -= 100;
+                    if (timeout <= 0) {
+                        publish(Protocol.CONFIRM, "OK");
+                        cleanBroker();
+                        disconnect();
+                        isRuning = false;
+                        break;
+                    }
+                }
+            }).start();
         }
 
         @Override
@@ -110,7 +141,7 @@ public class ServerTest {
         public void deliveryComplete(IMqttDeliveryToken token) {
             logger.log(Level.INFO, "Message {0} deliveried", token.getTopics());
         }
-        
+
     }
 
     public static void main(String[] args) {
