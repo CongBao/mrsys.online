@@ -31,34 +31,19 @@ import online.mrsys.common.remote.Protocol;
 public class Scheduler {
 
     private static final Logger logger = Logger.getLogger(Scheduler.class.getName());
+    private static final DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
     private static final String clientId = "Scheduler";
 
     private final MqttClient client;
     private final MqttConnectOptions options;
 
-    private final DateFormat formatter;
-
     public Scheduler() throws MqttException {
-        formatter = new SimpleDateFormat("yyyy-MM-dd");
-        initLogger();
         client = new MqttClient(Protocol.BROKER, clientId, new MemoryPersistence());
         client.setCallback(new Handler());
         options = new MqttConnectOptions();
         options.setAutomaticReconnect(true);
         options.setCleanSession(true);
-    }
-
-    public void initLogger() {
-        try {
-            final String date = formatter.format(new Date());
-            final FileHandler fh = new FileHandler("log/" + Protocol.SYS_NAME + "-" + date + ".log", true);
-            fh.setLevel(Level.ALL);
-            fh.setFormatter(new SimpleFormatter());
-            logger.addHandler(fh);
-        } catch (SecurityException | IOException e) {
-            logger.log(Level.SEVERE, null, e);
-        }
     }
 
     public void connect() {
@@ -171,6 +156,18 @@ public class Scheduler {
 
     }
     
+    private static void initLogger() {
+        try {
+            final String date = formatter.format(new Date());
+            final FileHandler fh = new FileHandler("log/" + Protocol.SYS_NAME + "-" + date + ".log", true);
+            fh.setLevel(Level.ALL);
+            fh.setFormatter(new SimpleFormatter());
+            logger.addHandler(fh);
+        } catch (SecurityException | IOException e) {
+            logger.log(Level.SEVERE, null, e);
+        }
+    }
+    
     private static long getTimeMillis(String time){
         try {
             DateFormat dateFormat = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
@@ -201,6 +198,7 @@ public class Scheduler {
     }
     
     public static void main(String[] args) {
+        initLogger();
         String scheduleTime = "06:00:00";
         if (args.length > 0) {
             scheduleTime = args[0];
