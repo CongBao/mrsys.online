@@ -134,17 +134,6 @@ public interface MovieManager {
 	List<Movie> getMoviesByTitle(String title);
 
 	/**
-	 * Recommend a list of movies to a user.
-	 * 
-	 * @param user
-	 *            the user to be recommended
-	 * @return a list of recommended movies
-	 */
-	List<Movie> recommendMoviesToUser(User user); // call
-													// *.function.MovieRecommender
-													// to process
-
-	/**
 	 * Obtain a list of rating records of a user.
 	 * 
 	 * @param user

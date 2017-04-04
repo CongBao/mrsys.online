@@ -9,7 +9,7 @@
           class="com.mchange.v2.c3p0.ComboPooledDataSource"
           destroy-method="close"
           p:driverClass="com.mysql.jdbc.Driver"
-          p:jdbcUrl="jdbc:mysql://localhost:3306/mrsys"
+          p:jdbcUrl="jdbc:mysql://localhost:3306/mrsys2000"
           p:user="[username]"
           p:password="[password]"
           p:maxPoolSize="200"
@@ -33,7 +33,7 @@
 			<value>
 				hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
 				hibernate.hbm2ddl.auto=update
-				hibernate.show_sql=true
+				hibernate.show_sql=false
 				hibernate.format_sql=true
 				hibernate.cache.use_second_level_cache=true
 				hibernate.cache.region.factory_class=org.hibernate.cache.ehcache.EhCacheRegionFactory

@@ -195,5 +195,10 @@ public interface UserManager {
 	 * @return if the delete is successful
 	 */
 	boolean deleteFavorite(Favorite favorite);
+	
+	/**
+	 * Recommend a list of movies to users.
+	 */
+	void recommendMovies() throws Exception;
 
 }

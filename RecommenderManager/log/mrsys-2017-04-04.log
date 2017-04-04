@@ -679,3 +679,21 @@ Apr 04, 2017 9:02:43 PM online.mrsys.mrsysmanager.Scheduler lambda$0
 INFO: Disconnecting from tcp://www.mrsys.online:1883 ...
 Apr 04, 2017 9:02:43 PM online.mrsys.mrsysmanager.Scheduler lambda$0
 INFO: Disconnected
+Apr 04, 2017 10:20:41 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connecting to tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 10:20:42 PM online.mrsys.mrsysmanager.Scheduler connect
+INFO: Connection established
+Apr 04, 2017 10:20:42 PM online.mrsys.mrsysmanager.Scheduler subscribe
+INFO: Start subscribing topic: RecommendedMovieList
+Apr 04, 2017 10:20:57 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 10:20:57 PM online.mrsys.mrsysmanager.Scheduler publish
+INFO: Start publishing topic: RecommendedMovieList
+Apr 04, 2017 10:20:57 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried
+Apr 04, 2017 10:20:57 PM online.mrsys.mrsysmanager.Scheduler$Handler deliveryComplete
+INFO: Message RecommendedMovieList deliveried
+Apr 04, 2017 10:20:58 PM online.mrsys.mrsysmanager.Scheduler lambda$0
+INFO: Disconnecting from tcp://www.mrsys.online:1883 ...
+Apr 04, 2017 10:20:58 PM online.mrsys.mrsysmanager.Scheduler lambda$0
+INFO: Disconnected

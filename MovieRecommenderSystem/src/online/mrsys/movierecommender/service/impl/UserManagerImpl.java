@@ -1,5 +1,6 @@
 package online.mrsys.movierecommender.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import online.mrsys.movierecommender.dao.FavoriteDao;
@@ -10,6 +11,7 @@ import online.mrsys.movierecommender.dao.UserDao;
 import online.mrsys.movierecommender.domain.Favorite;
 import online.mrsys.movierecommender.domain.Role;
 import online.mrsys.movierecommender.domain.User;
+import online.mrsys.movierecommender.function.MovieRecommender;
 import online.mrsys.movierecommender.function.PasswordValidator;
 import online.mrsys.movierecommender.service.UserManager;
 import online.mrsys.movierecommender.vo.RoleBean;
@@ -206,6 +208,15 @@ public class UserManagerImpl implements UserManager {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void recommendMovies() throws Exception {
+        User user = getUserByAccount("testuser7");
+        List<User> users = new ArrayList<>();
+        users.add(user);
+        MovieRecommender recommender = new MovieRecommender(this);
+        recommender.recommend(users);
     }
 
 }

@@ -111,8 +111,8 @@ public class Scheduler {
             final File[] files = dir.listFiles((FilenameFilter) (d, name) -> name.endsWith(Protocol.RES_SUFFIX));
             for (File file : files) {
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));) {
-                    // format: date!author!record1#record2#...
-                    StringBuilder sb = new StringBuilder();
+                    // format: date!user!record1#record2#...
+                    final StringBuilder sb = new StringBuilder();
                     sb.append(date);
                     sb.append("!");
                     sb.append(file.getName().replaceFirst(Protocol.RES_SUFFIX, ""));

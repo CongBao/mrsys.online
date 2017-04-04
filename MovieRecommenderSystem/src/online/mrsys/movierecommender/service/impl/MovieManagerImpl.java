@@ -1,8 +1,6 @@
 package online.mrsys.movierecommender.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import online.mrsys.movierecommender.dao.FavoriteDao;
 import online.mrsys.movierecommender.dao.MovieDao;
@@ -12,7 +10,6 @@ import online.mrsys.movierecommender.dao.UserDao;
 import online.mrsys.movierecommender.domain.Movie;
 import online.mrsys.movierecommender.domain.Rating;
 import online.mrsys.movierecommender.domain.User;
-import online.mrsys.movierecommender.function.MovieRecommender;
 import online.mrsys.movierecommender.service.MovieManager;
 import online.mrsys.movierecommender.vo.MovieBean;
 
@@ -143,18 +140,6 @@ public class MovieManagerImpl implements MovieManager {
 	@Override
 	public List<Movie> getMoviesByTitle(String title) {
 		return movieDao.findByTitle(title);
-	}
-
-	@Override
-	public List<Movie> recommendMoviesToUser(User user) {
-		MovieRecommender recommender = MovieRecommender.getInstance();
-		List<Map.Entry<Movie, Float>> moviePair = recommender.recommend(user);
-		List<Movie> movies = new ArrayList<>(10);
-		int num = moviePair.size() >= 10 ? 10 : moviePair.size();
-		for (int i = 0; i < num; i++) {
-		    movies.add(moviePair.get(i).getKey());
-		}
-		return movies;
 	}
 
 	@Override
