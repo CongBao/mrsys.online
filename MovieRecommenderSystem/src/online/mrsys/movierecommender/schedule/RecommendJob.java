@@ -4,16 +4,16 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
-import online.mrsys.movierecommender.service.MovieManager;
+import online.mrsys.movierecommender.service.UserManager;
 
 public class RecommendJob extends QuartzJobBean {
 	
 	private boolean isRunning = false;
 	
-	private MovieManager movieManager;
+	private UserManager userManager;
 
-	public void setMovieManager(MovieManager movieManager) {
-		this.movieManager = movieManager;
+	public void setMovieManager(UserManager userManager) {
+		this.userManager = userManager;
 	}
 
 	@Override

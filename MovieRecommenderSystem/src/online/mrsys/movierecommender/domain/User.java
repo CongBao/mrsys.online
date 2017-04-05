@@ -25,9 +25,9 @@ import org.hibernate.annotations.Type;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class User implements Serializable {
 
-	private static final long serialVersionUID = 594848709084066969L;
+    private static final long serialVersionUID = -5747589579608044137L;
 
-	@Id
+    @Id
 	@Column(name = "user_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -45,6 +45,9 @@ public class User implements Serializable {
 	@Type(type = "yes_no")
 	private Boolean mailVerified = false;
 	
+	@Column(name = "recommendation")
+	private byte[] recommendation;
+	
 	@ManyToOne(targetEntity = Role.class)
 	@JoinColumn(name = "role_id", referencedColumnName = "role_id", nullable = false)
 	private Role role;
@@ -61,84 +64,93 @@ public class User implements Serializable {
 	public User() {
 	}
 
-	public User(Integer id, String account, String password, String email, Boolean mailVerified, Role role,
-			Set<Movie> movies, Set<Rating> ratings) {
-		super();
-		this.id = id;
-		this.account = account;
-		this.password = password;
-		this.email = email;
-		this.mailVerified = mailVerified;
-		this.role = role;
-		this.movies = movies;
-		this.ratings = ratings;
-	}
+    public User(Integer id, String account, String password, String email, Boolean mailVerified, byte[] recommendation,
+            Role role, Set<Movie> movies, Set<Rating> ratings) {
+        super();
+        this.id = id;
+        this.account = account;
+        this.password = password;
+        this.email = email;
+        this.mailVerified = mailVerified;
+        this.recommendation = recommendation;
+        this.role = role;
+        this.movies = movies;
+        this.ratings = ratings;
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public String getAccount() {
-		return account;
-	}
+    public String getAccount() {
+        return account;
+    }
 
-	public void setAccount(String account) {
-		this.account = account;
-	}
+    public void setAccount(String account) {
+        this.account = account;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public Boolean isMailVerified() {
-		return mailVerified;
-	}
+    public Boolean getMailVerified() {
+        return mailVerified;
+    }
 
-	public void setMailVerified(Boolean mailVerified) {
-		this.mailVerified = mailVerified;
-	}
+    public void setMailVerified(Boolean mailVerified) {
+        this.mailVerified = mailVerified;
+    }
 
-	public Role getRole() {
-		return role;
-	}
+    public byte[] getRecommendation() {
+        return recommendation;
+    }
 
-	public void setRole(Role role) {
-		this.role = role;
-	}
+    public void setRecommendation(byte[] recommendation) {
+        this.recommendation = recommendation;
+    }
 
-	public Set<Movie> getMovies() {
-		return movies;
-	}
+    public Role getRole() {
+        return role;
+    }
 
-	public void setMovies(Set<Movie> movies) {
-		this.movies = movies;
-	}
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
-	public Set<Rating> getRatings() {
-		return ratings;
-	}
+    public Set<Movie> getMovies() {
+        return movies;
+    }
 
-	public void setRatings(Set<Rating> ratings) {
-		this.ratings = ratings;
-	}
+    public void setMovies(Set<Movie> movies) {
+        this.movies = movies;
+    }
 
-	@Override
+    public Set<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(Set<Rating> ratings) {
+        this.ratings = ratings;
+    }
+
+    @Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;

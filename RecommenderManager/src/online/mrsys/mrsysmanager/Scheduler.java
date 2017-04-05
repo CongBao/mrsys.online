@@ -37,6 +37,8 @@ public class Scheduler {
 
     private final MqttClient client;
     private final MqttConnectOptions options;
+    
+    private static Process process;
 
     public Scheduler() throws MqttException {
         client = new MqttClient(Protocol.BROKER, clientId, new MemoryPersistence());
@@ -94,21 +96,24 @@ public class Scheduler {
     }
 
     private class Handler implements MqttCallback {
+        
+        private String userList;
 
         public void onRequested(String content) {
-            // content format: date!user1#user2#...
-            System.out.println(content); // TODO parse content as the users to be recommended
+            // content format: date@user1#user2#...
+            logger.log(Level.INFO, "Request received: {0}", content);
+            userList = content;
             final String date = formatter.format(new Date());
             final File dir = new File("res/" + date);
             final File[] files = dir.listFiles((FilenameFilter) (d, name) -> name.endsWith(Protocol.RES_SUFFIX));
             for (File file : files) {
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));) {
-                    // format: date!user!record1#record2#...
+                    // format: date@user@record1#record2#...
                     final StringBuilder sb = new StringBuilder();
                     sb.append(date);
-                    sb.append("!");
+                    sb.append("@");
                     sb.append(file.getName().replaceFirst(Protocol.RES_SUFFIX, ""));
-                    sb.append("!");
+                    sb.append("@");
                     reader.lines().forEach(line -> {
                         sb.append(line);
                         sb.append("#");
@@ -120,10 +125,13 @@ public class Scheduler {
             }
         }
 
-        public void onConfirmed() {
+        public void onConfirmed(String content) {
+            logger.log(Level.INFO, "Confirm received: {0}", content);
+//            final String[] cmd = { "/bin/bash", "-c", "python recommend.py " + userList };
             final String cmd = "java -version"; // TODO
+            logger.log(Level.INFO, "Start running python script, command: {0}", cmd);
             try {
-                Runtime.getRuntime().exec(cmd);
+                process = Runtime.getRuntime().exec(cmd);
             } catch (IOException e) {
                 logger.log(Level.SEVERE, null, e);
             }
@@ -145,7 +153,7 @@ public class Scheduler {
             if (content.startsWith(Protocol.REQUEST)) {
                 onRequested(content.replaceFirst(Protocol.REQUEST, ""));
             } else if (content.startsWith(Protocol.CONFIRM)) {
-                onConfirmed();
+                onConfirmed(content.replaceFirst(Protocol.CONFIRM, ""));
             }
         }
 
@@ -159,7 +167,10 @@ public class Scheduler {
     private static void initLogger() {
         try {
             final String date = formatter.format(new Date());
-            final FileHandler fh = new FileHandler("log/" + Protocol.SYS_NAME + "-" + date + ".log", true);
+            new File("log/").mkdirs();
+            final String path = "log/" + Protocol.SYS_NAME + "-" + date + ".log";
+            new File(path).createNewFile();
+            final FileHandler fh = new FileHandler(path, true);
             fh.setLevel(Level.ALL);
             fh.setFormatter(new SimpleFormatter());
             logger.addHandler(fh);
@@ -207,10 +218,13 @@ public class Scheduler {
         final long oneDay = 24 * 60 * 60 * 1000;
         long initDelay = getTimeMillis(scheduleTime) - System.currentTimeMillis();
         initDelay = initDelay > 0 ? initDelay : oneDay + initDelay;
-        logger.log(Level.INFO, "Mrsys scheduler will start at {0}, {1} from now", new Object[] {scheduleTime, formatTime(initDelay)});
+        logger.log(Level.INFO, "Mrsys scheduler will start at {0}, {1} from now", new Object[] { scheduleTime, formatTime(initDelay) });
         executor.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
+                if (process != null && process.isAlive()) {
+                    process.destroy();
+                }
                 try {
                     Scheduler scheduler = new Scheduler();
                     scheduler.connect();

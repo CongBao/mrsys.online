@@ -13,7 +13,10 @@ import online.mrsys.movierecommender.domain.Role;
 import online.mrsys.movierecommender.domain.User;
 import online.mrsys.movierecommender.function.MovieRecommender;
 import online.mrsys.movierecommender.function.PasswordValidator;
+import online.mrsys.movierecommender.function.Serializer;
+import online.mrsys.movierecommender.service.MovieManager;
 import online.mrsys.movierecommender.service.UserManager;
+import online.mrsys.movierecommender.vo.MovieBean;
 import online.mrsys.movierecommender.vo.RoleBean;
 import online.mrsys.movierecommender.vo.UserBean;
 
@@ -141,6 +144,14 @@ public class UserManagerImpl implements UserManager {
         userDao.update(change);
         return change;
     }
+    
+    @Override
+    public User updateRecommendation(User origin, byte[] recommend) {
+        final User change = origin;
+        change.setRecommendation(recommend);
+        userDao.update(change);
+        return change;
+    }
 
     @Override
     public User updateRole(User origin, int roleId) {
@@ -152,6 +163,11 @@ public class UserManagerImpl implements UserManager {
             return change;
         }
         return null;
+    }
+    
+    @Override
+    public User getUserById(int id) {
+        return userDao.findById(id);
     }
 
     @Override
@@ -169,11 +185,17 @@ public class UserManagerImpl implements UserManager {
     }
 
     @Override
-    public UserBean getUserBeanByAccount(String account) {
+    public UserBean getUserBeanByAccount(String account, MovieManager movieManager) {
         final User user = getUserByAccount(account);
         if (user != null) {
-            return new UserBean(user.getId(), user.getAccount(), user.getEmail(), user.isMailVerified(),
-                    getRoleBeanByAccount(user.getAccount()));
+            Object obj = Serializer.deserialize(user.getRecommendation());
+            if (obj != null) {
+                @SuppressWarnings("unchecked")
+                List<String> recomList = (List<String>) obj;
+                List<MovieBean> movieBeans = new ArrayList<>(recomList.size() + 1);
+                recomList.forEach(item -> movieBeans.add(movieManager.getMovieBeanById(Integer.parseInt(item))));
+                return new UserBean(user.getId(), user.getAccount(), user.getEmail(), user.getMailVerified(), movieBeans, getRoleBeanByAccount(account));
+            }
         }
         return null;
     }
@@ -212,7 +234,8 @@ public class UserManagerImpl implements UserManager {
 
     @Override
     public void recommendMovies() throws Exception {
-        User user = getUserByAccount("testuser7");
+        // just test
+        User user = getUserByAccount("testuser1");
         List<User> users = new ArrayList<>();
         users.add(user);
         MovieRecommender recommender = new MovieRecommender(this);

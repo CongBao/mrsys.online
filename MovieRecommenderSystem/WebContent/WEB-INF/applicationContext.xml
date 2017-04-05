@@ -27,6 +27,33 @@
 	<bean id="movieManager"
           class="online.mrsys.movierecommender.service.impl.MovieManagerImpl"
           parent="managerTemplate"/>
+    
+    <!--        
+    <bean id="cronTriggerRecommend"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"
+          p:cronExpression="0 0 6 ? * MON-SUN">
+        <property name="jobDetail">
+            <bean class="org.springframework.scheduling.quartz.JobDetailFactoryBean"
+                  p:jobClass="online.mrsys.movierecommender.schedule.RecommendJob"
+                  p:durability="true">
+                <property name="jobDataAsMap">
+                    <map>
+                        <entry key="usrMgr" value-ref="userManager"/>
+                    </map>
+                </property>
+            </bean>
+        </property>
+    </bean>
+    
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="cronTriggerRecommend"/>
+            </list>
+        </property>
+    </bean>
+    
+    -->
 		
 	<bean id="transactionManager"
           class="org.springframework.orm.hibernate4.HibernateTransactionManager"

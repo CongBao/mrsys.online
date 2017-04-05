@@ -7,6 +7,14 @@ import online.mrsys.movierecommender.dao.UserDao;
 import online.mrsys.movierecommender.domain.User;
 
 public class UserDaoHibernate extends BaseDaoHibernate<User> implements UserDao {
+    
+    @Override
+    public User findById(Integer id) {
+        List<User> users = find("select u from User u where u.id = ?0", id);
+        if (users != null && users.size() >= 1)
+            return users.get(0);
+        return null;
+    }
 
 	@Override
 	public List<User> findByAccountAndPass(User user) {

@@ -2,11 +2,13 @@ package online.mrsys.movierecommender.vo;
 
 import java.io.Serializable;
 
-public class MovieBean implements Serializable {
+import online.mrsys.movierecommender.function.Serializer;
 
-	private static final long serialVersionUID = -2023229095791525535L;
+public class MovieBean implements Serializable {
 	
-	private Integer id;
+    private static final long serialVersionUID = -2023229095791525535L;
+    
+    private Integer id;
 	private Integer imdb;
 	private Integer year;
 	private String title;
@@ -54,9 +56,9 @@ public class MovieBean implements Serializable {
 		this.title = title;
 	}
 
-	@Override
-	public String toString() {
-		return id + "," + imdb + "," + year + "," + title;
-	}
+    @Override
+    public String toString() {
+        return new String(Serializer.serialize(this));
+    }
 
 }

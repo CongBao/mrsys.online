@@ -1,8 +1,11 @@
 package online.mrsys.movierecommender.function;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,7 +25,7 @@ public class MovieRecommender {
 	
     private static final Logger logger = Logger.getLogger(MovieRecommender.class.getName());
 
-    private static final String clientId = "ServerTest";
+    private static final String clientId = "Recommender";
 
     private final MqttClient client;
     private final MqttConnectOptions options;
@@ -30,6 +33,9 @@ public class MovieRecommender {
     private final UserManager userManager;
 
     private final SimpleDateFormat formatter;
+    
+    private Map<String, List<String>> recomList = new HashMap<>(100);
+    private boolean scheduling = true;
     
     public MovieRecommender(UserManager userManager) throws MqttException {
         this.userManager = userManager;
@@ -42,18 +48,45 @@ public class MovieRecommender {
     }
     
     public void recommend(List<User> next) {
-        connect();
-        subscribe();
-        final String date = formatter.format(new Date());
-        // format: date!user1#user2#...
-        final StringBuilder sb = new StringBuilder();
-        sb.append(date);
-        sb.append("!");
-        next.forEach(user -> {
-            sb.append(user.getId());
-            sb.append("#");
+        new Thread(() -> {
+            connect();
+            subscribe();
+            final String date = formatter.format(new Date());
+            // format: date!user1#user2#...
+            final StringBuilder sb = new StringBuilder();
+            sb.append(date);
+            sb.append("@");
+            next.forEach(user -> {
+                sb.append(user.getId());
+                sb.append("#");
+            });
+            publish(Protocol.REQUEST, sb.toString());
+        }).start();
+        while (scheduling) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+            }
+        }
+        if (recomList.size() > 0) {
+            updateDatabase(recomList);
+        }
+    }
+    
+    public void updateDatabase(Map<String, List<String>> recommend) {
+        logger.log(Level.INFO, "Start updating database...");
+        recommend.forEach((k, v) -> {
+            User user = userManager.getUserById(Integer.parseInt(k));
+            if (user == null) {
+                logger.log(Level.WARNING, "User with id {0} not found", k);
+                return;
+            }
+            byte[] serializedRecom = Serializer.serialize(v);
+            if (serializedRecom != null) {
+                userManager.updateRecommendation(user, serializedRecom);
+            }
         });
-        publish(Protocol.REQUEST, sb.toString());
+        logger.log(Level.INFO, "Database updated");
     }
     
     private void connect() {
@@ -114,8 +147,17 @@ public class MovieRecommender {
         private boolean isRuning = false;
 
         public void onResulted(String content) {
-            // content format: date!user!record1#record2#...
-            System.out.println(content);// TODO parse content as the movies recommended to users
+            // content format: date@user@record1#record2#...
+            logger.log(Level.INFO, "Result received: {0}", content);
+            String[] module = content.split("@");
+            String date = module[0];
+            if (!date.equalsIgnoreCase(formatter.format(new Date()))) {
+                logger.log(Level.WARNING, "The date of recieved results is {0}, but today is {1}", new Object[] { date, formatter.format(new Date()) });
+                return;
+            }
+            String user = module[1];
+            String[] movies = module[2].split("#");
+            recomList.put(user, Arrays.asList(movies));
             timeout = 1000;
             countdown();
         }
@@ -133,13 +175,14 @@ public class MovieRecommender {
                     }
                     timeout -= 100;
                     if (timeout <= 0) {
-                        publish(Protocol.CONFIRM, "OK");
-                        cleanBroker();
-                        disconnect();
-                        isRuning = false;
                         break;
                     }
                 }
+                publish(Protocol.CONFIRM, "OK");
+                cleanBroker();
+                disconnect();
+                isRuning = false;
+                scheduling = false;
             }).start();
         }
 

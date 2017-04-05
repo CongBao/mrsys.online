@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.apache.struts2.util.StrutsTypeConverter;
 
+import online.mrsys.movierecommender.function.Serializer;
 import online.mrsys.movierecommender.vo.RoleBean;
 
 public class RoleBeanConverter extends StrutsTypeConverter {
@@ -11,11 +12,7 @@ public class RoleBeanConverter extends StrutsTypeConverter {
 	@SuppressWarnings("rawtypes")
 	@Override
 	public Object convertFromString(Map context, String[] values, Class toClass) {
-		RoleBean roleBean = new RoleBean();
-		String[] data = values[0].split(",");
-		roleBean.setId(Integer.parseInt(data[0]));
-		roleBean.setRole(data[1]);
-		return roleBean;
+	    return Serializer.deserialize(values[0].getBytes());
 	}
 
 	@SuppressWarnings("rawtypes")

@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.apache.struts2.util.StrutsTypeConverter;
 
+import online.mrsys.movierecommender.function.Serializer;
 import online.mrsys.movierecommender.vo.MovieBean;
 
 public class MovieBeanConverter extends StrutsTypeConverter {
@@ -11,13 +12,7 @@ public class MovieBeanConverter extends StrutsTypeConverter {
 	@SuppressWarnings("rawtypes")
 	@Override
 	public Object convertFromString(Map context, String[] values, Class toClass) {
-		MovieBean movieBean = new MovieBean();
-		String[] data = values[0].split(",");
-		movieBean.setId(Integer.parseInt(data[0]));
-		movieBean.setImdb(Integer.parseInt(data[1]));
-		movieBean.setYear(Integer.parseInt(data[2]));
-		movieBean.setTitle(data[3]);
-		return movieBean;
+	    return Serializer.deserialize(values[0].getBytes());
 	}
 
 	@SuppressWarnings("rawtypes")

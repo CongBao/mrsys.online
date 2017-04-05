@@ -1,72 +1,86 @@
 package online.mrsys.movierecommender.vo;
 
 import java.io.Serializable;
+import java.util.List;
+
+import online.mrsys.movierecommender.function.Serializer;
 
 public class UserBean implements Serializable {
-	
-	private static final long serialVersionUID = 6762320425574412060L;
-	
-	private Integer id;
-	private String account;
-	private String email;
-	private Boolean mailVerified;
-	private RoleBean role;
-	
-	public UserBean() {
-	}
 
-	public UserBean(Integer id, String account, String email, Boolean mailVerified, RoleBean role) {
-		super();
-		this.id = id;
-		this.account = account;
-		this.email = email;
-		this.mailVerified = mailVerified;
-		this.role = role;
-	}
+    private static final long serialVersionUID = -2989704113036651774L;
 
-	public Integer getId() {
-		return id;
-	}
+    private Integer id;
+    private String account;
+    private String email;
+    private Boolean mailVerified;
+    private List<MovieBean> recommendation;
+    private RoleBean role;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public UserBean() {
+    }
 
-	public String getAccount() {
-		return account;
-	}
+    public UserBean(Integer id, String account, String email, Boolean mailVerified, List<MovieBean> recommendation,
+            RoleBean role) {
+        super();
+        this.id = id;
+        this.account = account;
+        this.email = email;
+        this.mailVerified = mailVerified;
+        this.recommendation = recommendation;
+        this.role = role;
+    }
 
-	public void setAccount(String account) {
-		this.account = account;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getAccount() {
+        return account;
+    }
 
-	public Boolean getMailVerified() {
-		return mailVerified;
-	}
+    public void setAccount(String account) {
+        this.account = account;
+    }
 
-	public void setMailVerified(Boolean mailVerified) {
-		this.mailVerified = mailVerified;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public RoleBean getRole() {
-		return role;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setRole(RoleBean role) {
-		this.role = role;
-	}
+    public Boolean getMailVerified() {
+        return mailVerified;
+    }
 
-	@Override
-	public String toString() {
-		return id + "," + account + "," + email + "," + mailVerified + "," + role;
-	}
+    public void setMailVerified(Boolean mailVerified) {
+        this.mailVerified = mailVerified;
+    }
+
+    public List<MovieBean> getRecommendation() {
+        return recommendation;
+    }
+
+    public void setRecommendation(List<MovieBean> recommendation) {
+        this.recommendation = recommendation;
+    }
+
+    public RoleBean getRole() {
+        return role;
+    }
+
+    public void setRole(RoleBean role) {
+        this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return new String(Serializer.serialize(this));
+    }
 
 }
