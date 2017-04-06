@@ -1,5 +1,12 @@
 package online.mrsys.common.remote;
 
+/**
+ * The protocol used to connect server and scheduler.
+ * Both the server and the scheduler should contain this interface.
+ * 
+ * @author Cong Bao
+ *
+ */
 public interface Protocol {
     
     String SYS_NAME = "mrsys";

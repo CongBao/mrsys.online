@@ -71,7 +71,7 @@
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="mrPointcut"/>
 	</aop:config>
 	
-	<bean id="dataChecker" class="online.mrsys.movierecommender.function.DataChecker"/>
+	<bean id="dataChecker" class="online.mrsys.movierecommender.aop.DataChecker"/>
 	
 	<aop:config>
 	    <aop:aspect id="daoAspect" ref="dataChecker">

@@ -27,22 +27,50 @@ import online.mrsys.common.remote.Protocol;
 import online.mrsys.movierecommender.domain.User;
 import online.mrsys.movierecommender.service.UserManager;
 
+/**
+ * This class is used to publish requests to remote scheduler and process
+ * results in server. The procedure of this schedule is shown below:
+ * <ol>
+ * <li>The scheduler wakes up at a fixed time (6 a.m. by default), connect to
+ * MQTT broker and subscribe an assigned topic (MRSYSCOMMUNICATION by
+ * default).</li>
+ * <li>The server wakes up at a fixed time (6 a.m. by default), connect to MQTT
+ * broker, subscribe an assigned topic (MRSYSCOMMUNICATION by default), and
+ * publish a request with a list of users that should be processed in the next
+ * 24 hours to this topic.</li>
+ * <li>The scheduler receives server's request, store the list of users to be
+ * processed, and publish a serial of results it processed in the last 24 hours
+ * to the topic.</li>
+ * <li>The server receives the scheduler's results, publish a serial of update
+ * of ratings if there are any, and publish confirm to the topic. After
+ * everything is done, the server updates users' recommendation list in
+ * database, and finally disconnect from the MQTT broker and wait for the next
+ * waking up.</li>
+ * <li>The scheduler receives the updates and store them locally if there are
+ * any. When the confirm is received, the scheduler starts the script and
+ * disconnects from the MQTT broker, waiting for next waking up.</li>
+ * </ol>
+ * 
+ * @since JDK1.8
+ * @author Cong Bao
+ *
+ */
 public class MovieRecommender {
-	
+
     private static final Logger logger = Logger.getLogger(MovieRecommender.class.getName());
 
     private static final String clientId = "Recommender";
 
     private final MqttClient client;
     private final MqttConnectOptions options;
-    
+
     private final UserManager userManager;
 
     private final SimpleDateFormat formatter;
-    
+
     private Map<String, List<String>> recomList = new HashMap<>(100);
     private boolean scheduling = true;
-    
+
     public MovieRecommender(UserManager userManager) throws MqttException {
         this.userManager = userManager;
         formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -52,7 +80,13 @@ public class MovieRecommender {
         options.setAutomaticReconnect(true);
         options.setCleanSession(true);
     }
-    
+
+    /**
+     * Start fetching results of recommendation in last 24 hours.
+     * 
+     * @param next
+     *            a list of users to be recommended in next 24 hours
+     */
     public void recommend(List<User> next) {
         new Thread(() -> {
             connect();
@@ -79,7 +113,13 @@ public class MovieRecommender {
             updateDatabase(recomList);
         }
     }
-    
+
+    /**
+     * Update users' recommendation lists.
+     * 
+     * @param recommend
+     *            a map of recommendation
+     */
     public void updateDatabase(Map<String, List<String>> recommend) {
         logger.log(Level.INFO, "Start updating database...");
         recommend.forEach((k, v) -> {
@@ -95,7 +135,7 @@ public class MovieRecommender {
         });
         logger.log(Level.INFO, "Database updated");
     }
-    
+
     private void connect() {
         try {
             logger.log(Level.INFO, "Connecting to {0} ...", Protocol.BROKER);
@@ -115,7 +155,7 @@ public class MovieRecommender {
             logger.log(Level.SEVERE, "Error when disconnected from " + Protocol.BROKER, e);
         }
     }
-    
+
     private void cleanBroker() {
         try {
             client.publish(Protocol.TOPIC, new byte[0], 2, true);
@@ -153,13 +193,21 @@ public class MovieRecommender {
         private int timeout = 1000;
         private boolean isRuning = false;
 
+        /**
+         * When a message starts with {@link Protocol.RESULT} received.
+         * 
+         * @param content
+         *            the content of this message with format
+         *            date@user_id@(movie_id#)+
+         */
         public void onResulted(String content) {
-            // content format: date@user@record1#record2#...
+            // content format: date@user_id@movie_id1#movie_id2#...
             logger.log(Level.INFO, "Result received: {0}", content);
             String[] module = content.split("@");
             String date = module[0];
             if (!date.equalsIgnoreCase(formatter.format(new Date()))) {
-                logger.log(Level.WARNING, "The date of recieved results is {0}, but today is {1}", new Object[] { date, formatter.format(new Date()) });
+                logger.log(Level.WARNING, "The date of recieved results is {0}, but today is {1}",
+                        new Object[] { date, formatter.format(new Date()) });
                 return;
             }
             String user = module[1];
@@ -169,6 +217,10 @@ public class MovieRecommender {
             countdown();
         }
 
+        /**
+         * This method is used to check whether the results have been fetched
+         * completely. The default timeout is 1 second.
+         */
         public void countdown() {
             if (isRuning) {
                 return;
@@ -200,7 +252,12 @@ public class MovieRecommender {
                 scheduling = false;
             }).start();
         }
-        
+
+        /**
+         * Read a buffer file of rating updates from local.
+         * 
+         * @return a list of updated ratings
+         */
         public List<String> getDataBuffer() {
             final File file = new File("data.buf");
             if (!file.exists()) {
@@ -241,5 +298,5 @@ public class MovieRecommender {
         }
 
     }
-    
+
 }

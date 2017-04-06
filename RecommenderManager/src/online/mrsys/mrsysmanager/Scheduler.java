@@ -33,6 +33,34 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 import online.mrsys.common.remote.Protocol;
 
+/**
+ * This class is used to receive requests from server and handle them locally at
+ * a fixed time everyday. The procedure of this schedule is shown below:
+ * <ol>
+ * <li>The scheduler wakes up at a fixed time (6 a.m. by default), connect to
+ * MQTT broker and subscribe an assigned topic (MRSYSCOMMUNICATION by
+ * default).</li>
+ * <li>The server wakes up at a fixed time (6 a.m. by default), connect to MQTT
+ * broker, subscribe an assigned topic (MRSYSCOMMUNICATION by default), and
+ * publish a request with a list of users that should be processed in the next
+ * 24 hours to this topic.</li>
+ * <li>The scheduler receives server's request, store the list of users to be
+ * processed, and publish a serial of results it processed in the last 24 hours
+ * to the topic.</li>
+ * <li>The server receives the scheduler's results, publish a serial of update
+ * of ratings if there are any, and publish confirm to the topic. After
+ * everything is done, the server updates users' recommendation list in
+ * database, and finally disconnect from the MQTT broker and wait for the next
+ * waking up.</li>
+ * <li>The scheduler receives the updates and store them locally if there are
+ * any. When the confirm is received, the scheduler starts the script and
+ * disconnects from the MQTT broker, waiting for next waking up.</li>
+ * </ol>
+ * 
+ * @since JDK1.8
+ * @author Cong Bao
+ *
+ */
 public class Scheduler {
 
     private static final Logger logger = Logger.getLogger(Scheduler.class.getName());
@@ -42,7 +70,7 @@ public class Scheduler {
 
     private final MqttClient client;
     private final MqttConnectOptions options;
-    
+
     private static Process process;
 
     public Scheduler() throws MqttException {
@@ -53,6 +81,9 @@ public class Scheduler {
         options.setCleanSession(true);
     }
 
+    /**
+     * Connect to the MQTT broker.
+     */
     public void connect() {
         try {
             logger.log(Level.INFO, "Connecting to {0} ...", Protocol.BROKER);
@@ -63,6 +94,10 @@ public class Scheduler {
         }
     }
 
+    /**
+     * Disconnect from MQTT broker. The disconnecting is processed in a new
+     * thread so it can be called every where.
+     */
     public void disconnect() {
         if (client.isConnected()) {
             new Thread(() -> {
@@ -77,6 +112,14 @@ public class Scheduler {
         }
     }
 
+    /**
+     * Publish a topic to the topic assigned in {@link Protocol}.
+     * 
+     * @param protocol
+     *            the protocol specified in {@link Protocol}
+     * @param content
+     *            the content to publish
+     */
     public void publish(String protocol, String content) {
         final String msg = protocol + content;
         final MqttMessage message = new MqttMessage();
@@ -91,6 +134,9 @@ public class Scheduler {
         }
     }
 
+    /**
+     * Subscribe a topic assigned in {@link Protocol}.
+     */
     public void subscribe() {
         try {
             client.subscribe(Protocol.TOPIC);
@@ -100,12 +146,24 @@ public class Scheduler {
         }
     }
 
+    /**
+     * A callback class to handle message received.
+     * 
+     * @author Cong Bao
+     *
+     */
     private class Handler implements MqttCallback {
-        
+
         private String userList;
         private List<String> newRatings;
         private List<String> updatedRatings;
 
+        /**
+         * When a message starts with {@link Protocol.REQUEST} received.
+         * 
+         * @param content
+         *            the content of this message with format date@(user_id#)+
+         */
         public void onRequested(String content) {
             // content format: date@user1#user2#...
             logger.log(Level.INFO, "Request received: {0}", content);
@@ -131,7 +189,14 @@ public class Scheduler {
                 }
             }
         }
-        
+
+        /**
+         * When a message starts with {@link Protocol.UPDATE} received.
+         * 
+         * @param content
+         *            the content of this message with format
+         *            (new|update)user_id#movie_id#rating
+         */
         public void onUpdated(String content) {
             // content format: (new|update)user_id#movie_id#rating
             logger.log(Level.INFO, "Update received: {0}", content);
@@ -146,6 +211,12 @@ public class Scheduler {
             }
         }
 
+        /**
+         * When a message starts with {@link Protocol.CONFIRM} received.
+         * 
+         * @param content
+         *            the content of this message
+         */
         public void onConfirmed(String content) {
             logger.log(Level.INFO, "Confirm received: {0}", content);
             if (newRatings != null && newRatings.size() > 0) {
@@ -154,7 +225,8 @@ public class Scheduler {
             if (updatedRatings != null && updatedRatings.size() > 0) {
                 updateLocalFile(Protocol.UPDATE_PREFIX, updatedRatings);
             }
-//            final String[] cmd = { "/bin/bash", "-c", "python recommend.py " + userList };
+            // final String[] cmd = { "/bin/bash", "-c", "python recommend.py "
+            // + userList };
             final String cmd = "java -version"; // TODO
             logger.log(Level.INFO, "Start running python script, command: {0}", cmd);
             try {
@@ -164,7 +236,15 @@ public class Scheduler {
             }
             disconnect();
         }
-        
+
+        /**
+         * Update the rating file.
+         * 
+         * @param protocol
+         *            the protocol specified in {@link Protocol}
+         * @param toUpdate
+         *            a list of updates
+         */
         public void updateLocalFile(String protocol, List<String> toUpdate) {
             File file = new File("data/ratings.csv");
             if (!file.exists()) {
@@ -172,7 +252,8 @@ public class Scheduler {
                 return;
             }
             if (protocol.equals(Protocol.NEW_PREFIX)) {
-                try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, true)));) {
+                try (BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(new FileOutputStream(file, true)));) {
                     toUpdate.forEach(item -> {
                         String res = item.replaceAll("#", ",");
                         try {
@@ -192,7 +273,8 @@ public class Scheduler {
                     return;
                 }
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(tmp)));
-                     BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));) {
+                        BufferedWriter writer = new BufferedWriter(
+                                new OutputStreamWriter(new FileOutputStream(file)));) {
                     List<String> updates = new ArrayList<>(toUpdate);
                     reader.lines().forEachOrdered(line -> {
                         try {
@@ -246,7 +328,7 @@ public class Scheduler {
         }
 
     }
-    
+
     private static void initLogger() {
         try {
             final String date = formatter.format(new Date());
@@ -261,8 +343,8 @@ public class Scheduler {
             logger.log(Level.SEVERE, null, e);
         }
     }
-    
-    private static long getTimeMillis(String time){
+
+    private static long getTimeMillis(String time) {
         try {
             DateFormat dateFormat = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
             DateFormat dayFormat = new SimpleDateFormat("yy-MM-dd");
@@ -273,7 +355,7 @@ public class Scheduler {
         }
         return 0;
     }
-    
+
     private static String formatTime(long millis) {
         final int ss = 1000;
         final int mm = ss * 60;
@@ -285,15 +367,19 @@ public class Scheduler {
         long min = (millis - day * dd - hour * HH) / mm;
         long sec = (millis - day * dd - hour * HH - min * mm) / ss;
 
-        return day + " d "
-        + (hour < 10 ? "0" + hour : hour) + " h "
-        + (min < 10 ? "0" + min : min) + " m "
-        + (sec < 10 ? "0" + sec : sec) + " s";
+        return day + " d " + (hour < 10 ? "0" + hour : hour) + " h " + (min < 10 ? "0" + min : min) + " m "
+                + (sec < 10 ? "0" + sec : sec) + " s";
     }
-    
+
+    /**
+     * The main function to start the scheduling.
+     * 
+     * @param args
+     *            command line arguments
+     */
     public static void main(String[] args) {
         initLogger();
-        String scheduleTime = "06:00:00";
+        String scheduleTime = "16:24:00";
         if (args.length > 0) {
             scheduleTime = args[0];
         }
@@ -301,7 +387,8 @@ public class Scheduler {
         final long oneDay = 24 * 60 * 60 * 1000;
         long initDelay = getTimeMillis(scheduleTime) - System.currentTimeMillis();
         initDelay = initDelay > 0 ? initDelay : oneDay + initDelay;
-        logger.log(Level.INFO, "Mrsys scheduler will start at {0}, {1} from now", new Object[] { scheduleTime, formatTime(initDelay) });
+        logger.log(Level.INFO, "Mrsys scheduler will start at {0}, {1} from now",
+                new Object[] { scheduleTime, formatTime(initDelay) });
         executor.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
@@ -313,7 +400,7 @@ public class Scheduler {
                     scheduler.connect();
                     scheduler.subscribe();
                 } catch (MqttException e) {
-                    logger.log(Level.SEVERE, null, e);
+                    logger.log(Level.SEVERE, "Error when initializing scheduler", e);
                 }
             }
         }, initDelay, oneDay, TimeUnit.MILLISECONDS);

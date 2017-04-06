@@ -12,14 +12,19 @@ public class RecommendJob extends QuartzJobBean {
 	
 	private UserManager userManager;
 
-	public void setMovieManager(UserManager userManager) {
-		this.userManager = userManager;
-	}
+	public void setUserManager(UserManager userManager) {
+        this.userManager = userManager;
+    }
 
-	@Override
+    @Override
 	protected void executeInternal(JobExecutionContext ctx) throws JobExecutionException {
-		// TODO auto schedule movie recommender via movie manager
-		
+		if (!isRunning) {
+		    try {
+                userManager.recommendMovies();
+            } catch (Exception e) {
+            }
+		    isRunning = false;
+		}
 	}
 
 }
