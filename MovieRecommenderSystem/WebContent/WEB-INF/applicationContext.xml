@@ -59,8 +59,7 @@
           class="org.springframework.orm.hibernate4.HibernateTransactionManager"
           p:sessionFactory-ref="sessionFactory"/>
 
-	<tx:advice id="txAdvice"
-               transaction-manager="transactionManager">
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
 			<tx:method name="get*" read-only="true"/>
 			<tx:method name="*"/>
@@ -68,10 +67,8 @@
 	</tx:advice>
 	
 	<aop:config>
-		<aop:pointcut id="mrPointcut"
-                      expression="bean(userManager) or bean(movieManager)"/>
-		<aop:advisor advice-ref="txAdvice" 
-                     pointcut-ref="mrPointcut"/>
+		<aop:pointcut id="mrPointcut" expression="bean(userManager) or bean(movieManager)"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="mrPointcut"/>
 	</aop:config>
 	
 </beans>
