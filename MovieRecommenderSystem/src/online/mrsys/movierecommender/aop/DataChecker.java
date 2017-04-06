@@ -1,10 +1,16 @@
 package online.mrsys.movierecommender.aop;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,6 +49,7 @@ public class DataChecker {
         sb.append("#");
         sb.append(rating.getRating());
         bufferData(sb.toString());
+        bufferUser(rating.getUser().getId().toString());
         logger.log(Level.INFO, "New rating record has been written into buffer");
     }
 
@@ -66,11 +73,12 @@ public class DataChecker {
         sb.append("#");
         sb.append(rating.getRating());
         bufferData(sb.toString());
+        bufferUser(rating.getUser().getId().toString());
         logger.log(Level.INFO, "Updates of rating record have been written into buffer");
     }
 
     private void bufferData(String content) {
-        File file = new File("data.buf");
+        final File file = new File("data.buf");
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -81,6 +89,29 @@ public class DataChecker {
         try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, true)));) {
             writer.write(content);
             writer.newLine();
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Error when writing file", e);
+        }
+    }
+    
+    private void bufferUser(String user) {
+        final File file = new File("user.buf");
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                logger.log(Level.SEVERE, "Error when creating file", e);
+            }
+        }
+        Properties prop = new Properties();
+        try (InputStream in = new BufferedInputStream(new FileInputStream(file));) {
+            prop.load(in);
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Error when reading file", e);
+        }
+        prop.setProperty(user, "10");
+        try (OutputStream out = new BufferedOutputStream(new FileOutputStream(file));) {
+            prop.store(out, "User=Frequency");
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Error when writing file", e);
         }

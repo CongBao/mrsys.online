@@ -27,18 +27,27 @@
 	<bean id="movieManager"
           class="online.mrsys.movierecommender.service.impl.MovieManagerImpl"
           parent="managerTemplate"/>
-    
-    <!--        
+          
+    <bean id="cronTriggerCleanZombies"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"
+          p:cronExpression="0 0 3 * * ?">
+        <property name="jobDetail">
+            <bean class="org.springframework.scheduling.quartz.JobDetailFactoryBean"
+                  p:jobClass="online.mrsys.movierecommender.schedule.CleanZombiesJob"
+                  p:durability="true"/>
+        </property>
+    </bean>
+     
     <bean id="cronTriggerRecommend"
           class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"
-          p:cronExpression="0 0 6 ? * MON-SUN">
+          p:cronExpression="0 0 4 * * ?">
         <property name="jobDetail">
             <bean class="org.springframework.scheduling.quartz.JobDetailFactoryBean"
                   p:jobClass="online.mrsys.movierecommender.schedule.RecommendJob"
                   p:durability="true">
                 <property name="jobDataAsMap">
                     <map>
-                        <entry key="usrMgr" value-ref="userManager"/>
+                        <entry key="userManager" value-ref="userManager"/>
                     </map>
                 </property>
             </bean>
@@ -48,12 +57,11 @@
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="triggers">
             <list>
+                <ref bean="cronTriggerCleanZombies"/>
                 <ref bean="cronTriggerRecommend"/>
             </list>
         </property>
     </bean>
-    
-    -->
 		
 	<bean id="transactionManager"
           class="org.springframework.orm.hibernate4.HibernateTransactionManager"

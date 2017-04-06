@@ -1,7 +1,13 @@
 package online.mrsys.movierecommender.service.impl;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import online.mrsys.movierecommender.dao.FavoriteDao;
 import online.mrsys.movierecommender.dao.MovieDao;
@@ -234,10 +240,22 @@ public class UserManagerImpl implements UserManager {
 
     @Override
     public void recommendMovies() throws Exception {
-        // TODO just test
-        User user = getUserByAccount("testuser1");
+        final File file = new File("user.buf");
+        if (!file.exists()) {
+            return;
+        }
+        Properties prop = new Properties();
+        try (InputStream in = new BufferedInputStream(new FileInputStream(file));) {
+            prop.load(in);
+        } catch (IOException e) {
+        }
         List<User> users = new ArrayList<>();
-        users.add(user);
+        prop.stringPropertyNames().forEach(key -> {
+            User user = getUserById(Integer.parseInt(key));
+            if (user != null) {
+                users.add(user);
+            }
+        });
         MovieRecommender recommender = new MovieRecommender(this);
         recommender.recommend(users);
     }

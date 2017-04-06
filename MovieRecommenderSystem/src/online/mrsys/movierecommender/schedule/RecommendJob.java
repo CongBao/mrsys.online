@@ -19,6 +19,7 @@ public class RecommendJob extends QuartzJobBean {
     @Override
 	protected void executeInternal(JobExecutionContext ctx) throws JobExecutionException {
 		if (!isRunning) {
+		    isRunning = true;
 		    try {
                 userManager.recommendMovies();
             } catch (Exception e) {

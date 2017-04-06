@@ -225,9 +225,7 @@ public class Scheduler {
             if (updatedRatings != null && updatedRatings.size() > 0) {
                 updateLocalFile(Protocol.UPDATE_PREFIX, updatedRatings);
             }
-            // final String[] cmd = { "/bin/bash", "-c", "python recommend.py "
-            // + userList };
-            final String cmd = "java -version"; // TODO
+            final String[] cmd = { "/bin/bash", "-c", "python recommend.py " + userList };
             logger.log(Level.INFO, "Start running python script, command: {0}", cmd);
             try {
                 process = Runtime.getRuntime().exec(cmd);
@@ -379,7 +377,7 @@ public class Scheduler {
      */
     public static void main(String[] args) {
         initLogger();
-        String scheduleTime = "16:24:00";
+        String scheduleTime = "21:02:00";
         if (args.length > 0) {
             scheduleTime = args[0];
         }

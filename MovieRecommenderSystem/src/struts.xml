@@ -40,10 +40,6 @@
             <result>/WEB-INF/content/index.jsp</result>
         </action>
         
-        <action name="test" class="online.mrsys.movierecommender.action.TestAction">
-            <result>/WEB-INF/content/index.jsp</result>
-        </action>
-        
 		<action name="*">
 			<result>/WEB-INF/content/{1}.jsp</result>
 		</action>
