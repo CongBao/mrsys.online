@@ -234,7 +234,7 @@ public class UserManagerImpl implements UserManager {
 
     @Override
     public void recommendMovies() throws Exception {
-        // just test
+        // TODO just test
         User user = getUserByAccount("testuser1");
         List<User> users = new ArrayList<>();
         users.add(user);

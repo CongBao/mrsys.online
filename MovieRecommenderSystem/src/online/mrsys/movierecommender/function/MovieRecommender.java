@@ -1,6 +1,12 @@
 package online.mrsys.movierecommender.function;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -51,8 +57,9 @@ public class MovieRecommender {
         new Thread(() -> {
             connect();
             subscribe();
-            final String date = formatter.format(new Date());
+            // publish request with user id list
             // format: date!user1#user2#...
+            final String date = formatter.format(new Date());
             final StringBuilder sb = new StringBuilder();
             sb.append(date);
             sb.append("@");
@@ -178,12 +185,37 @@ public class MovieRecommender {
                         break;
                     }
                 }
+                List<String> data = getDataBuffer();
+                if (data != null && !data.isEmpty()) {
+                    data.forEach(item -> publish(Protocol.UPDATE, item));
+                }
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                }
                 publish(Protocol.CONFIRM, "OK");
                 cleanBroker();
                 disconnect();
                 isRuning = false;
                 scheduling = false;
             }).start();
+        }
+        
+        public List<String> getDataBuffer() {
+            final File file = new File("data.buf");
+            if (!file.exists()) {
+                logger.log(Level.INFO, "No buffer file");
+                return null;
+            }
+            final List<String> updates = new ArrayList<>();
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
+                reader.lines().forEach(updates::add);
+            } catch (IOException e) {
+                logger.log(Level.SEVERE, "Error when reading updates", e);
+            }
+            file.delete();
+            logger.log(Level.INFO, "Buffer file deleted");
+            return updates;
         }
 
         @Override

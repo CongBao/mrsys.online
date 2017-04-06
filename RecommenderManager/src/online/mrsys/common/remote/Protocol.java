@@ -13,4 +13,7 @@ public interface Protocol {
     String RESULT = "result";
     String CONFIRM = "confirm";
     
+    String NEW_PREFIX = "new";
+    String UPDATE_PREFIX = "update";
+    
 }

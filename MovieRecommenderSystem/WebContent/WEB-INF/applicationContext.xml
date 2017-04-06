@@ -71,4 +71,13 @@
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="mrPointcut"/>
 	</aop:config>
 	
+	<bean id="dataChecker" class="online.mrsys.movierecommender.function.DataChecker"/>
+	
+	<aop:config>
+	    <aop:aspect id="daoAspect" ref="dataChecker">
+	        <aop:after-returning pointcut="execution(* online.mrsys.common.dao.BaseDao.save(..)) and args(entity)" method="afterSave"/>
+	        <aop:after-returning pointcut="execution(* online.mrsys.common.dao.BaseDao.update(..)) and args(entity)" method="afterUpdate"/>
+	    </aop:aspect>
+	</aop:config>
+	
 </beans>

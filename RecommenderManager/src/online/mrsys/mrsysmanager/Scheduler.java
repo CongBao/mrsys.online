@@ -1,15 +1,20 @@
 package online.mrsys.mrsysmanager;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -98,6 +103,8 @@ public class Scheduler {
     private class Handler implements MqttCallback {
         
         private String userList;
+        private List<String> newRatings;
+        private List<String> updatedRatings;
 
         public void onRequested(String content) {
             // content format: date@user1#user2#...
@@ -124,9 +131,29 @@ public class Scheduler {
                 }
             }
         }
+        
+        public void onUpdated(String content) {
+            // content format: (new|update)user_id#movie_id#rating
+            logger.log(Level.INFO, "Update received: {0}", content);
+            if (content.startsWith(Protocol.NEW_PREFIX)) {
+                content = content.replaceFirst(Protocol.NEW_PREFIX, "");
+                newRatings = new ArrayList<>();
+                newRatings.add(content);
+            } else if (content.startsWith(Protocol.UPDATE_PREFIX)) {
+                content = content.replaceFirst(Protocol.UPDATE_PREFIX, "");
+                updatedRatings = new ArrayList<>();
+                updatedRatings.add(content);
+            }
+        }
 
         public void onConfirmed(String content) {
             logger.log(Level.INFO, "Confirm received: {0}", content);
+            if (newRatings != null && newRatings.size() > 0) {
+                updateLocalFile(Protocol.NEW_PREFIX, newRatings);
+            }
+            if (updatedRatings != null && updatedRatings.size() > 0) {
+                updateLocalFile(Protocol.UPDATE_PREFIX, updatedRatings);
+            }
 //            final String[] cmd = { "/bin/bash", "-c", "python recommend.py " + userList };
             final String cmd = "java -version"; // TODO
             logger.log(Level.INFO, "Start running python script, command: {0}", cmd);
@@ -136,6 +163,60 @@ public class Scheduler {
                 logger.log(Level.SEVERE, null, e);
             }
             disconnect();
+        }
+        
+        public void updateLocalFile(String protocol, List<String> toUpdate) {
+            File file = new File("data/ratings.csv");
+            if (!file.exists()) {
+                logger.log(Level.WARNING, "File not exist: {0}", file.getAbsolutePath());
+                return;
+            }
+            if (protocol.equals(Protocol.NEW_PREFIX)) {
+                try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, true)));) {
+                    toUpdate.forEach(item -> {
+                        String res = item.replaceAll("#", ",");
+                        try {
+                            writer.write(res);
+                            writer.newLine();
+                        } catch (IOException e) {
+                            logger.log(Level.SEVERE, "Error when writing file", e);
+                        }
+                    });
+                } catch (IOException e) {
+                    logger.log(Level.SEVERE, "Error when opening file", e);
+                }
+            } else if (protocol.equals(Protocol.UPDATE_PREFIX)) {
+                File tmp = new File("data/ratings.csv.tmp");
+                if (!file.renameTo(tmp)) {
+                    logger.log(Level.SEVERE, "Error when renaming file: {0}", file.getAbsolutePath());
+                    return;
+                }
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(tmp)));
+                     BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));) {
+                    List<String> updates = new ArrayList<>(toUpdate);
+                    reader.lines().forEachOrdered(line -> {
+                        try {
+                            for (String item : updates) {
+                                if (line.split(",")[0].equals(item.split("#")[0])) {
+                                    updates.remove(item);
+                                    writer.write(item.replaceAll("#", ","));
+                                    writer.newLine();
+                                    return;
+                                }
+                            }
+                            writer.write(line);
+                            writer.newLine();
+                        } catch (IOException e) {
+                            logger.log(Level.SEVERE, "Error when writing file", e);
+                        }
+                    });
+                } catch (IOException e) {
+                    logger.log(Level.SEVERE, "Error when opening file", e);
+                } finally {
+                    tmp.delete();
+                }
+            }
+            logger.log(Level.INFO, "Local file updated");
         }
 
         @Override
@@ -152,6 +233,8 @@ public class Scheduler {
             String content = new String(message.getPayload(), "ISO-8859-1");
             if (content.startsWith(Protocol.REQUEST)) {
                 onRequested(content.replaceFirst(Protocol.REQUEST, ""));
+            } else if (content.startsWith(Protocol.UPDATE)) {
+                onUpdated(content.replaceFirst(Protocol.UPDATE, ""));
             } else if (content.startsWith(Protocol.CONFIRM)) {
                 onConfirmed(content.replaceFirst(Protocol.CONFIRM, ""));
             }
