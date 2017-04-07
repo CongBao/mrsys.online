@@ -6,30 +6,37 @@
 <struts>
 
 	<!-- when developing -->
-	<constant name="struts.devMode" value="true" />
-	<constant name="struts.serve.static.browserCache" value="false" />
+	<constant name="struts.devMode" value="true"/>
+	<constant name="struts.serve.static.browserCache" value="false"/>
 	<!-- delete above when publish -->
 
-	<constant name="struts.action.extension" value="" />
-	<constant name="struts.action.excludePattern" value="/res/.*?" />
+	<constant name="struts.action.extension" value=""/>
+	<constant name="struts.action.excludePattern" value="/res/.*?"/>
 	
 	<package name="default" extends="struts-default" abstract="true">
 	
 		<interceptors>
-			<interceptor name="loginAuthority" class="online.mrsys.movierecommender.action.authority.LoginInterceptor" />
-			<interceptor-stack name="loginStack">
-				<interceptor-ref name="loginAuthority" />
-				<interceptor-ref name="defaultStack" />
+			<interceptor name="userAuthority" class="online.mrsys.movierecommender.action.authority.UserInterceptor"/>
+			<interceptor name="adminAuthority" class="online.mrsys.movierecommender.action.authority.AdminInterceptor"/>
+			<interceptor-stack name="userStack">
+				<interceptor-ref name="userAuthority"/>
+				<interceptor-ref name="defaultStack"/>
+			</interceptor-stack>
+			<interceptor-stack name="adminStack">
+			    <interceptor-ref name="adminAuthority"/>
+			    <interceptor-ref name="defaultStack"/>
 			</interceptor-stack>
 		</interceptors>
 	
 		<global-results>
 			<result name="error">/WEB-INF/content/error.jsp</result>
+			<result name="login">/WEB-INF/content/login.jsp</result>
+			<result name="reject">/WEB-INF/content/reject.jsp</result>
 		</global-results>
 	
 		<global-exception-mappings>
-			<exception-mapping result="error" exception="online.mrsys.movierecommender.exception.MRException" />
-			<exception-mapping result="error" exception="java.lang.Exception" />
+			<exception-mapping result="error" exception="online.mrsys.movierecommender.exception.MRException"/>
+			<exception-mapping result="error" exception="java.lang.Exception"/>
 		</global-exception-mappings>
 	
 	</package>
@@ -48,8 +55,22 @@
 	
 	<package name="user" extends="root" namespace="/user">
 	
-		<default-interceptor-ref name="loginStack" />
+		<default-interceptor-ref name="userStack"/>
 		
+		<action name="*">
+		    <result>/WEB-INF/content/user/{1}.jsp</result>
+		</action>
+		
+	</package>
+	
+	<package name="admin" extends="root" namespace="/admin">
+	
+	    <default-interceptor-ref name="adminStack"/>
+	    
+	    <action name="*">
+	        <result>/WEB-INF/content/admin/{1}.jsp</result>
+	    </action>
+	
 	</package>
 
 </struts>

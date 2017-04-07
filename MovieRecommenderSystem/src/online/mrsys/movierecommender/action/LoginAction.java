@@ -1,9 +1,9 @@
 package online.mrsys.movierecommender.action;
 
-import online.mrsys.movierecommender.action.base.UserBaseAction;
+import online.mrsys.movierecommender.action.base.BaseAction;
 import online.mrsys.movierecommender.domain.User;
 
-public class LoginAction extends UserBaseAction {
+public class LoginAction extends BaseAction {
 	
 	private User user;
 
