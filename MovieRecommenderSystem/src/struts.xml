@@ -57,6 +57,14 @@
 	
 		<default-interceptor-ref name="userStack"/>
 		
+		<action name="~*" class="online.mrsys.movierecommender.action.user.LoadProfileAction">
+		    <param name="account">{1}</param>
+		    <result name="success" type="redirectAction">
+		        <param name="actionName">profile</param>
+		        <param name="namespace">/user</param>
+		    </result>
+		</action>
+		
 		<action name="*">
 		    <result>/WEB-INF/content/user/{1}.jsp</result>
 		</action>
