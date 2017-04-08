@@ -377,7 +377,7 @@ public class Scheduler {
      */
     public static void main(String[] args) {
         initLogger();
-        String scheduleTime = "21:02:00";
+        String scheduleTime = "06:00:00";
         if (args.length > 0) {
             scheduleTime = args[0];
         }
