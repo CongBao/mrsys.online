@@ -17,7 +17,7 @@ import online.mrsys.movierecommender.vo.UserBean;
 
 public class UserInterceptor extends AbstractInterceptor {
     
-    private static final long serialVersionUID = -2733846991298467294L;
+    private static final long serialVersionUID = -5177665263045644572L;
     
     private UserManager userManager;
     private MovieManager movieManager;
