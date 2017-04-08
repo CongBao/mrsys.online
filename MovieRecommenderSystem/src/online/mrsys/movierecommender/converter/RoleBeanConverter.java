@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.apache.struts2.util.StrutsTypeConverter;
 
-import online.mrsys.movierecommender.function.Serializer;
+import online.mrsys.movierecommender.util.Serializer;
 import online.mrsys.movierecommender.vo.RoleBean;
 
 public class RoleBeanConverter extends StrutsTypeConverter {

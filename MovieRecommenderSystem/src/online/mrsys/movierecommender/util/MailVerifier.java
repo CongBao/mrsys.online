@@ -1,4 +1,4 @@
-package online.mrsys.movierecommender.function;
+package online.mrsys.movierecommender.util;
 
 public class MailVerifier {
 
