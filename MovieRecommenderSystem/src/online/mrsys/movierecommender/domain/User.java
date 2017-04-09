@@ -134,18 +134,22 @@ public class User implements Serializable {
         this.role = role;
     }
 
+    @Deprecated
     public Set<Movie> getMovies() {
         return movies;
     }
 
+    @Deprecated
     public void setMovies(Set<Movie> movies) {
         this.movies = movies;
     }
 
+    @Deprecated
     public Set<Rating> getRatings() {
         return ratings;
     }
 
+    @Deprecated
     public void setRatings(Set<Rating> ratings) {
         this.ratings = ratings;
     }

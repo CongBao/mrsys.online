@@ -93,18 +93,22 @@ public class Movie implements Serializable {
 		this.title = title;
 	}
 
+	@Deprecated
 	public Set<User> getUsers() {
 		return users;
 	}
 
+	@Deprecated
 	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
 
+	@Deprecated
 	public Set<Rating> getRatings() {
 		return ratings;
 	}
 
+	@Deprecated
 	public void setRatings(Set<Rating> ratings) {
 		this.ratings = ratings;
 	}

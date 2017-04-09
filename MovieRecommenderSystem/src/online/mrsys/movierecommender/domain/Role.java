@@ -59,10 +59,12 @@ public class Role implements Serializable {
 		this.role = role;
 	}
 
+	@Deprecated
 	public Set<User> getUsers() {
 		return users;
 	}
 
+	@Deprecated
 	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
