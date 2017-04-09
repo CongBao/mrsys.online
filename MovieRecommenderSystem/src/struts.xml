@@ -53,6 +53,24 @@
 		
 	</package>
 	
+	<package name="movie" extends="root" namespace="/movie">
+	
+	    <default-interceptor-ref name="defaultStack"/>
+	
+	    <action name="~*" class="online.mrsys.movierecommender.action.movie.LoadMovieAction">
+	        <param name="id">{1}</param>
+	        <result name="success" type="redirectAction">
+	            <param name="actionName">preview</param>
+	            <param name="namespace">/movie</param>
+	        </result>
+	    </action>
+	    
+	    <action name="*">
+            <result>/WEB-INF/content/movie/{1}.jsp</result>
+        </action>
+	
+	</package>
+	
 	<package name="user" extends="root" namespace="/user">
 	
 		<default-interceptor-ref name="userStack"/>
