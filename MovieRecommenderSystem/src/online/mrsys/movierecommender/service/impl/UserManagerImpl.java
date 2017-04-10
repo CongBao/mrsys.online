@@ -3,11 +3,14 @@ package online.mrsys.movierecommender.service.impl;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+
+import org.eclipse.paho.client.mqttv3.MqttException;
 
 import online.mrsys.movierecommender.dao.FavoriteDao;
 import online.mrsys.movierecommender.dao.MovieDao;
@@ -239,10 +242,10 @@ public class UserManagerImpl implements UserManager {
     }
 
     @Override
-    public void recommendMovies() throws Exception {
+    public void recommendMovies() throws MqttException, FileNotFoundException {
         final File file = new File("user.buf");
         if (!file.exists()) {
-            return;
+            throw new FileNotFoundException("Cannot find file " + file.getAbsolutePath());
         }
         Properties prop = new Properties();
         try (InputStream in = new BufferedInputStream(new FileInputStream(file));) {

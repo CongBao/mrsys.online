@@ -13,7 +13,7 @@ public interface Protocol {
     String RES_SUFFIX = ".result";
     
     String TOPIC = "MRSYSCOMMUNICATION";
-    String BROKER = "tcp://www.mrsys.online:1883";
+    String BROKER = "tcp://sub.mrsys.online:1883";
     
     String REQUEST = "request";
     String UPDATE = "update";

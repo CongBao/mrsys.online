@@ -18,21 +18,25 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 
 public class CleanZombiesJob extends QuartzJobBean {
     
+    private static final Logger logger = Logger.getLogger(CleanZombiesJob.class.getName());
+    
     private boolean isRunning = false;
 
     @Override
     protected void executeInternal(JobExecutionContext ctx) throws JobExecutionException {
         if (!isRunning) {
             isRunning = true;
+            logger.log(Level.INFO, "Start cleaning zombies job");
             final File file = new File("user.buf");
             if (!file.exists()) {
+                logger.log(Level.WARNING, "File not found: ", file.getAbsolutePath());
                 return;
             }
             Properties prop = new Properties();
             try (InputStream in = new BufferedInputStream(new FileInputStream(file));) {
                 prop.load(in);
             } catch (IOException e) {
-                Logger.getLogger(CleanZombiesJob.class.getName()).log(Level.SEVERE, "Error when reading file", e);
+                logger.log(Level.SEVERE, "Error when reading file", e);
             }
             prop.stringPropertyNames().forEach(user -> {
                 int freq = Integer.parseInt(prop.getProperty(user));
@@ -45,8 +49,9 @@ public class CleanZombiesJob extends QuartzJobBean {
             try (OutputStream out = new BufferedOutputStream(new FileOutputStream(file));) {
                 prop.store(out, "User=Frequency");
             } catch (IOException e) {
-                Logger.getLogger(CleanZombiesJob.class.getName()).log(Level.SEVERE, "Error when writing file", e);
+                logger.log(Level.SEVERE, "Error when writing file", e);
             }
+            logger.log(Level.INFO, "Cleaning zombies job completed, next time: ", ctx.getNextFireTime());
             isRunning = false;
         }
     }

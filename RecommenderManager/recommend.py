@@ -8,6 +8,8 @@ import re
 import numpy as np
 from scipy import spatial
 import math
+import logging
+import logging.handlers
 
 user_path = ""
 try:
@@ -70,7 +72,8 @@ def getDictionaries(ratings):
             movie_to_user[i[1]].append(i[0])  # it's gonna be used when finding all the neighbors
         else:
             movie_to_user[i[1]] = [i[0]]
-    print "Dic = " + str(time.clock() - start_time)
+    logging.info(str(time.clock() - start_time) + " used to generate the dictionary.")
+    del ratings
     return user_rate_dic, movie_to_user  # return these two dictionaries
 
 
@@ -92,8 +95,8 @@ def getNeighborSimilarity(user_id, users_dic, movie_dic):
                 neighbors.append(neighbor_id)
                 i = i + 1  # count the number of neighbors in total
         counter = counter + 1  # how many movies are finished
-        print counter, "/", movie_num
-    print i, "neighbors found in total."
+        logging.info(counter, "/", movie_num)
+    logging.info(str(i) + " neighbors found in total.")
     neighbors_dist = []  # calculate the distance between the user and each neighbor of him/her
     for neighbor_id in neighbors:
         dist = getSimilarity(users_dic[user_id], users_dic[neighbor_id])
@@ -108,12 +111,11 @@ def getRatings(file_name):
 
 # by default, K=5
 def recommend(userid):
-    # thirdly, find the K nearest neighbors
+    # firstly, find the K nearest neighbors
     temp = time.clock()
     neighbors = getNeighborSimilarity(userid, user_to_rating_dic, movie_to_user_dic)
-    print len(neighbors)
-    print time.clock() - temp, "used to find the K nearest neighbors"
-    # fourthly, estimate the target user's rating on every movie that he/she hasn't rated
+    logging.info(time.clock() - temp, "used to find all the neighbors.")
+    # secondly, estimate the target user's ratingsS
     recommend_dic = {}  # neighbors is the list of [similarity, neighbor_id]
     similarity_dic = {}
     for neighbor in neighbors:  # neighbors is the list of [similarity, neighbor_id]
@@ -125,48 +127,67 @@ def recommend(userid):
                 recommend_dic[movie[0]] = neighbor[0] * movie[1]
                 similarity_dic[movie[0]] = neighbor[0]
             else:
-                recommend_dic[movie[0]] += neighbor[0] * movie[
-                    1]  # each movie in the recommend_dic dictionary has a value, which determine how much it will be recommended
+                recommend_dic[movie[0]] += neighbor[0] * movie[1]
                 similarity_dic[movie[0]] += neighbor[0]
     for key in recommend_dic:
         recommend_dic[key] = recommend_dic[key] / similarity_dic[key]
-    # finally, build the recommendation list - recommend_dic: key-movie_id, recommend_dic[key]-estimated rating value on this movie
-    recommend_list = sorted(recommend_dic.items(), lambda x, y: cmp(x[1], y[1]), reverse=True)
-    if os.path.exists('res') == False:
-        os.mkdir('res')
-    if os.path.exists('res/' + today) == False:
-        os.mkdir('res/' + today)
+    # thirdly, build the recommendation list
+    result_list = sorted(recommend_dic.items(), lambda x, y: cmp(x[1], y[1]), reverse=True)
     result_name = 'res/' + today + '/' + str(userid) + '.result'
     result = file(result_name, 'wb+')
-    list_length = min(len(recommend_list), 1000)
+    list_length = min(len(result), 1000)
     for i in range(list_length):
-        result.write(str(int((recommend_list[i])[0])) + '\n')
+        result.write(str(int((result[i])[0])) + '\n')
     result.close()
-    print "The result of User", userid, " has been written to the file", result_name
-    return recommend_list
+    logging.info("The result of User " + str(userid) + " has been written to the file " + result_name)
+    return result_list
     # return [i[0] for i in recommend_list]  # return movie ids according to their estimated ratings (high to low)
 
-#	the main function
+# the main function
 if __name__ == '__main__':
     # system setting
     start_time = time.clock()
     reload(sys)
     sys.setdefaultencoding('utf-8')
+    print "Program started."
+
+    # prepare phase
+    if not os.path.exists('res'):
+        os.mkdir('res')
+    if not os.path.exists('res/' + today):
+        os.mkdir('res/' + today)
+    if not os.path.exists('log'):
+        os.mkdir('log')
+    LOG_FILE = 'log/' + today + '.log'
+    logger = logging.getLogger()
+    logger.setLevel(logging.INFO)
+    file_handler = logging.FileHandler(LOG_FILE,mode='a')
+    file_handler.setLevel(logging.INFO)
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.INFO)
+    formatter = logging.Formatter('%(asctime)s %(filename)s[line:%(lineno)d] [%(levelname)s] %(message)s')
+    file_handler.setFormatter(formatter)
+    console_handler.setFormatter(formatter)
+    logger.addHandler(file_handler)
+    logger.addHandler(console_handler)
 
     # analyze command
-    command = sys.argv[1]
+    try:
+        command = sys.argv[1]
+    except IndexError:
+        command = today + '@7#'
     given_date = command.split('@')[0]
-    target_users = re.findall('(\d+)#',command)
+    target_users = re.findall('(\d+)#', command)
     if given_date != time.strftime("%Y-%m-%d", time.localtime()):
-        print "Wrong date!"
-        print given_date
-        print time.strftime("%Y-%m-%d", time.localtime())
+        logging.critical('Inconsistent date')
         sys.exit()
+    logging.info("Recommendation service started.")
 
     # read data
+    logging.info('Start to read ratings.')
     file_name = "data/ratings_after_2000.csv"
     ratings = getRatings(file_name)
-    print time.clock() - start_time, "used to read the ratings."
+    # logging.info(str(time.clock() - start_time) + "used to read the ratings.")
     # generate dictionaries
     user_to_rating_dic, movie_to_user_dic = getDictionaries(ratings)
 
@@ -175,7 +196,7 @@ if __name__ == '__main__':
     while time.strftime("%Y-%m-%d", time.localtime()) == given_date and i < len(target_users):
         target_user = int(target_users[i])
         start_time = time.clock()
-        print "Start to generate the recommendation list for user " + str(target_user)
+        logging.info("Start to generate the recommendation list for user " + str(target_user))
         recommend_list = recommend(target_user)
-        print time.clock() - start_time, "seconds used in total."
+        logging.info(str(time.clock() - start_time) + " seconds used in total.")
         i += 1
