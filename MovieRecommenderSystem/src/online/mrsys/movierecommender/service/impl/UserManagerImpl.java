@@ -243,7 +243,7 @@ public class UserManagerImpl implements UserManager {
 
     @Override
     public void recommendMovies() throws MqttException, FileNotFoundException {
-        final File file = new File("user.buf");
+        final File file = new File("/tmp/mrsys.online/user.buf");
         if (!file.exists()) {
             throw new FileNotFoundException("Cannot find file " + file.getAbsolutePath());
         }

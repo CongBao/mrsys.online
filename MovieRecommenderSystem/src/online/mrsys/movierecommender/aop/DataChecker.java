@@ -78,7 +78,8 @@ public class DataChecker {
     }
 
     private void bufferData(String content) {
-        final File file = new File("data.buf");
+        new File("/tmp/mrsys.online/").mkdirs();
+        final File file = new File("/tmp/mrsys.online/data.buf");
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -95,7 +96,8 @@ public class DataChecker {
     }
     
     private void bufferUser(String user) {
-        final File file = new File("user.buf");
+        new File("/tmp/mrsys.online/").mkdirs();
+        final File file = new File("/tmp/mrsys.online/user.buf");
         if (!file.exists()) {
             try {
                 file.createNewFile();

@@ -259,7 +259,7 @@ public class MovieRecommender {
          * @return a list of updated ratings
          */
         public List<String> getDataBuffer() {
-            final File file = new File("data.buf");
+            final File file = new File("/tmp/mrsys.online/data.buf");
             if (!file.exists()) {
                 logger.log(Level.INFO, "No buffer file");
                 return null;

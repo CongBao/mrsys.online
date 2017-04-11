@@ -27,7 +27,7 @@ public class CleanZombiesJob extends QuartzJobBean {
         if (!isRunning) {
             isRunning = true;
             logger.log(Level.INFO, "Start cleaning zombies job");
-            final File file = new File("user.buf");
+            final File file = new File("/tmp/mrsys.online/user.buf");
             if (!file.exists()) {
                 logger.log(Level.WARNING, "File not found: ", file.getAbsolutePath());
                 return;
