@@ -15,14 +15,14 @@ public class LogoutAction extends BaseAction {
     public String execute() throws Exception {
        ActionContext actionContext =ActionContext.getContext();
        if(actionContext.getSession()!=null){
-    	   actionContext.getSession().put(WebConstant.USER, null);
+			actionContext.getSession().put(WebConstant.USER, null);
     	   Cookie[] cookies = ServletActionContext.getRequest().getCookies();
     	   for(Cookie cookie:cookies){
     		   cookie.setMaxAge(0);
     	   }
     	   return SUCCESS;
        }else{
-    	   actionContext.getSession().put(WebConstant.INTERCEPT, "No current account");
+    	   actionContext.getSession().put(WebConstant.INTERCEPT, "No current account has logged in");
     	   return ERROR;
        }
        
