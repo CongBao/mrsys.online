@@ -109,6 +109,14 @@ public class UserManagerImpl implements UserManager {
         }
         return false;
     }
+    
+    @Override
+    public boolean isUserExist(String email) {
+        if (userDao.findByEmail(email) != null) {
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public boolean isFavoriteExist(Favorite favorite) {

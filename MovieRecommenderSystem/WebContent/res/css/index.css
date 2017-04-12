@@ -1,0 +1,95 @@
+/*!
+ * index.css
+ * Author: Cong Bao
+ * Date: 10 April, 2017
+ */
+
+body {
+	background: url(http://localhost:18080/res/img/bg.jpg);
+	background-size: cover;
+    background-attachment: fixed;
+    color: #fff;
+}
+
+.index-img {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center center;
+    z-index: 1;
+}
+
+#steps-container {
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+.timeline::before {
+    background-color: #fff;
+}
+
+.timeline .timeline-items {
+    padding-top: 50px;
+}
+
+.timeline .timeline-items .timeline-item {
+    margin-bottom: 50px;
+}
+
+.timeline .timeline-items .timeline-item::after {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.timeline .timeline-items .timeline-item.inverted::after {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.timeline .timeline-items .timeline-item:nth-of-type(2n+1) {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.timeline .timeline-items .timeline-item:nth-of-type(2n+1)::before {
+    border-top: 1em solid transparent;
+}
+
+.timeline .timeline-items .timeline-item.inverted:nth-of-type(2n+1) {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.timeline .timeline-items .timeline-item.inverted:nth-of-type(2n+1)::before {
+    border-top: 1em solid transparent;
+}
+
+.timeline h2 {
+    border-radius: 4px;
+}
+
+#movies-container {
+    background: url(http://localhost:18080/res/img/movie.jpg);
+    background-size: cover;
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+#masonry {
+    padding: 10px;
+}
+
+.box {
+    float: left;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #fff;
+    background: transparent;
+    box-shadow: 0 0 2px #ccc;
+}
+
+.box:hover {
+    box-shadow: 0 0 10px #999;
+    cursor: pointer;
+}
+
+.box img {
+    width: 300px;
+}

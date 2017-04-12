@@ -55,9 +55,10 @@
 	
 	<package name="ajax" extends="json-default">
         
-        <action name="userExist" class="online.mrsys.movierecommender.action.ajax.AccountExistAction">
+        <action name="*Exist" class="online.mrsys.movierecommender.action.ajax.CheckExistAction" method="check{1}">
             <result type="json">
                 <param name="noCache">true</param>
+                <param name="excludeNullProperties">true</param>
             </result>
         </action>
         

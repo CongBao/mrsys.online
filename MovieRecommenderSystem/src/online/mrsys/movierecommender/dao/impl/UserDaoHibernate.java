@@ -29,4 +29,12 @@ public class UserDaoHibernate extends BaseDaoHibernate<User> implements UserDao 
 		return null;
 	}
 
+    @Override
+    public User findByEmail(String email) {
+        List<User> users = find("select u from User u where u.email = ?0", email);
+        if (users != null && users.size() >= 1)
+            return users.get(0);
+        return null;
+    }
+
 }

@@ -69,6 +69,16 @@ public interface UserManager {
     boolean isUserExist(User user);
 
     /**
+     * Check if a user is existing in database. The check is based on user's
+     * email.
+     * 
+     * @param email
+     *            the email of user to be checked
+     * @return if the user is existing in database
+     */
+    boolean isUserExist(String email);
+
+    /**
      * Check if a favorite record is existing in database. The check is based on
      * favorite id.
      * 

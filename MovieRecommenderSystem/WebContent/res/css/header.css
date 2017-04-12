@@ -1,0 +1,80 @@
+/*!
+ * header.css
+ * Author: Cong Bao
+ * Date: 10 April, 2017
+ */
+
+.navbar {
+    color: #fff;
+}
+
+#navbar {
+    -webkit-transition: background 0.6s;
+       -moz-transition: background 0.6s;
+        -ms-transition: background 0.6s;
+         -o-transition: background 0.6s;
+            transition: background 0.6s;
+}
+
+#navbar:hover {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+#navbar > div {
+    -webkit-transition: width 0.6s;
+       -moz-transition: width 0.6s;
+        -ms-transition: width 0.6s;
+         -o-transition: width 0.6s;
+            transition: width 0.6s;
+}
+
+.navbar-inverse {
+	background-color: transparent;
+    border-color: transparent;
+}
+
+.navbar-inverse .navbar-brand {
+    color: #fff;
+}
+
+.navbar-inverse .navbar-text {
+    color: #fff;
+}
+
+.navbar-inverse .dropdown .dropdown-toggle {
+    color: #fff;
+}
+
+.navbar-inverse .dropdown-menu {
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 1px solid transparent;
+}
+
+.navbar-inverse .dropdown-menu .dropdown-header {
+    color: #fff;
+}
+
+.navbar-inverse .dropdown-menu a {
+    color: #fff;
+}
+
+.btn-default {
+    background: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+}
+
+.form-control {
+    background-color: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+}
+
+.modal-header > button {
+    color: #fff;
+}
+
+.modal-content {
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+}

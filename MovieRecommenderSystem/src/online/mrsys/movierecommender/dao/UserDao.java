@@ -33,5 +33,14 @@ public interface UserDao extends BaseDao<User> {
      * @return the user record found
      */
     User findByAccount(String account);
+    
+    /**
+     * Find a user record by email.
+     * 
+     * @param email
+     *            the email of user
+     * @return the user record found
+     */
+    User findByEmail(String email);
 
 }
