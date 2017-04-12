@@ -53,6 +53,16 @@
 		
 	</package>
 	
+	<package name="ajax" extends="json-default">
+        
+        <action name="userExist" class="online.mrsys.movierecommender.action.ajax.AccountExistAction">
+            <result type="json">
+                <param name="noCache">true</param>
+            </result>
+        </action>
+        
+    </package>
+	
 	<package name="movie" extends="root" namespace="/movie">
 	
 	    <default-interceptor-ref name="defaultStack"/>
