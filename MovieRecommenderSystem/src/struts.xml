@@ -51,6 +51,10 @@
 			<result>/WEB-INF/content/{1}.jsp</result>
 		</action>
 		
+		<action name="login" class="online.mrsys.movierecommender.action.LoginAction">
+		    <result>/WEB-INF/content/index.jsp</result>
+		</action>
+		
 	</package>
 	
 	<package name="ajax" extends="json-default" namespace="/ajax">

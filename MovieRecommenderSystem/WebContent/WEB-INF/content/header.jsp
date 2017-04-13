@@ -17,7 +17,7 @@
         <div class="collapse navbar-collapse" id="bs-navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
               <s:if test="#session.user != null">
-                <li><p class="navbar-text">Welcome, ${sessionScope.user.account}</p></li>
+                <li><p class="navbar-text"><b>Welcome, ${sessionScope.user.account}</b></p></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                         <span class="glyphicon glyphicon-user"></span>
@@ -51,6 +51,7 @@
     </div>
 </nav>
 
+<!-- Sign In Form -->
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -84,13 +85,14 @@
                 </div>
                 <div class="modal-footer">
                     <button type="reset" id="loginResetBtn" value="reset" class="btn btn-default">Reset</button>
-                    <button type="submit" id="loginSubmitBtn" value="submit" class="btn btn-primary" disabled="disabled">Submit</button>
+                    <button type="submit" id="loginSubmitBtn" value="submit" class="btn btn-primary">Submit</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
+<!-- Sign Up Form -->
 <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

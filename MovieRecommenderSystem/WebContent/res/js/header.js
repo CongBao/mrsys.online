@@ -26,8 +26,9 @@ if (typeof jQuery === 'undefined') {
     		$('#loginModal').modal('hide');
     		$('#registerModal').modal('show');
     	});
-    	$('#loginModal').on('hidden.bs.modal', function (e) {
-    		$('body').removeAttr('style class');
+    	$('#registerModal').on('shown.bs.modal', function (e) {
+    		$('body').attr('class', 'modal-open');
+    		$('body').attr('style', 'padding-right: 13px');
     	});
     	$('#registerModal').on('hidden.bs.modal', function (e) {
     		$('body').removeAttr('style class');
@@ -182,6 +183,17 @@ if (typeof jQuery === 'undefined') {
         	email = false;
         	pass = false;
         	confirm = false;
+    	});
+    });
+    
+    // md5
+    $(function () {
+    	$('#loginForm').submit(function () {
+    		$('#loginPassword').val($.md5($('#loginPassword').val()));
+    	});
+    	$('#registerForm').submit(function () {
+    		$('#registerPassword').val($.md5($('#registerPassword').val()));
+    		$('#confirmPassword').val($.md5($('#confirmPassword').val()));
     	});
     });
 
