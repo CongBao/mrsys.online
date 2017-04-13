@@ -23,7 +23,7 @@
 </head>
 <body>
 <%@include file="../header.jsp"%>
-<input type="hidden" id="movieId" value="tt${sessionScope.movie.imdb}">
+<input type="hidden" id="movieId" value="${sessionScope.movie.imdb}">
 <div class="container-fluid" id="main">
     <div id="background">
         <div id="video_bg_dim"></div>

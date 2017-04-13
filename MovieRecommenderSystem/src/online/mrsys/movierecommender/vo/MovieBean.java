@@ -5,18 +5,18 @@ import java.io.Serializable;
 import online.mrsys.movierecommender.util.Serializer;
 
 public class MovieBean implements Serializable {
-
-    private static final long serialVersionUID = 4399104190294524790L;
+    
+    private static final long serialVersionUID = 2406020136825053611L;
     
     private Integer id;
-	private Integer imdb;
+	private String imdb;
 	private Integer year;
 	private String title;
 	
 	public MovieBean() {
 	}
 
-	public MovieBean(Integer id, Integer imdb, Integer year, String title) {
+	public MovieBean(Integer id, String imdb, Integer year, String title) {
 		super();
 		this.id = id;
 		this.imdb = imdb;
@@ -32,11 +32,11 @@ public class MovieBean implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getImdb() {
+	public String getImdb() {
 		return imdb;
 	}
 
-	public void setImdb(Integer imdb) {
+	public void setImdb(String imdb) {
 		this.imdb = imdb;
 	}
 

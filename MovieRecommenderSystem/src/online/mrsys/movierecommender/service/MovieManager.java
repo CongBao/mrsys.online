@@ -104,7 +104,7 @@ public interface MovieManager {
 	 *            the imdb id of movie
 	 * @return the movie record obtained
 	 */
-	Movie getMovieByImdb(int imdb);
+	Movie getMovieByImdb(String imdb);
 
 	/**
 	 * Obtain a movie bean instance by the movie's imdb id
@@ -113,7 +113,7 @@ public interface MovieManager {
 	 *            the imdb id of movie
 	 * @return the movie bean instance obtained
 	 */
-	MovieBean getMovieBeanByImdb(int imdb);
+	MovieBean getMovieBeanByImdb(String imdb);
 
 	/**
 	 * Obtain a list of movie records by year.

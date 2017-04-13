@@ -23,15 +23,15 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Movie implements Cloneable, Serializable {
 
-    private static final long serialVersionUID = -2937182004260953389L;
+    private static final long serialVersionUID = 6200071790747038611L;
 
     @Id
 	@Column(name = "movie_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "imdb")
-	private Integer imdb;
+	@Column(name = "imdb", length = 64)
+	private String imdb;
 	
 	@Column(name = "year", nullable = false)
 	private Integer year;
@@ -51,7 +51,7 @@ public class Movie implements Cloneable, Serializable {
 	public Movie() {
 	}
 
-	public Movie(Integer id, Integer imdb, Integer year, String title, Set<User> users, Set<Rating> ratings) {
+	public Movie(Integer id, String imdb, Integer year, String title, Set<User> users, Set<Rating> ratings) {
 		super();
 		this.id = id;
 		this.imdb = imdb;
@@ -69,11 +69,11 @@ public class Movie implements Cloneable, Serializable {
 		this.id = id;
 	}
 
-	public Integer getImdb() {
+	public String getImdb() {
 		return imdb;
 	}
 
-	public void setImdb(Integer imdb) {
+	public void setImdb(String imdb) {
 		this.imdb = imdb;
 	}
 

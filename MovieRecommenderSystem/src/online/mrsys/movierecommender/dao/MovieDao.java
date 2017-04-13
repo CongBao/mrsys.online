@@ -23,7 +23,7 @@ public interface MovieDao extends BaseDao<Movie> {
 	 *            the imdb id
 	 * @return the movie record found
 	 */
-	Movie findByImdb(Integer imdb);
+	Movie findByImdb(String imdb);
 
 	/**
 	 * Find a list of movie records by year.

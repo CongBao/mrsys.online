@@ -17,7 +17,7 @@ public class MovieDaoHibernate extends BaseDaoHibernate<Movie> implements MovieD
 	}
 	
 	@Override
-	public Movie findByImdb(Integer imdb) {
+	public Movie findByImdb(String imdb) {
 		List<Movie> movies = find("select m from Movie m where m.imdb = ?0", imdb);
 		if (movies != null && movies.size() >= 1)
 			return movies.get(0);

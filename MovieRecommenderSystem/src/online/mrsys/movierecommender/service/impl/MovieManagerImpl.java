@@ -119,12 +119,12 @@ public class MovieManagerImpl implements MovieManager {
 	}
 
 	@Override
-	public Movie getMovieByImdb(int imdb) {
+	public Movie getMovieByImdb(String imdb) {
 		return movieDao.findByImdb(imdb);
 	}
 
 	@Override
-	public MovieBean getMovieBeanByImdb(int imdb) {
+	public MovieBean getMovieBeanByImdb(String imdb) {
 		final Movie movie = movieDao.findByImdb(imdb);
 		if (movie != null) {
 			return new MovieBean(movie.getId(), movie.getImdb(), movie.getYear(), movie.getTitle());

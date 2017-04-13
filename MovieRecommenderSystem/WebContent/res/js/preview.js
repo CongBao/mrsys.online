@@ -12,9 +12,7 @@ if (typeof jQuery === 'undefined') {
 
 	$(function() {
 		var movieId = $('#movieId').val();
-		var query = "http://www.omdbapi.com/?i=0" + movieId + "&plot=full";
-		//$("header").show();
-		//$("#temp").hide();
+		var query = "http://www.omdbapi.com/?i=" + movieId + "&plot=full";
 		$.getJSON(query, function(result) {
 			$("title").text(result.Title);
 			$("#title").text(result.Title);
