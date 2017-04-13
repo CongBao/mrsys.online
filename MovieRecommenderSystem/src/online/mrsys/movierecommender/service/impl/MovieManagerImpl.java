@@ -81,24 +81,24 @@ public class MovieManagerImpl implements MovieManager {
 	}
 
 	@Override
-	public Movie updateYear(Movie origin, int year) {
-		final Movie change = origin;
+	public Movie updateYear(Movie origin, int year) throws Exception {
+		final Movie change = (Movie) origin.clone();
 		change.setYear(year);
 		movieDao.update(change);
 		return change;
 	}
 
 	@Override
-	public Movie updateTitle(Movie origin, String title) {
-		final Movie change = origin;
+	public Movie updateTitle(Movie origin, String title) throws Exception {
+		final Movie change = (Movie) origin.clone();
 		change.setTitle(title);
 		movieDao.update(change);
 		return change;
 	}
 
 	@Override
-	public Rating updateRating(Rating origin, float rating) {
-		final Rating change = origin;
+	public Rating updateRating(Rating origin, float rating) throws Exception {
+		final Rating change = (Rating) origin.clone();
 		change.setRating(rating);
 		ratingDao.update(change);
 		return change;

@@ -61,7 +61,8 @@ public class UserManagerImpl implements UserManager {
 
     @Override
     public int validLogin(User user) throws Exception {
-        final User toValid = user;
+        final User toValid = new User();
+        toValid.setAccount(user.getAccount());
         toValid.setPassword(PasswordValidator.calculate(user.getPassword(), user.getAccount()));
         List<User> users = userDao.findByAccountAndPass(toValid);
         if (users.size() >= 1) {
@@ -76,7 +77,7 @@ public class UserManagerImpl implements UserManager {
 
     @Override
     public int validRegister(User user) throws Exception {
-        final User toRegister = user;
+        final User toRegister = (User) user.clone();
         toRegister.setPassword(PasswordValidator.calculate(user.getPassword(), user.getAccount()));
         if (!isUserExist(toRegister)) {
             if (toRegister.getRole().getId() == ADMIN) {
@@ -129,7 +130,7 @@ public class UserManagerImpl implements UserManager {
     @Override
     public User updateAccount(User origin, String account) throws Exception {
         if (!isUserExist(origin)) {
-            final User change = origin;
+            final User change = (User) origin.clone();
             change.setAccount(account);
             change.setPassword(PasswordValidator.calculate(origin.getPassword(), account));
             userDao.update(change);
@@ -140,39 +141,39 @@ public class UserManagerImpl implements UserManager {
 
     @Override
     public User updatePassword(User origin, String password) throws Exception {
-        final User change = origin;
+        final User change = (User) origin.clone();
         change.setPassword(PasswordValidator.calculate(password, origin.getAccount()));
         userDao.update(change);
         return change;
     }
 
     @Override
-    public User updateEmail(User origin, String email) {
-        final User change = origin;
+    public User updateEmail(User origin, String email) throws Exception {
+        final User change = (User) origin.clone();
         change.setEmail(email);
         userDao.update(change);
         return change;
     }
 
     @Override
-    public User updateMailVerifyState(User origin, boolean verified) {
-        final User change = origin;
+    public User updateMailVerifyState(User origin, boolean verified) throws Exception {
+        final User change = (User) origin.clone();
         change.setMailVerified(verified);
         userDao.update(change);
         return change;
     }
     
     @Override
-    public User updateRecommendation(User origin, byte[] recommend) {
-        final User change = origin;
+    public User updateRecommendation(User origin, byte[] recommend) throws Exception {
+        final User change = (User) origin.clone();
         change.setRecommendation(recommend);
         userDao.update(change);
         return change;
     }
 
     @Override
-    public User updateRole(User origin, int roleId) {
-        final User change = origin;
+    public User updateRole(User origin, int roleId) throws Exception {
+        final User change = (User) origin.clone();
         final Role role = roleDao.findById(roleId);
         if (role != null) {
             change.setRole(role);
@@ -205,14 +206,24 @@ public class UserManagerImpl implements UserManager {
     public UserBean getUserBeanByAccount(String account, MovieManager movieManager) {
         final User user = getUserByAccount(account);
         if (user != null) {
-            Object obj = Serializer.deserialize(user.getRecommendation());
-            if (obj != null) {
-                @SuppressWarnings("unchecked")
-                List<String> recomList = (List<String>) obj;
-                List<MovieBean> movieBeans = new ArrayList<>(recomList.size() + 1);
-                recomList.forEach(item -> movieBeans.add(movieManager.getMovieBeanById(Integer.parseInt(item))));
-                return new UserBean(user.getId(), user.getAccount(), user.getEmail(), user.getMailVerified(), movieBeans, getRoleBeanByAccount(account));
+            UserBean userBean = new UserBean();
+            userBean.setId(user.getId());
+            userBean.setAccount(user.getAccount());
+            userBean.setEmail(user.getEmail());
+            userBean.setMailVerified(user.getMailVerified());
+            userBean.setRecommendation(null);
+            userBean.setRole(getRoleBeanByAccount(account));
+            if (user.getRecommendation() != null) {
+                Object obj = Serializer.deserialize(user.getRecommendation());
+                if (obj != null) {
+                    @SuppressWarnings("unchecked")
+                    List<String> recomList = (List<String>) obj;
+                    List<MovieBean> movieBeans = new ArrayList<>(recomList.size() + 1);
+                    recomList.forEach(item -> movieBeans.add(movieManager.getMovieBeanById(Integer.parseInt(item))));
+                    userBean.setRecommendation(movieBeans);
+                }
             }
+            return userBean;
         }
         return null;
     }
@@ -221,7 +232,11 @@ public class UserManagerImpl implements UserManager {
     public RoleBean getRoleBeanByAccount(String account) {
         final Role role = getRoleByAccount(account);
         if (role != null) {
-            return new RoleBean(role.getId(), role.getRole());
+            if (role.getId() == ADMIN) {
+                return RoleBean.ADMIN;
+            } else if (role.getId() == USER) {
+                return RoleBean.USER;
+            }
         }
         return null;
     }

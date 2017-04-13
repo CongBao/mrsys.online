@@ -1,3 +1,4 @@
+<%@ page import="online.mrsys.movierecommender.action.base.WebConstant"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
@@ -27,6 +28,12 @@
 						<td><s:property value="exception.class" /></td>
 						<td><s:property value="exception.message" /></td>
 					</tr>
+				</table>
+				<hr>
+				<table class="table table-striped table-bordered">
+				    <tr><th>Error Message from Server</th></tr>
+				    <tr><td>${sessionScope.intercept}</td></tr>
+				    <%session.setAttribute(WebConstant.INTERCEPT, null);%>
 				</table>
 			</div>
 		</div>

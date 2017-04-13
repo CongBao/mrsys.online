@@ -13,11 +13,11 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "favorite")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Favorite implements Serializable {
+public class Favorite implements Cloneable, Serializable {
 
-	private static final long serialVersionUID = -4384174191175832946L;
+    private static final long serialVersionUID = -1813983000014482330L;
 
-	@Id
+    @Id
 	@Column(name = "favorite_id")
 	private Integer id;
 	
@@ -60,5 +60,41 @@ public class Favorite implements Serializable {
 	public void setMovieId(Integer movieId) {
 		this.movieId = movieId;
 	}
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((movieId == null) ? 0 : movieId.hashCode());
+        result = prime * result + ((userId == null) ? 0 : userId.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Favorite other = (Favorite) obj;
+        if (movieId == null) {
+            if (other.movieId != null)
+                return false;
+        } else if (!movieId.equals(other.movieId))
+            return false;
+        if (userId == null) {
+            if (other.userId != null)
+                return false;
+        } else if (!userId.equals(other.userId))
+            return false;
+        return true;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return new Favorite(getId(), getUserId(), getMovieId());
+    }
 	
 }

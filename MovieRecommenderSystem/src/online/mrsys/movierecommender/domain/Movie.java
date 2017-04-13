@@ -21,11 +21,11 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "movie")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Movie implements Serializable {
+public class Movie implements Cloneable, Serializable {
 
-	private static final long serialVersionUID = -3637666384453512991L;
+    private static final long serialVersionUID = -2937182004260953389L;
 
-	@Id
+    @Id
 	@Column(name = "movie_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -112,5 +112,35 @@ public class Movie implements Serializable {
 	public void setRatings(Set<Rating> ratings) {
 		this.ratings = ratings;
 	}
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Movie other = (Movie) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        return true;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return new Movie(getId(), getImdb(), getYear(), getTitle(), new HashSet<>(getUsers()), new HashSet<>(getRatings()));
+    }
 
 }

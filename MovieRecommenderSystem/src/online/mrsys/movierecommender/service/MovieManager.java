@@ -55,7 +55,7 @@ public interface MovieManager {
 	 *            the new year of movie
 	 * @return the movie record after updating
 	 */
-	Movie updateYear(Movie origin, int year);
+	Movie updateYear(Movie origin, int year) throws Exception;
 
 	/**
 	 * Update the title record of a movie.
@@ -66,7 +66,7 @@ public interface MovieManager {
 	 *            the new title of movie
 	 * @return the movie record after updating
 	 */
-	Movie updateTitle(Movie origin, String title);
+	Movie updateTitle(Movie origin, String title) throws Exception;
 
 	/**
 	 * Update the rating value of a rating record.
@@ -77,7 +77,7 @@ public interface MovieManager {
 	 *            the new rating value of the rating record
 	 * @return the rating record after updating
 	 */
-	Rating updateRating(Rating origin, float rating);
+	Rating updateRating(Rating origin, float rating) throws Exception;
 
 	/**
 	 * Obtain a movie record by the movie's id.

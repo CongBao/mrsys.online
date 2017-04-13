@@ -1,4 +1,7 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<script type="text/javascript" src="${pageContext.request.contextPath}/res/js/jquery.md5.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/res/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/res/js/header.js"></script>
 <nav class="navbar navbar-inverse navbar-fixed-top" id="navbar">
     <div class="container" id="navbar-container">
         <div class="navbar-header">

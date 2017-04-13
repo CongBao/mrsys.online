@@ -43,17 +43,54 @@
 	
 	<package name="root" extends="default">
 	
-		<action name="">
-            <result>/WEB-INF/content/index.jsp</result>
+		<action name="" class="online.mrsys.movierecommender.action.AutoLoginAction">
+            <result name="success">/WEB-INF/content/index.jsp</result>
+            <result name="error">/WEB-INF/content/index.jsp</result>
         </action>
         
-		<action name="*">
-			<result>/WEB-INF/content/{1}.jsp</result>
-		</action>
+        <action name="index" class="online.mrsys.movierecommender.action.AutoLoginAction">
+            <result name="success">/WEB-INF/content/index.jsp</result>
+            <result name="error">/WEB-INF/content/index.jsp</result>
+        </action>
 		
 		<action name="login" class="online.mrsys.movierecommender.action.LoginAction">
-		    <result>/WEB-INF/content/index.jsp</result>
+		    <result name="success" type="redirectAction">
+                <param name="actionName">index</param>
+                <param name="namespace">/</param>
+            </result>
+            <!--
+		    <result name="error" type="redirectAction">
+                <param name="actionName">index</param>
+                <param name="namespace">/</param>
+            </result>-->
 		</action>
+		
+		<action name="register" class="online.mrsys.movierecommender.action.RegisterAction">
+		    <result name="success" type="redirectAction">
+                <param name="actionName">index</param>
+                <param name="namespace">/</param>
+            </result>
+            <!-- 
+            <result name="error" type="redirectAction">
+                <param name="actionName">index</param>
+                <param name="namespace">/</param>
+            </result>-->
+		</action>
+		
+		<action name="logout" class="online.mrsys.movierecommender.action.LogoutAction">
+		    <result name="success" type="redirectAction">
+                <param name="actionName">index</param>
+                <param name="namespace">/</param>
+            </result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">index</param>
+                <param name="namespace">/</param>
+            </result>
+		</action>
+		
+		<action name="*">
+            <result>/WEB-INF/content/{1}.jsp</result>
+        </action>
 		
 	</package>
 	

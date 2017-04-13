@@ -23,9 +23,9 @@ import org.hibernate.annotations.Type;
 @Entity
 @Table(name = "user")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class User implements Serializable {
+public class User implements Cloneable, Serializable {
 
-    private static final long serialVersionUID = -5747589579608044137L;
+    private static final long serialVersionUID = 5153247670782885713L;
 
     @Id
 	@Column(name = "user_id")
@@ -184,5 +184,10 @@ public class User implements Serializable {
 			return false;
 		return true;
 	}
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return new User(getId(), getAccount(), getPassword(), getEmail(), getMailVerified(), getRecommendation(), (Role) getRole().clone(), new HashSet<>(getMovies()), new HashSet<>(getRatings()));
+    }
 	
 }

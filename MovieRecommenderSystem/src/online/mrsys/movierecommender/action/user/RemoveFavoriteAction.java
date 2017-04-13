@@ -8,6 +8,8 @@ import online.mrsys.movierecommender.domain.Favorite;
 
 public class RemoveFavoriteAction extends BaseAction {
     
+    private static final long serialVersionUID = 3320036867922514503L;
+    
     private Favorite favorite;
 
     public Favorite getFavorite() {
@@ -24,7 +26,7 @@ public class RemoveFavoriteAction extends BaseAction {
 		if (userManager.deleteFavorite(getFavorite())) {
 			return SUCCESS;
 		}
-		actionContext.getSession().put(WebConstant.INTERCEPT, "Error in removing favorite");
+		actionContext.getSession().put(WebConstant.INTERCEPT, "Cannot remove favorite");
 		return ERROR;
     }
     

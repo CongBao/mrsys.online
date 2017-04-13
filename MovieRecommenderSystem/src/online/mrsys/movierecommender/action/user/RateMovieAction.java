@@ -8,7 +8,9 @@ import online.mrsys.movierecommender.domain.Rating;
 
 public class RateMovieAction extends BaseAction {
 
-	private Rating rating;
+    private static final long serialVersionUID = 1924260166254928590L;
+    
+    private Rating rating;
 
 	public Rating getRating() {
 		return rating;
@@ -24,7 +26,7 @@ public class RateMovieAction extends BaseAction {
 		if (movieManager.addRating(getRating())) {
 			return SUCCESS;
 		}
-		actionContext.getSession().put(WebConstant.INTERCEPT, "Error in adding rating");
+		actionContext.getSession().put(WebConstant.INTERCEPT, "Rating exists");
 		return ERROR;
 	}
 

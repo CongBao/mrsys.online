@@ -119,7 +119,7 @@ public interface UserManager {
      *            the new email of user
      * @return the user record after updating
      */
-    User updateEmail(User origin, String email);
+    User updateEmail(User origin, String email) throws Exception;
 
     /**
      * Update the state of mail verification of a user.
@@ -130,7 +130,7 @@ public interface UserManager {
      *            the new mail verifies state of user
      * @return the user record after updating
      */
-    User updateMailVerifyState(User origin, boolean verified);
+    User updateMailVerifyState(User origin, boolean verified) throws Exception;
 
     /**
      * Update the recommendation list of user.
@@ -141,7 +141,7 @@ public interface UserManager {
      *            the new recommended list
      * @return the user record after updating
      */
-    User updateRecommendation(User origin, byte[] recommend);
+    User updateRecommendation(User origin, byte[] recommend) throws Exception;
 
     /**
      * Update the role of a user.
@@ -152,7 +152,7 @@ public interface UserManager {
      *            the new role id of user
      * @return the user record after updating
      */
-    User updateRole(User origin, int roleId);
+    User updateRole(User origin, int roleId) throws Exception;
 
     /**
      * Obtain a user record by the user's id.

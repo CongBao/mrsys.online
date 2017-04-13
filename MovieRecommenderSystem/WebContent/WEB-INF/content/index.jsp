@@ -17,7 +17,6 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/res/js/jquery.timelify.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/res/js/imagesloaded.pkgd.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/res/js/masonry.pkgd.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/res/js/header.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/res/js/index.js"></script>
 </head>
 <body>
@@ -134,20 +133,9 @@
             <div class="box">
                 <img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster4.jpg">
             </div>
-            <div class="box">
-                <img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster1.jpg">
-            </div>
-            <div class="box">
-                <img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster2.jpg">
-            </div>
-            <div class="box">
-                <img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster3.jpg">
-            </div>
-            <div class="box">
-                <img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster4.jpg">
-            </div>
         </div>
     </div>
 </div>
+<s:debug></s:debug>
 </body>
 </html>

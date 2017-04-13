@@ -1,9 +1,14 @@
 package online.mrsys.movierecommender.action.admin;
 
+import com.opensymphony.xwork2.ActionContext;
+
 import online.mrsys.movierecommender.action.base.BaseAction;
+import online.mrsys.movierecommender.action.base.WebConstant;
 import online.mrsys.movierecommender.domain.Movie;
 
 public class AddMovieAction extends BaseAction {
+    
+    private static final long serialVersionUID = -31125094003686109L;
     
     private Movie movie;
 
@@ -17,8 +22,12 @@ public class AddMovieAction extends BaseAction {
 
     @Override
     public String execute() throws Exception {
-        // TODO Auto-generated method stub
-        return super.execute();
+        ActionContext actionContext = ActionContext.getContext();
+        if (movieManager.addMovie(getMovie())) {
+            return SUCCESS;
+        }
+        actionContext.getSession().put(WebConstant.INTERCEPT, "Movie exists");
+        return ERROR;
     }
     
 }

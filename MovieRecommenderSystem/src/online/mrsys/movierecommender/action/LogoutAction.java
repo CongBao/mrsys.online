@@ -11,21 +11,24 @@ import online.mrsys.movierecommender.action.base.WebConstant;
 
 public class LogoutAction extends BaseAction {
 
+    private static final long serialVersionUID = -684687597322368752L;
+
     @Override
     public String execute() throws Exception {
-       ActionContext actionContext =ActionContext.getContext();
-       if(actionContext.getSession()!=null){
-			actionContext.getSession().put(WebConstant.USER, null);
-    	   Cookie[] cookies = ServletActionContext.getRequest().getCookies();
-    	   for(Cookie cookie:cookies){
-    		   cookie.setMaxAge(0);
-    	   }
-    	   return SUCCESS;
-       }else{
-    	   actionContext.getSession().put(WebConstant.INTERCEPT, "No current account has logged in");
-    	   return ERROR;
-       }
-       
+        ActionContext actionContext = ActionContext.getContext();
+        if (actionContext.getSession() != null) {
+            actionContext.getSession().put(WebConstant.USER, null);
+            Cookie[] cookies = ServletActionContext.getRequest().getCookies();
+            for (Cookie cookie : cookies) {
+                cookie.setMaxAge(0);
+                ServletActionContext.getResponse().addCookie(cookie);
+            }
+            return SUCCESS;
+        } else {
+            actionContext.getSession().put(WebConstant.INTERCEPT, "No current account has logged in");
+            return ERROR;
+        }
+
     }
-    
+
 }

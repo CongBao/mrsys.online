@@ -5,11 +5,12 @@ import com.opensymphony.xwork2.ActionContext;
 import online.mrsys.movierecommender.action.base.BaseAction;
 import online.mrsys.movierecommender.action.base.WebConstant;
 import online.mrsys.movierecommender.domain.Favorite;
-import online.mrsys.movierecommender.vo.UserBean;
 
 public class AddFavoriteAction extends BaseAction {
 
-	private Favorite favorite;
+    private static final long serialVersionUID = 3109301412733073128L;
+    
+    private Favorite favorite;
 
 	public Favorite getFavorite() {
 		return favorite;
@@ -25,7 +26,7 @@ public class AddFavoriteAction extends BaseAction {
 		if (userManager.addFavorite(getFavorite())) {
 			return SUCCESS;
 		}
-		actionContext.getSession().put(WebConstant.INTERCEPT, "Error in adding favorite");
+		actionContext.getSession().put(WebConstant.INTERCEPT, "Favorite exists");
 		return ERROR;
 	}
 

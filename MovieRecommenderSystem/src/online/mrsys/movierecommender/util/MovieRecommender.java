@@ -130,7 +130,11 @@ public class MovieRecommender {
             }
             byte[] serializedRecom = Serializer.serialize(v);
             if (serializedRecom != null) {
-                userManager.updateRecommendation(user, serializedRecom);
+                try {
+                    userManager.updateRecommendation(user, serializedRecom);
+                } catch (Exception e) {
+                    logger.log(Level.SEVERE, null, e);
+                }
             }
         });
         logger.log(Level.INFO, "Database updated");
