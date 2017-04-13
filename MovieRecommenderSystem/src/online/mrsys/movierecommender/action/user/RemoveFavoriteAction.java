@@ -1,6 +1,9 @@
 package online.mrsys.movierecommender.action.user;
 
+import com.opensymphony.xwork2.ActionContext;
+
 import online.mrsys.movierecommender.action.base.BaseAction;
+import online.mrsys.movierecommender.action.base.WebConstant;
 import online.mrsys.movierecommender.domain.Favorite;
 
 public class RemoveFavoriteAction extends BaseAction {
@@ -17,8 +20,12 @@ public class RemoveFavoriteAction extends BaseAction {
 
     @Override
     public String execute() throws Exception {
-        // TODO Auto-generated method stub
-        return super.execute();
+    	ActionContext actionContext = ActionContext.getContext();
+		if (userManager.deleteFavorite(getFavorite())) {
+			return SUCCESS;
+		}
+		actionContext.getSession().put(WebConstant.INTERCEPT, "Error in removing favorite");
+		return ERROR;
     }
     
 }
