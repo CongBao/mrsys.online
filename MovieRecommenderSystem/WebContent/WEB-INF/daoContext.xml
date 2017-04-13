@@ -9,7 +9,7 @@
           class="com.mchange.v2.c3p0.ComboPooledDataSource"
           destroy-method="close"
           p:driverClass="com.mysql.jdbc.Driver"
-          p:jdbcUrl="jdbc:mysql://localhost:3306/mrsystest"
+          p:jdbcUrl="jdbc:mysql://localhost:3306/mrsys2000"
           p:user="baocong"
           p:password="960723"
           p:maxPoolSize="200"

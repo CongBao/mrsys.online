@@ -8,6 +8,7 @@ public interface WebConstant {
     
     // session keys
     String USER = "user";
+    String MOVIE = "movie";
     String INTERCEPT = "intercept";
     
     // result types

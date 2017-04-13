@@ -29,8 +29,8 @@
                     <ul class="dropdown-menu">
                         <li class="dropdown-header">Signed in as <b>${sessionScope.user.account}</b></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="/user/~${sessionScope.user.account}/profile"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;View Your Profile</a></li>
-                        <li><a href="/user/~${sessionScope.user.account}/setting"><span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;User Settings</a></li>
+                        <li><a href="/user/${sessionScope.user.account}/profile"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;View Your Profile</a></li>
+                        <li><a href="/user/${sessionScope.user.account}/setting"><span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;User Settings</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="/logout" style="color: #F00; font-weight: bold;"><span class="glyphicon glyphicon-off"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sign Out</a></li>
                     </ul>

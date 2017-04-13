@@ -116,17 +116,10 @@
 	
 	    <default-interceptor-ref name="defaultStack"/>
 	
-	    <action name="~*" class="online.mrsys.movierecommender.action.movie.LoadMovieAction">
+	    <action name="*" class="online.mrsys.movierecommender.action.movie.LoadMovieAction">
 	        <param name="id">{1}</param>
-	        <result name="success" type="redirectAction">
-	            <param name="actionName">preview</param>
-	            <param name="namespace">/movie</param>
-	        </result>
+	        <result name="success">/WEB-INF/content/movie/preview.jsp</result>
 	    </action>
-	    
-	    <action name="*">
-            <result>/WEB-INF/content/movie/{1}.jsp</result>
-        </action>
 	
 	</package>
 	
@@ -134,16 +127,12 @@
 	
 		<default-interceptor-ref name="userStack"/>
 		
-		<action name="~*" class="online.mrsys.movierecommender.action.user.LoadProfileAction">
+		<action name="*" class="online.mrsys.movierecommender.action.user.LoadProfileAction">
 		    <param name="account">{1}</param>
 		    <result name="success" type="redirectAction">
 		        <param name="actionName">profile</param>
 		        <param name="namespace">/user</param>
 		    </result>
-		</action>
-		
-		<action name="*">
-		    <result>/WEB-INF/content/user/{1}.jsp</result>
 		</action>
 		
 	</package>

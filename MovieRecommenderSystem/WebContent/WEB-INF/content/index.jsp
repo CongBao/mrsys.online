@@ -18,6 +18,10 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/res/js/imagesloaded.pkgd.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/res/js/masonry.pkgd.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/res/js/index.js"></script>
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
 </head>
 <body>
 <%@include file="header.jsp"%>
@@ -136,6 +140,5 @@
         </div>
     </div>
 </div>
-<s:debug></s:debug>
 </body>
 </html>
