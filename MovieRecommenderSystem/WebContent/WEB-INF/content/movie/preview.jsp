@@ -45,15 +45,15 @@
         <div class="container">
             <div class="col-md-6" id="introduction">
                 <div class="col">
-                    <h4>GENRE</h4>
+                    <h4>Genre</h4>
                     <p id="genre">N/A</p>
                 </div>
                 <div class="col">
-                    <h4>IMDB RATING</h4>
+                    <h4>IMDB Rating</h4>
                     <p id="imdbRating">N/A</p>
                 </div>
                 <div class="col">
-                    <h4>ACTORS</h4>
+                    <h4>Actors</h4>
                     <p id="actors">N/A</p>
                 </div>
                 <div class="col">
@@ -61,7 +61,7 @@
                     <p id="released">N/A</p>
                 </div>
                 <div class="col">
-                    <h4>RUNTIME</h4>
+                    <h4>Runtime</h4>
                     <p id="runtime">N/A</p>
                 </div>
             </div>
@@ -136,6 +136,6 @@
 </div>
 </div>
 </div>
-<%@include file="../footer.jsp"%>
+<footer style="background: #181818;"><%@include file="../footer.jsp"%></footer>
 </body>
 </html>
