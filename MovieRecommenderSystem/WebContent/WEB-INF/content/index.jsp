@@ -32,13 +32,16 @@
                 <li data-target="#index-carousel" data-slide-to="0" class="active"></li>
                 <li data-target="#index-carousel" data-slide-to="1"></li>
                 <li data-target="#index-carousel" data-slide-to="2"></li>
+                <li data-target="#index-carousel" data-slide-to="3"></li>
+                <li data-target="#index-carousel" data-slide-to="4"></li>
+                <li data-target="#index-carousel" data-slide-to="5"></li>
             </ol>
             <div class="carousel-inner" role="listbox">
                 <div class="item active">
-                    <img class="index-img" src="${pageContext.request.contextPath}/res/img/index.jpg">
+                    <img class="index-img" src="${pageContext.request.contextPath}/res/img/index1.jpg">
                     <div class="carousel-caption">
-                        <h1>Gravity</h1>
-                        <p>Two astronauts work together to survive after an accident which leaves them alone in space.</p>
+                        <h1>Interstellar</h1>
+                        <p>A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.</p>
                     </div>
                 </div>
                 <div class="item">
@@ -51,8 +54,29 @@
                 <div class="item">
                     <img class="index-img" src="${pageContext.request.contextPath}/res/img/index3.jpg">
                     <div class="carousel-caption">
+                        <h1>Gravity</h1>
+                        <p>Two astronauts work together to survive after an accident which leaves them alone in space.</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img class="index-img" src="${pageContext.request.contextPath}/res/img/index4.jpg">
+                    <div class="carousel-caption">
                         <h1>Man of Steel</h1>
                         <p>Clark Kent, one of the last of an extinguished race disguised as an unremarkable human, is forced to reveal his identity when Earth is invaded by an army of survivors who threaten to bring the planet to the brink of destruction.</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img class="index-img" src="${pageContext.request.contextPath}/res/img/index5.jpg">
+                    <div class="carousel-caption">
+                        <h1>Pacific Rim</h1>
+                        <p>As a war between humankind and monstrous sea creatures wages on, a former pilot and a trainee are paired up to drive a seemingly obsolete special weapon in a desperate effort to save the world from the apocalypse.</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img class="index-img" src="${pageContext.request.contextPath}/res/img/index6.jpg">
+                    <div class="carousel-caption">
+                        <h1>Brave</h1>
+                        <p>Determined to make her own path in life, Princess Merida defies a custom that brings chaos to her kingdom. Granted one wish, Merida must rely on her bravery and her archery skills to undo a beastly curse.</p>
                     </div>
                 </div>
             </div>
@@ -102,43 +126,44 @@
     <div class="row">
         <div class="col-md-9 col-md-offset-2" id="masonry">
             <div class="box">
-                <img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster1.jpg">
+                <a href="#"><img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster1.jpg"></a>
             </div>
             <div class="box">
-                <img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster2.jpg">
+                <a href="#"><img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster2.jpg"></a>
             </div>
             <div class="box">
-                <img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster3.jpg">
+                <a href="#"><img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster3.jpg"></a>
             </div>
             <div class="box">
-                <img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster4.jpg">
+                <a href="#"><img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster4.jpg"></a>
             </div>
             <div class="box">
-                <img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster1.jpg">
+                <a href="#"><img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster1.jpg"></a>
             </div>
             <div class="box">
-                <img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster2.jpg">
+                <a href="#"><img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster2.jpg"></a>
             </div>
             <div class="box">
-                <img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster3.jpg">
+                <a href="#"><img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster3.jpg"></a>
             </div>
             <div class="box">
-                <img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster4.jpg">
+                <a href="#"><img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster4.jpg"></a>
             </div>
             <div class="box">
-                <img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster1.jpg">
+                <a href="#"><img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster1.jpg"></a>
             </div>
             <div class="box">
-                <img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster2.jpg">
+                <a href="#"><img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster2.jpg"></a>
             </div>
             <div class="box">
-                <img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster3.jpg">
+                <a href="#"><img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster3.jpg"></a>
             </div>
             <div class="box">
-                <img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster4.jpg">
+                <a href="#"><img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster4.jpg"></a>
             </div>
         </div>
     </div>
 </div>
+<%@include file="footer.jsp"%>
 </body>
 </html>

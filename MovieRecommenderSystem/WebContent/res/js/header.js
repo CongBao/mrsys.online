@@ -1,5 +1,5 @@
 /*!
- * index.js
+ * header.js
  * Author: Cong Bao
  * Date: 11 April, 2017
  */
@@ -12,7 +12,7 @@ if (typeof jQuery === 'undefined') {
 
     $(function () {
         $(win).scroll(function () {
-            if ($(win).scrollTop() >= 100) {
+            if ($(win).scrollTop() >= 50) {
                 $('#navbar > div').css('width', $(win).innerWidth() * 0.9);
             } else {
                 $('#navbar > div').css('width', '');

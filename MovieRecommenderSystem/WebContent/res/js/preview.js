@@ -1,5 +1,5 @@
 /*!
- * index.js
+ * preview.js
  * Author: Jinke He
  * Date: 10 April, 2017
  */
@@ -26,6 +26,16 @@ if (typeof jQuery === 'undefined') {
 			$("#poster").attr("alt", result.Title);
 			$("#background").attr("style", "background-image: url(" + result.Poster + ")");
 		});
+	});
+	
+	$(function () {
+		for (var i = 0; i < 5; i++) {
+			var $star = $('#' + (i + 1) + 'star');
+			var max = $star.attr('aria-valuemax');
+			var now = $star.attr('aria-valuenow');
+			$star.attr('style', 'width: ' + (now / max * 100) + '%;');
+			$star.children('span').text((now / max * 100) + '% Complete');
+		}
 	});
 	
 	$(function () {

@@ -115,6 +115,10 @@
 	<package name="movie" extends="root" namespace="/movie">
 	
 	    <default-interceptor-ref name="defaultStack"/>
+	    
+	    <action name="rate" class="online.mrsys.movierecommender.action.movie.RateMovieAction">
+	        <result name="success">/WEB-INF/content/movie/preview.jsp</result>
+	    </action>
 	
 	    <action name="*" class="online.mrsys.movierecommender.action.movie.LoadMovieAction">
 	        <param name="id">{1}</param>

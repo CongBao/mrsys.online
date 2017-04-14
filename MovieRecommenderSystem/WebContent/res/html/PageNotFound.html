@@ -8,6 +8,12 @@
 <link rel="stylesheet" type="text/css" href="/res/css/bootstrap.min.css" />
 <script type="text/javascript" src="/res/js/jquery-3.2.0.min.js"></script>
 <script type="text/javascript" src="/res/js/bootstrap.min.js"></script>
+<style type="text/css">
+body {
+    background: #181818;
+    color: #fff;
+}
+</style>
 </head>
 <body>
 <header>
@@ -15,9 +21,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="page-header">
-					<h1>
-						Movie Recommender System
-					</h1>
+					<h1>MRSYS.ONLINE - 404</h1>
 				</div>
 			</div>
 		</div>
@@ -41,8 +45,12 @@
 	</div>
 </footer>
 <script type="text/javascript">
-	$("#row").css("marginTop", $(window).innerHeight() / 4 + "px");
-	$("#row").css("marginBottom", $(window).innerHeight() /4 + "px");
+(function (win, doc, $, undefined) {
+	$(function () {
+		$("#row").css("marginTop", $(window).innerHeight() / 3);
+	    $("#row").css("marginBottom", $(window).innerHeight() / 3);
+	});
+})(window, document, jQuery);
 </script>
 </body>
 </html>

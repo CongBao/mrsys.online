@@ -28,7 +28,7 @@
     <div id="background">
         <div id="video_bg_dim"></div>
         <div class="box">
-        <div class="container" style="position:relative; z-index:2">
+        <div class="container" style="position:relative; z-index:2;">
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-4">
                     <div class="poster">
@@ -72,8 +72,8 @@
                     <div class="col-md-2">5 star</div>
                     <div class="col-md-10">
                         <div class="progress">
-                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                                <span class="sr-only">20% Complete (success)</span>
+                            <div class="progress-bar progress-bar-warning" id="5star" role="progressbar" aria-valuenow="${sessionScope.ratingMap[5]}" aria-valuemin="0" aria-valuemax="${sessionScope.ratingMap[-1]}" style="width: 0%">
+                                <span class="sr-only">20% Complete</span>
                             </div>
                         </div>
                     </div>
@@ -82,7 +82,7 @@
                     <div class="col-md-2">4 star</div>
                     <div class="col-md-10">
                         <div class="progress">
-                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%">
+                            <div class="progress-bar progress-bar-warning" id="4star" role="progressbar" aria-valuenow="${sessionScope.ratingMap[4]}" aria-valuemin="0" aria-valuemax="${sessionScope.ratingMap[-1]}" style="width: 0%">
                                 <span class="sr-only">10% Complete</span>
                             </div>
                         </div>
@@ -92,8 +92,8 @@
                     <div class="col-md-2">3 star</div>
                     <div class="col-md-10">
                         <div class="progress">
-                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: 30%">
-                                <span class="sr-only">30% Complete (warning)</span>
+                            <div class="progress-bar progress-bar-warning" id="3star" role="progressbar" aria-valuenow="${sessionScope.ratingMap[3]}" aria-valuemin="0" aria-valuemax="${sessionScope.ratingMap[-1]}" style="width: 0%">
+                                <span class="sr-only">30% Complete</span>
                             </div>
                         </div>
                     </div>
@@ -102,34 +102,33 @@
                     <div class="col-md-2">2 star</div>
                     <div class="col-md-10">
                         <div class="progress">
-                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                                <span class="sr-only">20% Complete (danger)</span>
+                            <div class="progress-bar progress-bar-warning" id="2star" role="progressbar" aria-valuenow="${sessionScope.ratingMap[2]}" aria-valuemin="0" aria-valuemax="${sessionScope.ratingMap[-1]}" style="width: 0%">
+                                <span class="sr-only">20% Complete</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-2">2 star</div>
+                    <div class="col-md-2">1 star</div>
                     <div class="col-md-10">
                         <div class="progress">
-                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%">
-                                <span class="sr-only">10% Complete (danger)</span>
+                            <div class="progress-bar progress-bar-warning" id="1star" role="progressbar" aria-valuenow="${sessionScope.ratingMap[1]}" aria-valuemin="0" aria-valuemax="${sessionScope.ratingMap[-1]}" style="width: 0%">
+                                <span class="sr-only">10% Complete</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div id="rate">
-                    <form>    
-                        <input id="input-21e" value="0" type="number" class="rating" min="0" max="5" step="0.5" data-size="xs" />
-                        <div class="clearfix"></div>
+                    <form method="post" action="movie/rate">
+                        <div class="form-group text-center">
+                            <input id="input-21e" name="rating.rating" value="0" type="number" class="rating" min="0" max="5" step="0.5" data-size="md" />
+                            <div class="clearfix"></div>
+                        </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Submit</button> 
-                            <button type="reset" class="btn btn-default">Reset</button>
+                            <button type="submit" class="btn btn-lg btn-default btn-block">Submit Your Rating</button> 
                         </div>
                     </form>
                     <br/>
-                    <div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -137,5 +136,6 @@
 </div>
 </div>
 </div>
+<%@include file="../footer.jsp"%>
 </body>
 </html>

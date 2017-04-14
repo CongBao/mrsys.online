@@ -66,8 +66,8 @@ body {
 }
 
 #movies-container {
-    background: url(http://localhost:18080/res/img/movie.jpg);
-    background-size: cover;
+    background: url(http://localhost:18080/res/img/film.jpg);
+    background-size: contain;
     padding-top: 100px;
     padding-bottom: 100px;
 }
@@ -86,8 +86,7 @@ body {
 }
 
 .box:hover {
-    box-shadow: 0 0 10px #999;
-    cursor: pointer;
+    box-shadow: 0 0 10px #181818;
 }
 
 .box img {

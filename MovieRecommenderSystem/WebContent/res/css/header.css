@@ -64,6 +64,10 @@
     color: #fff;
 }
 
+.btn-primary {
+	background: transparent;
+}
+
 .form-control {
     background-color: transparent;
     border: 1px solid #fff;

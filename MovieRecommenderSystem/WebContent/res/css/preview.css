@@ -1,15 +1,19 @@
+/*!
+ * preview.css
+ * Author: Jinke He
+ * Date: 12 April, 2017
+ */
 
 body {
 	background: #000;
 	color: #949494;
 	font-weight: 300;
-	font-family: Ubuntu,sans-serif;
     font-size: 14px;
 	line-height: 1.42857143;
 }
 
 #background {
-    position: absolute;
+    position: center;
     padding: 80px 0;
     width: 100%;
     background-position: center center;
@@ -97,7 +101,6 @@ h4 {
 }
 
 #plot{
-    font-family: 'Ubuntu',sans-serif;
     margin-top: 30px;
     color: rgb(148, 148, 148);
     font-size: 15px;
@@ -111,7 +114,7 @@ h4 {
 
 #r{
     padding-left: 50px;
-    padding-top: 100px;
+    padding-top: 120px;
 }
 
 .progress{
@@ -119,9 +122,9 @@ h4 {
 }
 
 #introduction{
-    padding-top: 100px;
+    padding-top: 120px;
 }
 
 #rate{
-    margin-top: 40px;
+    margin-top: 10px;
 }
