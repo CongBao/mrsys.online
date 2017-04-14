@@ -51,5 +51,30 @@ if (typeof jQuery === 'undefined') {
             });
         });*/
     });
+    
+    $(function () {
+    	var refreshing = false;
+    	$(win).scroll(function () {
+    		if ($(doc).scrollTop() + $(win).height() > $(doc).height() - 10 && !refreshing) {
+    			refreshing = true;
+    			var mvIds = new Array();
+    	    	$('#masonry > .box').each(function () {
+    	    		mvIds.push(Number($(this).attr('id')));
+    	    	});
+    	    	$.ajax({
+    	    		cache: false,
+    	    		type: 'post',
+    	    		url: 'ajax/refreshMovies',
+    	    		data: JSON.stringify({ "oldMovies": mvIds }),
+    	    		contentType: "application/json",
+    	    		success: function (data, statusText) {
+    	    			$.each(data.newMovies, function (key, value) {
+    	    				console.log(key + ' ' + value);// TODO
+    	    			});
+    	    		}
+    	    	});
+    		}
+    	});
+    });
 
 })(window, document, jQuery);

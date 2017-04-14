@@ -125,42 +125,18 @@
     </div>
     <div class="row">
         <div class="col-md-9 col-md-offset-2" id="masonry">
-            <div class="box">
+            <!--  <div class="box" id="12">
                 <a href="#"><img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster1.jpg"></a>
             </div>
-            <div class="box">
+            <div class="box" id="7879">
                 <a href="#"><img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster2.jpg"></a>
             </div>
-            <div class="box">
+            <div class="box" id="22">
                 <a href="#"><img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster3.jpg"></a>
             </div>
-            <div class="box">
+            <div class="box" id="123">
                 <a href="#"><img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster4.jpg"></a>
-            </div>
-            <div class="box">
-                <a href="#"><img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster1.jpg"></a>
-            </div>
-            <div class="box">
-                <a href="#"><img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster2.jpg"></a>
-            </div>
-            <div class="box">
-                <a href="#"><img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster3.jpg"></a>
-            </div>
-            <div class="box">
-                <a href="#"><img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster4.jpg"></a>
-            </div>
-            <div class="box">
-                <a href="#"><img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster1.jpg"></a>
-            </div>
-            <div class="box">
-                <a href="#"><img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster2.jpg"></a>
-            </div>
-            <div class="box">
-                <a href="#"><img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster3.jpg"></a>
-            </div>
-            <div class="box">
-                <a href="#"><img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster4.jpg"></a>
-            </div>
+            </div>-->
         </div>
     </div>
 </div>

@@ -151,6 +151,11 @@ public class MovieManagerImpl implements MovieManager {
 	public List<Rating> getRatingsByMovie(Movie movie) {
 		return ratingDao.findByMovie(movie);
 	}
+	
+    @Override
+    public long getMovieCount() {
+        return movieDao.findCount(Movie.class);
+    }
 
 	@Override
 	public boolean deleteMovie(Movie movie) {

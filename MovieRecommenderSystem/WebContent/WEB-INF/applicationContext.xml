@@ -27,7 +27,8 @@
 	<bean id="movieManager"
           class="online.mrsys.movierecommender.service.impl.MovieManagerImpl"
           parent="managerTemplate"/>
-          
+    
+    <!--     
     <bean id="cronTriggerCleanZombies"
           class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"
           p:cronExpression="0 0 3 * * ?">
@@ -62,6 +63,7 @@
             </list>
         </property>
     </bean>
+	--> 
 		
 	<bean id="transactionManager"
           class="org.springframework.orm.hibernate4.HibernateTransactionManager"

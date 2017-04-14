@@ -44,7 +44,7 @@
                 <li>
                     <form class="navbar-form" action="">
                         <div class="form-group has-feedback">
-                            <input type="text" class="form-control" placeholder="Search in website">
+                            <input type="text" class="form-control" placeholder="Search for movies">
                             <span class="glyphicon glyphicon-search form-control-feedback"></span>
                         </div>
                     </form>

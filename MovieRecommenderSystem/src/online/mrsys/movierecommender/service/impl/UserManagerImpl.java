@@ -245,6 +245,11 @@ public class UserManagerImpl implements UserManager {
     public List<Favorite> getFavoritesByUser(User user) {
         return favoriteDao.findByUser(user);
     }
+    
+    @Override
+    public long getUserCount() {
+        return userDao.findCount(User.class);
+    }
 
     @Override
     public void deleteUser(Integer id) {

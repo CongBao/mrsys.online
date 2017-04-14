@@ -95,6 +95,14 @@
 	</package>
 	
 	<package name="ajax" extends="json-default" namespace="/ajax">
+	    
+	    <action name="refreshMovies" class="online.mrsys.movierecommender.action.ajax.RefreshMoviesAction">
+	        <interceptor-ref name="json"/>
+	        <result type="json">
+	            <param name="noCache">true</param>
+                <param name="excludeNullProperties">true</param>
+	        </result>
+	    </action>
         
         <action name="accountExist" class="online.mrsys.movierecommender.action.ajax.CheckExistAction" method="checkAccount">
             <result type="json">

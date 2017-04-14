@@ -209,6 +209,13 @@ public interface UserManager {
     List<Favorite> getFavoritesByUser(User user);
 
     /**
+     * Obtain the total number of user.
+     * 
+     * @return the number of users in database
+     */
+    long getUserCount();
+
+    /**
      * Delete a user record in database.
      * 
      * @param user
