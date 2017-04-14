@@ -187,7 +187,7 @@ public class User implements Cloneable, Serializable {
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        return new User(getId(), getAccount(), getPassword(), getEmail(), getMailVerified(), getRecommendation(), (Role) getRole().clone(), new HashSet<>(getMovies()), new HashSet<>(getRatings()));
+        return new User(getId(), getAccount(), getPassword(), getEmail(), getMailVerified(), getRecommendation(), (Role) getRole().clone(), new HashSet<>(), new HashSet<>());
     }
 	
 }

@@ -39,14 +39,14 @@ public class EditPasswordAction extends BaseAction {
         ActionContext actionContext = ActionContext.getContext();
         int result = userManager.validLogin(getUser());
         if (result == UserManager.LOGIN_FAIL) {
-            actionContext.getSession().put(WebConstant.INTERCEPT, "Wrong Current Password");
+            actionContext.getSession().put(WebConstant.INTERCEPT_2, "Wrong Current Password");
             return ERROR;
         }
-        User user = userManager.updatePassword(getUser(), getNewPassword());
-        actionContext.getSession().put(WebConstant.USER, userManager.getUserBeanByAccount(user.getAccount(), movieManager));
+        userManager.updatePassword(userManager.getUserByAccount(getUser().getAccount()), getNewPassword());
+        actionContext.getSession().put(WebConstant.USER, userManager.getUserBeanByAccount(getUser().getAccount(), movieManager));
         if (result == UserManager.LOGIN_USER) {
             Cookie usrCookie = new Cookie(WebConstant.ACCOUNT, getUser().getAccount());
-            Cookie pwdCookie = new Cookie(WebConstant.PASSWORD, getUser().getPassword());
+            Cookie pwdCookie = new Cookie(WebConstant.PASSWORD, getNewPassword());
             final int expiry = 7 * 24 * 60 * 60; // one week
             usrCookie.setMaxAge(expiry);
             pwdCookie.setMaxAge(expiry);

@@ -110,6 +110,13 @@
             </result>
         </action>
         
+        <action name="checkPass" class="online.mrsys.movierecommender.action.ajax.CheckPasswordAction">
+            <result type="json">
+                <param name="noCache">true</param>
+                <param name="excludeNullProperties">true</param>
+            </result>
+        </action>
+        
     </package>
 	
 	<package name="movie" extends="root" namespace="/movie">
@@ -131,12 +138,19 @@
 	
 		<default-interceptor-ref name="userStack"/>
 		
+		<action name="editEmail" class="online.mrsys.movierecommender.action.user.EditEmailAction">
+		    <result name="success">/WEB-INF/content/user/profile.jsp</result>
+            <!--  <result name="error">/WEB-INF/content/user/profile.jsp</result> -->
+		</action>
+		
+		<action name="editPassword" class="online.mrsys.movierecommender.action.user.EditPasswordAction">
+		    <result name="success">/WEB-INF/content/user/profile.jsp</result>
+		    <!-- <result name="error">/WEB-INF/content/user/profile.jsp</result> -->
+		</action>
+		
 		<action name="*" class="online.mrsys.movierecommender.action.user.LoadProfileAction">
 		    <param name="account">{1}</param>
-		    <result name="success" type="redirectAction">
-		        <param name="actionName">profile</param>
-		        <param name="namespace">/user</param>
-		    </result>
+		    <result name="success">/WEB-INF/content/user/profile.jsp</result>
 		</action>
 		
 	</package>

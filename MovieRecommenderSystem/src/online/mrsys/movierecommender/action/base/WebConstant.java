@@ -11,6 +11,8 @@ public interface WebConstant {
     String MOVIE = "movie";
     String RATING_MAP = "ratingMap";
     String INTERCEPT = "intercept";
+    String INTERCEPT_1 = "intercept_1";
+    String INTERCEPT_2 = "intercept_2";
     
     // result types
 	String REJECT = "reject";

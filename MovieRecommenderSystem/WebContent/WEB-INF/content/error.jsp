@@ -30,6 +30,8 @@ body {
           </s:if>
           <s:else>
             <h1>Sorry, there're something wrong with the server.</h1>
+            <s:property value="exception.class"/>
+            <s:property value="exception.message"/>
           </s:else>
         </div>
     </div>

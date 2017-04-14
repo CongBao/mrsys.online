@@ -140,7 +140,7 @@ public class Movie implements Cloneable, Serializable {
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        return new Movie(getId(), getImdb(), getYear(), getTitle(), new HashSet<>(getUsers()), new HashSet<>(getRatings()));
+        return new Movie(getId(), getImdb(), getYear(), getTitle(), new HashSet<>(), new HashSet<>());
     }
 
 }

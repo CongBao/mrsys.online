@@ -105,7 +105,7 @@ public class Role implements Cloneable, Serializable {
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        return new Role(getId(), getRole(), new HashSet<>(getUsers()));
+        return new Role(getId(), getRole(), new HashSet<>());
     }
 	
 }

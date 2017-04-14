@@ -99,7 +99,7 @@
             <div class="timeline">
                 <ul class="timeline-items">
                     <li class="is-hidden timeline-item">
-                        <h3>Step 1: Login in</h3>
+                        <h3>Step 1: Sign in</h3>
                     </li>
                 </ul>
                 <ul class="timeline-items">
