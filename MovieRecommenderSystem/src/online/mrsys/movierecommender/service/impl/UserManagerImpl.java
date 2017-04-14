@@ -247,21 +247,13 @@ public class UserManagerImpl implements UserManager {
     }
 
     @Override
-    public boolean deleteUser(User user) {
-        if (isUserExist(user)) {
-            userDao.delete(user);
-            return true;
-        }
-        return false;
+    public void deleteUser(Integer id) {
+        userDao.delete(User.class, id);
     }
 
     @Override
-    public boolean deleteFavorite(Favorite favorite) {
-        if (isFavoriteExist(favorite)) {
-            favoriteDao.delete(favorite);
-            return true;
-        }
-        return false;
+    public void deleteFavorite(Integer id) {
+        favoriteDao.delete(Favorite.class, id);
     }
 
     @Override

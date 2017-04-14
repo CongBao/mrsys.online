@@ -10,6 +10,7 @@ public interface WebConstant {
     String USER = "user";
     String MOVIE = "movie";
     String RATING_MAP = "ratingMap";
+    String FAVORITES = "favorites";
     String INTERCEPT = "intercept";
     String INTERCEPT_1 = "intercept_1";
     String INTERCEPT_2 = "intercept_2";

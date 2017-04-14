@@ -168,7 +168,7 @@
 	                    </div>
 	                    <div class="panel-body">
 	                        <form method="post" action="deleteAccount">
-	                            <input type="hidden" name="userId" value="${sessionScope.user.id}">
+	                            <input type="hidden" name="id" value="${sessionScope.user.id}">
 	                            <label>Confirm</label>
 	                            <div class="checkbox">
 	                                <label><input type="checkbox" id="agreement">I'm sure I want to delete my account.</label>

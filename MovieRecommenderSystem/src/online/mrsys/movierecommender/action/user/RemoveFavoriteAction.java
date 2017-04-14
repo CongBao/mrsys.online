@@ -4,30 +4,27 @@ import com.opensymphony.xwork2.ActionContext;
 
 import online.mrsys.movierecommender.action.base.BaseAction;
 import online.mrsys.movierecommender.action.base.WebConstant;
-import online.mrsys.movierecommender.domain.Favorite;
 
 public class RemoveFavoriteAction extends BaseAction {
     
-    private static final long serialVersionUID = 3320036867922514503L;
+    private static final long serialVersionUID = 4364661103933417469L;
     
-    private Favorite favorite;
+    private Integer id;
 
-    public Favorite getFavorite() {
-        return favorite;
+    public Integer getId() {
+        return id;
     }
 
-    public void setFavorite(Favorite favorite) {
-        this.favorite = favorite;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     @Override
     public String execute() throws Exception {
     	ActionContext actionContext = ActionContext.getContext();
-		if (userManager.deleteFavorite(getFavorite())) {
-			return SUCCESS;
-		}
-		actionContext.getSession().put(WebConstant.INTERCEPT, "Cannot remove favorite");
-		return ERROR;
+    	userManager.deleteFavorite(getId());
+    	actionContext.getSession().put(WebConstant.FAVORITES, null);
+    	return SUCCESS;
     }
     
 }

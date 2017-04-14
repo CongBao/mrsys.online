@@ -213,9 +213,8 @@ public interface UserManager {
      * 
      * @param user
      *            the user to be deleted
-     * @return if the delete is successful
      */
-    boolean deleteUser(User user);
+    void deleteUser(Integer id);
 
     /**
      * Delete a favorite record in database.
@@ -224,7 +223,7 @@ public interface UserManager {
      *            the favorite record to be deleted
      * @return if the delete is successful
      */
-    boolean deleteFavorite(Favorite favorite);
+    void deleteFavorite(Integer id);
 
     /**
      * Recommend a list of movies to users.
