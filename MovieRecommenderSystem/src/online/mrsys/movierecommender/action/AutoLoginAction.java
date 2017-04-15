@@ -1,5 +1,7 @@
 package online.mrsys.movierecommender.action;
 
+import java.util.Random;
+
 import javax.servlet.http.Cookie;
 
 import org.apache.struts2.ServletActionContext;
@@ -37,6 +39,7 @@ public class AutoLoginAction extends BaseAction {
     @Override
     public String execute() throws Exception {
         ActionContext actionContext = ActionContext.getContext();
+        actionContext.getSession().put(WebConstant.MOVIE, movieManager.getMovieBeanById(new Random().nextInt((int) movieManager.getMovieCount()) + 1));
         Cookie[] cookies = ServletActionContext.getRequest().getCookies();
         if (cookies != null) {
             String account = null;

@@ -49,12 +49,20 @@ body {
     background-color: rgba(0, 0, 0, 0.6);
 }
 
+.timeline .timeline-items .timeline-item:nth-of-type(2n+1) a {
+	color: #fff;
+}
+
 .timeline .timeline-items .timeline-item:nth-of-type(2n+1)::before {
     border-top: 1em solid transparent;
 }
 
 .timeline .timeline-items .timeline-item.inverted:nth-of-type(2n+1) {
     background-color: rgba(0, 0, 0, 0.6);
+}
+
+.timeline .timeline-items .timeline-item.inverted:nth-of-type(2n+1) a {
+	color: #fff;
 }
 
 .timeline .timeline-items .timeline-item.inverted:nth-of-type(2n+1)::before {

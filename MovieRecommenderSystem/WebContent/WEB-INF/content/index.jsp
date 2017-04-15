@@ -99,17 +99,17 @@
             <div class="timeline">
                 <ul class="timeline-items">
                     <li class="is-hidden timeline-item">
-                        <h3>Step 1: Sign in</h3>
+                        <h3><a href="" data-toggle="modal" data-target="#loginModal">Step 1: Sign in</a></h3>
                     </li>
                 </ul>
                 <ul class="timeline-items">
                     <li class="is-hidden timeline-item inverted">
-                        <h3>Step 2: Rate for movies</h3>
+                        <h3><a href="#movies-container">Step 2: Rate for movies</a></h3>
                     </li>
                 </ul>
                 <ul class="timeline-items">
                     <li class="is-hidden timeline-item">
-                        <h3>Step 3: Check your recommendation list</h3>
+                        <h3><a href="/user/${sessionScope.user.account}#recommend">Step 3: Check your recommendation list</a></h3>
                     </li>
                 </ul>
             </div>
@@ -117,7 +117,7 @@
     </div>
 </div>
 <div class="container-fluid" id="movies-container">
-    <div class="row">
+    <div class="row" style="margin-bottom: 50px;">
         <div class="col-md-12">
             <h1 class="text-center" style="font-size: 4em;">Do not want to wait?</h1>
             <h1 class="text-center">Browse the following movies. You may like them!</h1>
@@ -125,18 +125,14 @@
     </div>
     <div class="row">
         <div class="col-md-9 col-md-offset-2" id="masonry">
-            <!--  <div class="box" id="12">
-                <a href="#"><img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster1.jpg"></a>
+            <div class="box" id="${sessionScope.movie.id}">
+                <a href="movie/${sessionScope.movie.id}"><img src="${sessionScope.movie.imdb}"></a>
             </div>
-            <div class="box" id="7879">
-                <a href="#"><img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster2.jpg"></a>
-            </div>
-            <div class="box" id="22">
-                <a href="#"><img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster3.jpg"></a>
-            </div>
-            <div class="box" id="123">
-                <a href="#"><img class="img-responsive" src="${pageContext.request.contextPath}/res/img/poster4.jpg"></a>
-            </div>-->
+        </div>
+    </div>
+    <div class="row" id="loading">
+        <div class="col-md-12 text-center">
+            <img alt="loading" src="${pageContext.request.contextPath}/res/img/loading.gif">
         </div>
     </div>
 </div>

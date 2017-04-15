@@ -53,26 +53,69 @@ if (typeof jQuery === 'undefined') {
     });
     
     $(function () {
+    	$('#loading').hide();
     	var refreshing = false;
+    	var autoRefresh = function () {
+    		refreshing = true;
+			var mvIds = new Array();
+	    	$('#masonry > .box').each(function () {
+	    		mvIds.push(Number($(this).attr('id')));
+	    	});
+	    	$.ajax({
+	    		cache: false,
+	    		type: 'post',
+	    		url: 'ajax/refreshMovies',
+	    		data: JSON.stringify({ 'oldMovies': mvIds }),
+	    		contentType: 'application/json',
+	    		beforeSend: function () {
+	    			$('#loading').show();
+	    		},
+	    		complete: function () {
+	    			$('#loading').hide();
+	    			refreshing = false;
+	    		},
+	    		success: function (data, statusText) {
+	    			var urlMap = {};
+	    			$.each(data.newMovies, function (key, value) {
+	    				$.ajax({
+	    					cache: false,
+	    					type: 'get',
+	    					async: false,
+	    					url: 'https://www.omdbapi.com',
+	    					data: { 'i': value },
+	    					success: function (data, statusText) {
+	    						urlMap[key] = data.Poster;
+	    					}
+	    				});
+	    			});
+	    			$.each(urlMap, function (id, url) {
+	    				if (url != 'N/A') {
+	    					setTimeout(function () {
+    	    					var $box = $('<div class="box" id="' + id + '"><a href="movie/' + id + '"><img src="' + url + '"></a></div>');
+    	    					$('#masonry').append($box);
+    	    					$box.imagesLoaded(function () {
+	    							$('#masonry').masonry('appended', $box);
+	    						});
+    	    				}, 900);
+	    				}
+	    			});
+	    		}
+	    	});
+    	};
+    	var src = $('#masonry > .box > a > img').attr('src');
+    	$.ajax({
+    		cache: false,
+    		type: 'get',
+    		url: 'https://www.omdbapi.com',
+    		data: { i: src },
+    		success: function (data, statusText) {
+    			$('#masonry > .box > a > img').attr('src', data.Poster);
+    		}
+    	});
+    	autoRefresh();
     	$(win).scroll(function () {
-    		if ($(doc).scrollTop() + $(win).height() > $(doc).height() - 10 && !refreshing) {
-    			refreshing = true;
-    			var mvIds = new Array();
-    	    	$('#masonry > .box').each(function () {
-    	    		mvIds.push(Number($(this).attr('id')));
-    	    	});
-    	    	$.ajax({
-    	    		cache: false,
-    	    		type: 'post',
-    	    		url: 'ajax/refreshMovies',
-    	    		data: JSON.stringify({ "oldMovies": mvIds }),
-    	    		contentType: "application/json",
-    	    		success: function (data, statusText) {
-    	    			$.each(data.newMovies, function (key, value) {
-    	    				console.log(key + ' ' + value);// TODO
-    	    			});
-    	    		}
-    	    	});
+    		if ($(doc).scrollTop() + $(win).height() > $(doc).height() - 50 && !refreshing) {
+    			autoRefresh();
     		}
     	});
     });
