@@ -35,7 +35,7 @@
                         <img id="poster" src="N/A" class="img-thumbnail" alt="N/A"/>
                     </div>
                 </div>
-                <div>
+                <div class="col-lg-8 col-md-8 col-sm-8">
                   <h2 id="title">N/A</h2>
                   <p id="plot">N/A</p>
                 </div>

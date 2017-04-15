@@ -74,7 +74,7 @@ if (typeof jQuery === 'undefined') {
 	    			$('#loading').hide();
 	    			setTimeout(function () {
 	    				refreshing = false;
-	    			}, 1000);
+	    			}, 2000);
 	    		},
 	    		success: function (data, statusText) {
 	    			$.each(data.newMovies, function (key, value) {

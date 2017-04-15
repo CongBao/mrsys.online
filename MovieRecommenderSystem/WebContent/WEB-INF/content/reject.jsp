@@ -10,13 +10,33 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/res/css/bootstrap.min.css"/>
 <script type="text/javascript" src="${pageContext.request.contextPath}/res/js/jquery-3.2.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/res/js/bootstrap.min.js"></script>
+<style type="text/css">
+    .inverse-block {
+        color: #fff;
+        background: #6c6c6c;
+    }
+    #reject h1 {
+        margin-left: 0.8em;
+    }
+    #reject p {
+        font-size: 3em;
+        color: #6c6c6c;
+    }
+    #footer > div {
+        color: #fff;
+        background: #6c6c6c;
+    }
+</style>
 </head>
 <body>
 <%@include file="header.jsp"%>
-<div class="container">
+<div class="container" id="reject">
+    <div class="row inverse-block">
+        <h1><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Rejection From Server</h1>
+    </div>
     <div class="row" id="row">
         <div class="col-md-12 text-center">
-            <h1>Sorry, you have no permission to access this page.</h1>
+            <p>Sorry, you have no permission to access this page.</p>
         </div>
     </div>
 </div>

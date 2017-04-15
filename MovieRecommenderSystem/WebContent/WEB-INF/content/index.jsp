@@ -136,6 +136,6 @@
         </div>
     </div>
 </div>
-<%@include file="footer.jsp"%>
+<footer style="background: #181818;"><%@include file="footer.jsp"%></footer>
 </body>
 </html>
