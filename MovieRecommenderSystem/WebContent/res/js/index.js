@@ -72,32 +72,29 @@ if (typeof jQuery === 'undefined') {
 	    		},
 	    		complete: function () {
 	    			$('#loading').hide();
-	    			refreshing = false;
+	    			setTimeout(function () {
+	    				refreshing = false;
+	    			}, 1000);
 	    		},
 	    		success: function (data, statusText) {
-	    			var urlMap = {};
 	    			$.each(data.newMovies, function (key, value) {
-	    				$.ajax({
-	    					cache: false,
-	    					type: 'get',
-	    					async: false,
-	    					url: 'https://www.omdbapi.com',
-	    					data: { 'i': value },
-	    					success: function (data, statusText) {
-	    						urlMap[key] = data.Poster;
-	    					}
-	    				});
-	    			});
-	    			$.each(urlMap, function (id, url) {
-	    				if (url != 'N/A') {
-	    					setTimeout(function () {
-    	    					var $box = $('<div class="box" id="' + id + '"><a href="movie/' + id + '"><img src="' + url + '"></a></div>');
-    	    					$('#masonry').append($box);
-    	    					$box.imagesLoaded(function () {
-	    							$('#masonry').masonry('appended', $box);
-	    						});
-    	    				}, 900);
-	    				}
+	    				setTimeout(function () {
+	    					$.ajax({
+		    					cache: false,
+		    					type: 'get',
+		    					url: 'https://www.omdbapi.com',
+		    					data: { 'i': value },
+		    					success: function (data, statusText) {
+		    						if (data.Poster != 'N/A') {
+		    							var $box = $('<div class="box" id="' + key + '"><a href="movie/' + key + '"><img src="' + data.Poster + '"></a></div>');
+			    						$('#masonry').append($box);
+		    	    					$box.imagesLoaded(function () {
+			    							$('#masonry').masonry('appended', $box);
+			    						});
+		    						}
+		    					}
+		    				});
+	    				}, 500);
 	    			});
 	    		}
 	    	});
@@ -112,7 +109,7 @@ if (typeof jQuery === 'undefined') {
     			$('#masonry > .box > a > img').attr('src', data.Poster);
     		}
     	});
-    	autoRefresh();
+    	$('#masonry').imagesLoaded(autoRefresh);
     	$(win).scroll(function () {
     		if ($(doc).scrollTop() + $(win).height() > $(doc).height() - 50 && !refreshing) {
     			autoRefresh();

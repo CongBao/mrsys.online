@@ -6,6 +6,8 @@ import online.mrsys.movierecommender.domain.Movie;
 import online.mrsys.movierecommender.domain.Rating;
 import online.mrsys.movierecommender.domain.User;
 import online.mrsys.movierecommender.vo.MovieBean;
+import online.mrsys.movierecommender.vo.RatingBean;
+import online.mrsys.movierecommender.vo.UserBean;
 
 public interface MovieManager {
 
@@ -149,6 +151,30 @@ public interface MovieManager {
      * @return a list of rating records obtained
      */
     List<Rating> getRatingsByMovie(Movie movie);
+
+    /**
+     * Obtain a rating record by user and movie
+     * 
+     * @param user
+     *            the user of this rating
+     * @param movie
+     *            the movie of this rating
+     * @return the rating record obtained
+     */
+    Rating getRatingByUserAndMovie(User user, Movie movie);
+
+    /**
+     * Obtain a rating bean instance by user bean and movie bean.
+     * 
+     * @param userBean
+     *            the user bean instance of this rating
+     * @param movieBean
+     *            the movie bean instance of this rating
+     * @param userManager
+     *            the instance of user manager
+     * @return the rating bean instance obtained
+     */
+    RatingBean getRatingBeanByUserBeanAndMovieBean(UserBean userBean, MovieBean movieBean, UserManager userManager);
 
     /**
      * Obtain the total number of movie.

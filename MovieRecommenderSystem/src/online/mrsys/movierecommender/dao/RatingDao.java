@@ -9,31 +9,42 @@ import online.mrsys.movierecommender.domain.User;
 
 public interface RatingDao extends BaseDao<Rating> {
 
-	/**
-	 * Find a rating record by id
-	 * 
-	 * @param id
-	 *            the id of the rating record
-	 * @return the rating record found
-	 */
-	Rating findById(Integer id);
+    /**
+     * Find a rating record by id
+     * 
+     * @param id
+     *            the id of the rating record
+     * @return the rating record found
+     */
+    Rating findById(Integer id);
 
-	/**
-	 * Find a list of rating records by user.
-	 * 
-	 * @param user
-	 *            the user to be queried
-	 * @return a list of rating records found
-	 */
-	List<Rating> findByUser(User user);
+    /**
+     * Find a list of rating records by user.
+     * 
+     * @param user
+     *            the user to be queried
+     * @return a list of rating records found
+     */
+    List<Rating> findByUser(User user);
 
-	/**
-	 * Find a list of rating records by movie.
-	 * 
-	 * @param movie
-	 *            the movie to be queried
-	 * @return a list of rating records found
-	 */
-	List<Rating> findByMovie(Movie movie);
+    /**
+     * Find a list of rating records by movie.
+     * 
+     * @param movie
+     *            the movie to be queried
+     * @return a list of rating records found
+     */
+    List<Rating> findByMovie(Movie movie);
+
+    /**
+     * Find a rating record by user and movie.
+     * 
+     * @param user
+     *            the user of this rating
+     * @param movie
+     *            the movie of this rating
+     * @return the rating record found
+     */
+    Rating findByUserAndMovie(User user, Movie movie);
 
 }

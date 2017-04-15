@@ -28,4 +28,13 @@ public class RatingDaoHibernate extends BaseDaoHibernate<Rating> implements Rati
 		return find("select r from Rating r where r.movie = ?0", movie);
 	}
 
+    @Override
+    public Rating findByUserAndMovie(User user, Movie movie) {
+        List<Rating> ratings = find("select r from Rating r where r.user = ?0 and r.movie = ?1", user, movie);
+        if (ratings != null && ratings.size() >= 1) {
+            return ratings.get(0);
+        }
+        return null;
+    }
+
 }

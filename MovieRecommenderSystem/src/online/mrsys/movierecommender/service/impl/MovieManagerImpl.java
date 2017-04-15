@@ -11,7 +11,10 @@ import online.mrsys.movierecommender.domain.Movie;
 import online.mrsys.movierecommender.domain.Rating;
 import online.mrsys.movierecommender.domain.User;
 import online.mrsys.movierecommender.service.MovieManager;
+import online.mrsys.movierecommender.service.UserManager;
 import online.mrsys.movierecommender.vo.MovieBean;
+import online.mrsys.movierecommender.vo.RatingBean;
+import online.mrsys.movierecommender.vo.UserBean;
 
 public class MovieManagerImpl implements MovieManager {
 
@@ -74,8 +77,8 @@ public class MovieManagerImpl implements MovieManager {
 
 	@Override
 	public boolean isRatingExist(Rating rating) {
-		if (ratingDao.findById(rating.getId()) != null) {
-			return true;
+		if (ratingDao.findByUserAndMovie(rating.getUser(), rating.getMovie()) != null) {
+		    return true;
 		}
 		return false;
 	}
@@ -151,6 +154,29 @@ public class MovieManagerImpl implements MovieManager {
 	public List<Rating> getRatingsByMovie(Movie movie) {
 		return ratingDao.findByMovie(movie);
 	}
+	
+    @Override
+    public Rating getRatingByUserAndMovie(User user, Movie movie) {
+        return ratingDao.findByUserAndMovie(user, movie);
+    }
+    
+    @Override
+    public RatingBean getRatingBeanByUserBeanAndMovieBean(UserBean userBean, MovieBean movieBean, UserManager userManager) {
+        User user = userManager.getUserById(userBean.getId());
+        Movie movie = getMovieById(movieBean.getId());
+        if (user != null && movie != null) {
+            Rating rating = getRatingByUserAndMovie(user, movie);
+            if (rating != null) {
+                RatingBean ratingBean = new RatingBean();
+                ratingBean.setId(rating.getId());
+                ratingBean.setRating(rating.getRating());
+                ratingBean.setUser(userBean);
+                ratingBean.setMovie(movieBean);
+                return ratingBean;
+            }
+        }
+        return null;
+    }
 	
     @Override
     public long getMovieCount() {

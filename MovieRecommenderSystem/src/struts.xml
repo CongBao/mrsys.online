@@ -125,6 +125,13 @@
             </result>
         </action>
         
+        <action name="rateMovie" class="online.mrsys.movierecommender.action.ajax.RateMovieAction">
+            <result type="json">
+                <param name="noCache">true</param>
+                <param name="excludeNullProperties">true</param>
+            </result>
+        </action>
+        
     </package>
 	
 	<package name="movie" extends="root" namespace="/movie">

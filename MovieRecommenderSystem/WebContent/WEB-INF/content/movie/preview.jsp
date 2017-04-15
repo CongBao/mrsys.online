@@ -119,15 +119,16 @@
                     </div>
                 </div>
                 <div id="rate">
-                    <form method="post" action="movie/rate">
+                    <div>
                         <div class="form-group text-center">
-                            <input id="input-21e" name="rating.rating" value="0" type="number" class="rating" min="0" max="5" step="0.5" data-size="md" />
+                            <input id="rating" name="rating" value="<s:if test="#session.rating != null">${sessionScope.rating.rating}</s:if><s:else>0</s:else>" type="number" class="rating" min="0" max="5" step="0.5" data-size="md" />
                             <div class="clearfix"></div>
                         </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-lg btn-default btn-block">Submit Your Rating</button> 
+                        <div class="form-group text-center">
+                            <button id="ratingBtn" type="button" class="btn btn-lg btn-default btn-block" <s:if test="#session.rating != null">disabled="disabled"</s:if>>Submit Your Rating</button>
+                            <p id="ratingFeed">Rating succeeds! Thank you!</p>
                         </div>
-                    </form>
+                    </div>
                     <br/>
                 </div>
             </div>

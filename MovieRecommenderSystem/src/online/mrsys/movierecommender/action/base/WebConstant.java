@@ -9,6 +9,7 @@ public interface WebConstant {
     // session keys
     String USER = "user";
     String MOVIE = "movie";
+    String RATING = "rating";
     String RATING_MAP = "ratingMap";
     String FAVORITES = "favorites";
     String INTERCEPT = "intercept";

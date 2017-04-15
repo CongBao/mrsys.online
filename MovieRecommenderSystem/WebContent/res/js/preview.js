@@ -39,7 +39,21 @@ if (typeof jQuery === 'undefined') {
 	});
 	
 	$(function () {
-		$('.rating-kv').rating();
+		$('#ratingFeed').hide();
+		$('#ratingBtn').click(function () {
+			$.ajax({
+				cache: false,
+				type: 'post',
+				url: '/ajax/rateMovie',
+				data: { 'rating': $('#rating').val() },
+				success: function (data, statusText) {
+					if (data.valid == false) {
+						$('#ratingFeed').text('Sorry, You have already rated for this movie!');
+					}
+					$('#ratingFeed').show();
+				}
+			});
+		});
 	});
 
 })(window, document, jQuery);
