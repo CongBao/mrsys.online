@@ -128,3 +128,22 @@ h4 {
 #rate{
     margin-top: 10px;
 }
+
+#title {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+#favBtn {
+	margin-top: 5px;
+	border: 1px solid transparent;
+}
+
+#favBtn:hover {
+	background: transparent;
+	color: #f00;
+}
+
+#favorite {
+	font-size: 2em;
+}

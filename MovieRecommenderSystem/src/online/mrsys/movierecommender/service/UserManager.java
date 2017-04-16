@@ -5,6 +5,8 @@ import java.util.List;
 import online.mrsys.movierecommender.domain.Favorite;
 import online.mrsys.movierecommender.domain.Role;
 import online.mrsys.movierecommender.domain.User;
+import online.mrsys.movierecommender.vo.FavoriteBean;
+import online.mrsys.movierecommender.vo.MovieBean;
 import online.mrsys.movierecommender.vo.RoleBean;
 import online.mrsys.movierecommender.vo.UserBean;
 
@@ -188,7 +190,7 @@ public interface UserManager {
      *            the account of user
      * @return the user bean instance obtained
      */
-    UserBean getUserBeanByAccount(String account, MovieManager movieManager);
+    UserBean getUserBeanByAccount(String account);
 
     /**
      * Obtain a role bean instance by the user's account.
@@ -207,6 +209,46 @@ public interface UserManager {
      * @return a list of favorite records obtained
      */
     List<Favorite> getFavoritesByUser(User user);
+
+    /**
+     * Obtain a list of favorite records by user id.
+     * 
+     * @param userId
+     *            the user id to be queried
+     * @return a list of favorite records obtained
+     */
+    List<Favorite> getFavoritesByUser(Integer userId);
+
+    /**
+     * Obtain a list of favorite bean instances of a user.
+     * 
+     * @param user
+     *            the user to be queried
+     * @return a list of favorite bean instances obtained
+     */
+    List<FavoriteBean> getFavoriteBeansByUserBean(UserBean userBean, MovieManager movieManager);
+
+    /**
+     * Obtain a favorite record by user id and movie id.
+     * 
+     * @param userId
+     *            the user id of this favorite
+     * @param movieId
+     *            the movie id of this favorite
+     * @return the favorite record obtained
+     */
+    Favorite getFavoriteByUserAndMovie(Integer userId, Integer movieId);
+
+    /**
+     * Obtain a favorite bean instance by user bean and movie bean.
+     * 
+     * @param userBean
+     *            the user bean instance
+     * @param movieBean
+     *            the movie bean instance
+     * @return the favorite bean instance obtained
+     */
+    FavoriteBean getFavoriteBeanByUserBeanAndMovieBean(UserBean userBean, MovieBean movieBean);
 
     /**
      * Obtain the total number of user.

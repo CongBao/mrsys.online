@@ -36,8 +36,24 @@
                     </div>
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-8">
-                  <h2 id="title">N/A</h2>
-                  <p id="plot">N/A</p>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h1 id="title">N/A</h1>
+                        </div>
+                        <div class="col-md-2 text-right">
+                          <s:if test="#session.favorite == null">
+                            <button id="favBtn" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="add to favourites"><span id="favorite" class="glyphicon glyphicon-heart-empty"></span></button>
+                          </s:if>
+                          <s:else>
+                            <button id="favBtn" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="remove favourite" style="color: #f00;"><span id="favorite" class=" glyphicon glyphicon-heart"></span></button>
+                          </s:else>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p id="plot">N/A</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

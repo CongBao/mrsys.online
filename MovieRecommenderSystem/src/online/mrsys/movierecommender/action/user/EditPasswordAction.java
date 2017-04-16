@@ -43,7 +43,7 @@ public class EditPasswordAction extends BaseAction {
             return ERROR;
         }
         userManager.updatePassword(userManager.getUserByAccount(getUser().getAccount()), getNewPassword());
-        actionContext.getSession().put(WebConstant.USER, userManager.getUserBeanByAccount(getUser().getAccount(), movieManager));
+        actionContext.getSession().put(WebConstant.USER, userManager.getUserBeanByAccount(getUser().getAccount()));
         if (result == UserManager.LOGIN_USER) {
             Cookie usrCookie = new Cookie(WebConstant.ACCOUNT, getUser().getAccount());
             Cookie pwdCookie = new Cookie(WebConstant.PASSWORD, getNewPassword());

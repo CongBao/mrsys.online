@@ -11,6 +11,8 @@
 <meta name="author" content="Jinke He">
 <title>${sessionScope.user.account}</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/res/css/bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/res/css/normal.css"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/res/css/profile.css"/>
 <script type="text/javascript" src="${pageContext.request.contextPath}/res/js/jquery-3.2.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/res/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/res/js/profile.js"></script>
@@ -21,13 +23,23 @@
 </head>
 <body>
 <%@include file="../header.jsp"%>
-<div class="container" style="margin-top: 50px;">
-    <div class="row">
+<div class="container">
+    <div class="row inverse-block">
+        <div class="col-md-12">
+            <h1><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;Personal Page</h1>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 50px;">
         <div class="col-md-3">
             <ul class="nav nav-pills nav-stacked" role="tablist" id="tabs">
                 <li role="presentation" class="active">
                     <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">
                         <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;Profile
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a href="#favorite" aria-controls="favorite" role="tab" data-toggle="tab">
+                        <span class="glyphicon glyphicon-heart"></span>&nbsp;&nbsp;&nbsp;Favourites
                     </a>
                 </li>
                 <li role="presentation">
@@ -70,7 +82,7 @@
 	                                      <s:if test="#session.user.mailVerified">Verified</s:if>
 	                                      <s:else>
 	                                        Not Verified
-	                                        <a id="mail_verify" href="user/verify?account=${sessionScope.user.account}" class="btn btn-default btn-xs">Verify Now</a>
+	                                        <a id="mail_verify" href="" class="btn btn-default btn-xs" onclick="alert('This function is unavailable now');">Verify Now</a>
 	                                      </s:else>
 	                                    </td>
 	                                </tr>
@@ -79,9 +91,35 @@
 	                    </div>
 	                </div>
 	            </div>
+	            <div role="tabpanel" class="tab-pane fade" id="favorite">
+	              <s:if test="#session.favorites != null">
+	                  <s:iterator value="#session.favorites" id="fav">
+	                    <div class="panel panel-defalut" id="<s:property value="#fav.imdb"/>">
+	                        <div class="panel-heading">
+                                <h3 class="panel-title">N/A</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <img alt="N/A" src="N/A">
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="media-heading">N/A</h4>
+                                        <p>N/A</p>
+                                        <a class="btn btn-default" href="/movie/<s:property value="#fav.id"/>">Learn more »</a>
+                                    </div>
+                                </div>
+                            </div>
+	                    </div>
+	                  </s:iterator>
+	              </s:if>
+	              <s:else>
+	                <h2 class="text-center">There are no movies in your favourites</h2>
+	              </s:else>
+	            </div>
 	            <div role="tabpanel" class="tab-pane fade" id="recommend">
-	              <s:if test="#session.user.recommendation != null">
-		              <s:iterator value="#session.user.recommendation" id="rec">
+	              <s:if test="#session.recommendations != null">
+		              <s:iterator value="#session.recommendations" id="rec">
 		                <div class="panel panel-default" id="<s:property value="#rec.imdb"/>">
 		                    <div class="panel-heading">
 		                        <h3 class="panel-title">N/A</h3>
@@ -102,7 +140,7 @@
 		              </s:iterator>
 		          </s:if>
 		          <s:else>
-		              <h2>Sorry, recommendation list is not available now.</h2>
+		              <h2 class="text-center">Sorry, recommendation list is not available now.</h2>
 		          </s:else>
 	            </div>
 	            <div role="tabpanel" class="tab-pane fade" id="setting">
@@ -164,7 +202,7 @@
 	                </div>
 	                <div class="panel panel-default">
 	                    <div class="panel-heading">
-	                        <h3 class="panel-title" style="color: #D9534F">Delete Account</h3>
+	                        <h3 class="panel-title">Delete Account</h3>
 	                    </div>
 	                    <div class="panel-body">
 	                        <form method="post" action="deleteAccount">

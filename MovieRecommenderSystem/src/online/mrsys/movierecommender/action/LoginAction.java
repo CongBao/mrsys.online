@@ -30,7 +30,7 @@ public class LoginAction extends BaseAction {
 	    ActionContext actionContext = ActionContext.getContext();
 	    int result = userManager.validLogin(getUser());
 	    if (result != UserManager.LOGIN_FAIL) {
-	        actionContext.getSession().put(WebConstant.USER, userManager.getUserBeanByAccount(getUser().getAccount(), movieManager));
+	        actionContext.getSession().put(WebConstant.USER, userManager.getUserBeanByAccount(getUser().getAccount()));
 	        if (result == UserManager.LOGIN_USER) { // only set cookies for normal users
 	            Cookie usrCookie = new Cookie(WebConstant.ACCOUNT, getUser().getAccount());
 	            Cookie pwdCookie = new Cookie(WebConstant.PASSWORD, getUser().getPassword());

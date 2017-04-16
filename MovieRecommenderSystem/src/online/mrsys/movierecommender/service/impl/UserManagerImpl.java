@@ -24,7 +24,7 @@ import online.mrsys.movierecommender.service.MovieManager;
 import online.mrsys.movierecommender.service.UserManager;
 import online.mrsys.movierecommender.util.MovieRecommender;
 import online.mrsys.movierecommender.util.PasswordValidator;
-import online.mrsys.movierecommender.util.Serializer;
+import online.mrsys.movierecommender.vo.FavoriteBean;
 import online.mrsys.movierecommender.vo.MovieBean;
 import online.mrsys.movierecommender.vo.RoleBean;
 import online.mrsys.movierecommender.vo.UserBean;
@@ -121,7 +121,7 @@ public class UserManagerImpl implements UserManager {
 
     @Override
     public boolean isFavoriteExist(Favorite favorite) {
-        if (favoriteDao.findById(favorite.getId()) != null) {
+        if (favoriteDao.findByUserAndMovie(favorite.getUserId(), favorite.getMovieId()) != null) {
             return true;
         }
         return false;
@@ -203,7 +203,7 @@ public class UserManagerImpl implements UserManager {
     }
 
     @Override
-    public UserBean getUserBeanByAccount(String account, MovieManager movieManager) {
+    public UserBean getUserBeanByAccount(String account) {
         final User user = getUserByAccount(account);
         if (user != null) {
             UserBean userBean = new UserBean();
@@ -211,18 +211,7 @@ public class UserManagerImpl implements UserManager {
             userBean.setAccount(user.getAccount());
             userBean.setEmail(user.getEmail());
             userBean.setMailVerified(user.getMailVerified());
-            userBean.setRecommendation(null);
             userBean.setRole(getRoleBeanByAccount(account));
-            if (user.getRecommendation() != null) {
-                Object obj = Serializer.deserialize(user.getRecommendation());
-                if (obj != null) {
-                    @SuppressWarnings("unchecked")
-                    List<String> recomList = (List<String>) obj;
-                    List<MovieBean> movieBeans = new ArrayList<>(recomList.size() + 1);
-                    recomList.forEach(item -> movieBeans.add(movieManager.getMovieBeanById(Integer.parseInt(item))));
-                    userBean.setRecommendation(movieBeans);
-                }
-            }
             return userBean;
         }
         return null;
@@ -244,6 +233,43 @@ public class UserManagerImpl implements UserManager {
     @Override
     public List<Favorite> getFavoritesByUser(User user) {
         return favoriteDao.findByUser(user);
+    }
+    
+    @Override
+    public List<Favorite> getFavoritesByUser(Integer userId) {
+        return favoriteDao.findByUser(userId);
+    }
+    
+    @Override
+    public List<FavoriteBean> getFavoriteBeansByUserBean(UserBean userBean, MovieManager movieManager) {
+        List<FavoriteBean> favoriteBeans = new ArrayList<>();
+        List<Favorite> favorites = getFavoritesByUser(userBean.getId());
+        favorites.forEach(item -> {
+            FavoriteBean favoriteBean = new FavoriteBean();
+            favoriteBean.setId(item.getId());
+            favoriteBean.setUser(userBean);
+            favoriteBean.setMovie(movieManager.getMovieBeanById(item.getMovieId()));
+            favoriteBeans.add(favoriteBean);
+        });
+        return favoriteBeans;
+    }
+    
+    @Override
+    public Favorite getFavoriteByUserAndMovie(Integer userId, Integer movieId) {
+        return favoriteDao.findByUserAndMovie(userId, movieId);
+    }
+    
+    @Override
+    public FavoriteBean getFavoriteBeanByUserBeanAndMovieBean(UserBean userBean, MovieBean movieBean) {
+        Favorite favorite = getFavoriteByUserAndMovie(userBean.getId(), movieBean.getId());
+        if (favorite != null) {
+            FavoriteBean favoriteBean = new FavoriteBean();
+            favoriteBean.setId(favorite.getId());
+            favoriteBean.setUser(userBean);
+            favoriteBean.setMovie(movieBean);
+            return favoriteBean;
+        }
+        return null;
     }
     
     @Override

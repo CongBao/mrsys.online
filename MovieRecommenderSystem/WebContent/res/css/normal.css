@@ -1,0 +1,46 @@
+/*!
+ * normal.css
+ * Author: Cong Bao
+ * Date: 15 April, 2017
+ */
+ 
+.inverse-block {
+    padding: 15px 20px;
+    background: #6c6c6c;
+    color: #fff;
+    border-radius: 4px;
+}
+
+.inverse-block h1 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+#footer > div {
+    color: #fff;
+    background: #6c6c6c;
+    margin-top: 50px;
+    border-radius: 4px;
+}
+
+#footer .btn-default {
+	background: transparent;
+	color: #fff;
+}
+
+#footer .btn-default:hover {
+	background-color: #eee;
+	color: #6c6c6c;
+}
+
+#navbar {
+    color: #6c6c6c;
+}
+
+#navbar a:hover {
+    color: #000;
+}
+
+a, a:hover {
+    color: #6c6c6c;
+}

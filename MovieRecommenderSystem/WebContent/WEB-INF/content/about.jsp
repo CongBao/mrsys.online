@@ -10,27 +10,16 @@
 <meta name="author" content="Zekun Wang">
 <title>About</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/res/css/bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/res/css/normal.css"/>
 <script type="text/javascript" src="${pageContext.request.contextPath}/res/js/jquery-3.2.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/res/js/bootstrap.min.js"></script>
 <style type="text/css">
-    .inverse-block {
-        color: #fff;
-        background: #6c6c6c;
-    }
     #about {
         font-size: 1.2em;
         color: #6c6c6c;
     }
-    #about h1 {
-        margin-left: 0.8em;
-    }
     #about h2 {
         margin-left: -1.8em;
-    }
-    #footer > div {
-        color: #fff;
-        background: #6c6c6c;
-        margin-top: 50px;
     }
 </style>
 </head>

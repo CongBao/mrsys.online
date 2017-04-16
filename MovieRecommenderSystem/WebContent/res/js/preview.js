@@ -10,7 +10,11 @@ if (typeof jQuery === 'undefined') {
 
 (function(win, doc, $, undefined) {
 
-	$(function() {
+	$(function () {
+		$('[data-toggle="tooltip"]').tooltip()
+	});
+	
+	$(function () {
 		var movieId = $('#movieId').val();
 		var query = "https://www.omdbapi.com/?i=" + movieId + "&plot=full";
 		$.getJSON(query, function(result) {
@@ -36,6 +40,20 @@ if (typeof jQuery === 'undefined') {
 			$star.attr('style', 'width: ' + (now / max * 100) + '%;');
 			$star.children('span').text((now / max * 100) + '% Complete');
 		}
+	});
+	
+	$(function () {
+		$('#favBtn').click(function () {
+			$.ajax({
+				cache: false,
+				type: 'post',
+				url: '/ajax/updateFavorite',
+				data: { 'status': 'request' },
+				success: function (data, statusText) {
+					console.log(data);
+				}
+			});
+		});
 	});
 	
 	$(function () {

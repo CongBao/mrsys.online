@@ -11,23 +11,17 @@ import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 
 import online.mrsys.movierecommender.action.base.WebConstant;
 import online.mrsys.movierecommender.domain.User;
-import online.mrsys.movierecommender.service.MovieManager;
 import online.mrsys.movierecommender.service.UserManager;
 import online.mrsys.movierecommender.vo.UserBean;
 
 public class UserInterceptor extends AbstractInterceptor {
     
-    private static final long serialVersionUID = -5177665263045644572L;
+    private static final long serialVersionUID = 4686770240251078793L;
     
     private UserManager userManager;
-    private MovieManager movieManager;
     
     public void setUserManager(UserManager userManager) {
         this.userManager = userManager;
-    }
-    
-    public void setMovieManager(MovieManager movieManager) {
-        this.movieManager = movieManager;
     }
 
     @Override
@@ -58,7 +52,7 @@ public class UserInterceptor extends AbstractInterceptor {
                 testUser.setPassword(password);
                 int result = userManager.validLogin(testUser);
                 if (result == UserManager.LOGIN_USER) {
-                    actionContext.getSession().put(WebConstant.USER, userManager.getUserBeanByAccount(account, movieManager));
+                    actionContext.getSession().put(WebConstant.USER, userManager.getUserBeanByAccount(account));
                     return invocation.invoke();
                 }
             }

@@ -125,6 +125,13 @@
             </result>
         </action>
         
+        <action name="updateFavorite" class="online.mrsys.movierecommender.action.ajax.UpdateFavoriteAction">
+            <result type="json">
+                <param name="noCache">true</param>
+                <param name="excludeNullProperties">true</param>
+            </result>
+        </action>
+        
         <action name="rateMovie" class="online.mrsys.movierecommender.action.ajax.RateMovieAction">
             <result type="json">
                 <param name="noCache">true</param>

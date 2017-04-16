@@ -57,7 +57,7 @@ public class AutoLoginAction extends BaseAction {
                 toLogin.setPassword(password);
                 int result = userManager.validLogin(toLogin);
                 if (result == UserManager.LOGIN_USER) {
-                    actionContext.getSession().put(WebConstant.USER, userManager.getUserBeanByAccount(account, movieManager));
+                    actionContext.getSession().put(WebConstant.USER, userManager.getUserBeanByAccount(account));
                     return SUCCESS;
                 }
             }

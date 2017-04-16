@@ -1,31 +1,28 @@
 package online.mrsys.movierecommender.vo;
 
 import java.io.Serializable;
-import java.util.List;
 
 import online.mrsys.movierecommender.util.Serializer;
 
 public class UserBean implements Serializable {
-
-    private static final long serialVersionUID = 8754356370516708321L;
+    
+    private static final long serialVersionUID = 1034682106851713781L;
     
     private Integer id;
     private String account;
     private String email;
     private Boolean mailVerified;
-    private List<MovieBean> recommendation;
     private RoleBean role;
 
     public UserBean() {
     }
 
-    public UserBean(Integer id, String account, String email, Boolean mailVerified, List<MovieBean> recommendation, RoleBean role) {
+    public UserBean(Integer id, String account, String email, Boolean mailVerified, RoleBean role) {
         super();
         this.id = id;
         this.account = account;
         this.email = email;
         this.mailVerified = mailVerified;
-        this.recommendation = recommendation;
         this.role = role;
     }
 
@@ -59,14 +56,6 @@ public class UserBean implements Serializable {
 
     public void setMailVerified(Boolean mailVerified) {
         this.mailVerified = mailVerified;
-    }
-
-    public List<MovieBean> getRecommendation() {
-        return recommendation;
-    }
-
-    public void setRecommendation(List<MovieBean> recommendation) {
-        this.recommendation = recommendation;
     }
 
     public RoleBean getRole() {

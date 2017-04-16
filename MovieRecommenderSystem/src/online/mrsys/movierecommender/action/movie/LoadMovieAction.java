@@ -9,6 +9,7 @@ import com.opensymphony.xwork2.ActionContext;
 import online.mrsys.movierecommender.action.base.BaseAction;
 import online.mrsys.movierecommender.action.base.WebConstant;
 import online.mrsys.movierecommender.domain.Rating;
+import online.mrsys.movierecommender.vo.FavoriteBean;
 import online.mrsys.movierecommender.vo.MovieBean;
 import online.mrsys.movierecommender.vo.RatingBean;
 import online.mrsys.movierecommender.vo.UserBean;
@@ -33,8 +34,17 @@ public class LoadMovieAction extends BaseAction {
         MovieBean movieBean = movieManager.getMovieBeanById(Integer.parseInt(getId()));
         if (movieBean != null) {
             actionContext.getSession().put(WebConstant.MOVIE, movieBean);
-            // ratings by the current signed in user
             UserBean userBean = (UserBean) actionContext.getSession().get(WebConstant.USER);
+            // favorite by the current signed in user
+            if (userBean != null) {
+                FavoriteBean favoriteBean = userManager.getFavoriteBeanByUserBeanAndMovieBean(userBean, movieBean);
+                if (favoriteBean != null) {
+                    actionContext.getSession().put(WebConstant.FAVORITE, favoriteBean);
+                } else {
+                    actionContext.getSession().put(WebConstant.FAVORITE, null);
+                }
+            }
+            // ratings by the current signed in user
             if (userBean != null) {
                 RatingBean ratingBean = movieManager.getRatingBeanByUserBeanAndMovieBean(userBean, movieBean, userManager);
                 if (ratingBean != null) {

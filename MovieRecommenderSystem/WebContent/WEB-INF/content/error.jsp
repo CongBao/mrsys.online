@@ -10,16 +10,10 @@
 <meta name="author" content="Cong Bao">
 <title>Error</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/res/css/bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/res/css/normal.css"/>
 <script type="text/javascript" src="${pageContext.request.contextPath}/res/js/jquery-3.2.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/res/js/bootstrap.min.js"></script>
 <style type="text/css">
-    .inverse-block {
-        color: #fff;
-        background: #6c6c6c;
-    }
-    #error h1 {
-        margin-left: 0.8em;
-    }
     #error h2 {
         font-size: 3em;
         color: #6c6c6c;
@@ -31,10 +25,6 @@
     #error table th, td {
         font-size: 1.2em;
         color: #6c6c6c;
-    }
-    #footer > div {
-        color: #fff;
-        background: #6c6c6c;
     }
 </style>
 </head>

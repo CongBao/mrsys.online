@@ -38,7 +38,7 @@ public class EditEmailAction extends BaseAction {
         }
         User user = userManager.getUserById(Integer.parseInt(getId()));
         userManager.updateEmail(user, getNewEmail());
-        actionContext.getSession().put(WebConstant.USER, userManager.getUserBeanByAccount(user.getAccount(), movieManager));
+        actionContext.getSession().put(WebConstant.USER, userManager.getUserBeanByAccount(user.getAccount()));
         return SUCCESS;
     }
     

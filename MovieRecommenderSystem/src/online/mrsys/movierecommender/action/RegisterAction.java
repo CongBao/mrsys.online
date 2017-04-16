@@ -37,7 +37,7 @@ public class RegisterAction extends BaseAction {
             actionContext.getSession().put(WebConstant.INTERCEPT, "User is existed");
             return ERROR;
         }
-        actionContext.getSession().put(WebConstant.USER, userManager.getUserBeanByAccount(user.getAccount(), movieManager));
+        actionContext.getSession().put(WebConstant.USER, userManager.getUserBeanByAccount(user.getAccount()));
         if (result == UserManager.REGISTER_USER) {
             Cookie usrCookie = new Cookie(WebConstant.ACCOUNT, user.getAccount());
             Cookie pwdCookie = new Cookie(WebConstant.PASSWORD, user.getPassword());
