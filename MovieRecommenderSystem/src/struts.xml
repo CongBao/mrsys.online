@@ -88,6 +88,10 @@
             </result>
 		</action>
 		
+		<action name="search" class="online.mrsys.movierecommender.action.SearchAction">
+		    <result>/WEB-INF/content/results.jsp</result>
+		</action>
+		
 		<action name="*">
             <result>/WEB-INF/content/{1}.jsp</result>
         </action>
@@ -95,6 +99,14 @@
 	</package>
 	
 	<package name="ajax" extends="json-default" namespace="/ajax">
+	
+	    <action name="askId" class="online.mrsys.movierecommender.action.ajax.AskMovieIdAction">
+	        <interceptor-ref name="json"/>
+	        <result type="json">
+                <param name="noCache">true</param>
+                <param name="excludeNullProperties">true</param>
+            </result>
+	    </action>
 	    
 	    <action name="refreshMovies" class="online.mrsys.movierecommender.action.ajax.RefreshMoviesAction">
 	        <interceptor-ref name="json"/>
@@ -187,6 +199,18 @@
 	<package name="admin" extends="root" namespace="/admin">
 	
 	    <default-interceptor-ref name="adminStack"/>
+	    
+	    <action name="addMovie" class="online.mrsys.movierecommender.action.admin.AddMovieAction">
+	        <result>/WEB-INF/content/admin/console.jsp</result>
+	    </action>
+	    
+	    <action name="deleteMovie" class="online.mrsys.movierecommender.action.admin.DeleteMovieAction">
+	        <result>/WEB-INF/content/admin/console.jsp</result>
+	    </action>
+	    
+	    <action name="upgradeUser" class="online.mrsys.movierecommender.action.admin.UpgradeUserAction">
+	        <result>/WEB-INF/content/admin/console.jsp</result>
+	    </action>
 	    
 	    <action name="*">
 	        <result>/WEB-INF/content/admin/{1}.jsp</result>

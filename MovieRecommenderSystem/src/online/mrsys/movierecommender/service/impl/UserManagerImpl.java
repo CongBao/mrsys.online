@@ -32,8 +32,9 @@ import online.mrsys.movierecommender.vo.UserBean;
 public class UserManagerImpl implements UserManager {
 
     private FavoriteDao favoriteDao;
-    private RoleDao roleDao;
     private UserDao userDao;
+    @SuppressWarnings("unused")
+    private RoleDao roleDao;
     @SuppressWarnings("unused")
     private MovieDao movieDao;
     @SuppressWarnings("unused")
@@ -172,15 +173,11 @@ public class UserManagerImpl implements UserManager {
     }
 
     @Override
-    public User updateRole(User origin, int roleId) throws Exception {
+    public User updateRole(User origin, Role role) throws Exception {
         final User change = (User) origin.clone();
-        final Role role = roleDao.findById(roleId);
-        if (role != null) {
-            change.setRole(role);
-            userDao.update(change);
-            return change;
-        }
-        return null;
+        change.setRole(role);
+        userDao.update(change);
+        return change;
     }
     
     @Override

@@ -184,12 +184,8 @@ public class MovieManagerImpl implements MovieManager {
     }
 
 	@Override
-	public boolean deleteMovie(Movie movie) {
-		if (isMovieExist(movie)) {
-			movieDao.delete(movie);
-			return true;
-		}
-		return false;
+	public void deleteMovie(Integer id) {
+	    movieDao.delete(Movie.class, id);
 	}
 
 	@Override

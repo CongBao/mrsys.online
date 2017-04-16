@@ -12,7 +12,6 @@
 <title>${sessionScope.user.account}</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/res/css/bootstrap.min.css"/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/res/css/normal.css"/>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/res/css/profile.css"/>
 <script type="text/javascript" src="${pageContext.request.contextPath}/res/js/jquery-3.2.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/res/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/res/js/profile.js"></script>
@@ -144,6 +143,16 @@
 		          </s:else>
 	            </div>
 	            <div role="tabpanel" class="tab-pane fade" id="setting">
+	              <s:if test="#session.user.role.id == 1">
+	                <div class="panel panel-default">
+	                    <div class="panel-heading">
+	                        <h3 class="panel-title">Administrator</h3>
+	                    </div>
+	                    <div class="panel-body">
+	                        <a href="/admin/console" type="button" class="btn btn-default btn-lg btn-block">Open Console</a>
+	                    </div>
+	                </div>
+	              </s:if>
 	                <div class="panel panel-default">
 	                    <div class="panel-heading">
 	                        <h3 class="panel-title">Change Email</h3>

@@ -77,7 +77,6 @@ public class Role implements Cloneable, Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
-        result = prime * result + ((role == null) ? 0 : role.hashCode());
         return result;
     }
 
@@ -94,11 +93,6 @@ public class Role implements Cloneable, Serializable {
             if (other.id != null)
                 return false;
         } else if (!id.equals(other.id))
-            return false;
-        if (role == null) {
-            if (other.role != null)
-                return false;
-        } else if (!role.equals(other.role))
             return false;
         return true;
     }

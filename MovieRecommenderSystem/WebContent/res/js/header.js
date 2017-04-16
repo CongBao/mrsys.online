@@ -9,6 +9,18 @@ if (typeof jQuery === 'undefined') {
 }
 
 (function (win, doc, $, undefined) {
+	
+	$(function () {
+		$('#searchBtn').click(redirect);
+		$('#search').bind('keypress', function (e) {
+			if (e.keyCode == '13') {
+				redirect();
+			}
+		});
+		var redirect = function () {
+			$(location).attr('href', '/search?s=' + $('#search').val() + '&page=1');
+		}
+	});
 
     $(function () {
         $(win).scroll(function () {

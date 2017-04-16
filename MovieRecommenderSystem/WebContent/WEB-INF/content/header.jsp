@@ -11,9 +11,6 @@
                     data-target="#bs-navbar-collapse"
                     aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="/index">MRSYS.ONLINE</a>
         </div>
@@ -42,12 +39,16 @@
                 </li>
               </s:else>
                 <li>
-                    <form class="navbar-form" action="">
-                        <div class="form-group has-feedback">
-                            <input type="text" class="form-control" placeholder="Search for movies">
-                            <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                    <div class="navbar-form">
+                        <div class="input-group">
+                            <input type="text" id="search" class="form-control" placeholder="Search for movies">
+                            <div class="input-group-btn">
+                                <button id="searchBtn" class="btn btn-default" type="button">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </div>
                         </div>
-                    </form>
+                    </div>
                 </li>
             </ul>
         </div>

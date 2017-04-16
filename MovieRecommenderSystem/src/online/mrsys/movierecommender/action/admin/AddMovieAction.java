@@ -24,9 +24,10 @@ public class AddMovieAction extends BaseAction {
     public String execute() throws Exception {
         ActionContext actionContext = ActionContext.getContext();
         if (movieManager.addMovie(getMovie())) {
+            actionContext.getSession().put(WebConstant.INTERCEPT_1, "Success");
             return SUCCESS;
         }
-        actionContext.getSession().put(WebConstant.INTERCEPT, "Movie exists");
+        actionContext.getSession().put(WebConstant.INTERCEPT_1, "Movie exists");
         return ERROR;
     }
     

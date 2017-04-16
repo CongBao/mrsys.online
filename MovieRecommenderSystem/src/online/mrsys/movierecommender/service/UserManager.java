@@ -150,11 +150,11 @@ public interface UserManager {
      * 
      * @param origin
      *            the user to be updated
-     * @param roleId
-     *            the new role id of user
+     * @param role
+     *            the new role of user
      * @return the user record after updating
      */
-    User updateRole(User origin, int roleId) throws Exception;
+    User updateRole(User origin, Role role) throws Exception;
 
     /**
      * Obtain a user record by the user's id.
