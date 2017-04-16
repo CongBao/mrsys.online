@@ -48,9 +48,20 @@ if (typeof jQuery === 'undefined') {
 				cache: false,
 				type: 'post',
 				url: '/ajax/updateFavorite',
-				data: { 'status': 'request' },
+				data: {},
 				success: function (data, statusText) {
 					console.log(data);
+					if (data.status == 'added') {
+						$('#favBtn').attr('title', 'remove favourite');
+						$('#favBtn').attr('style', 'color: #f00;');
+						$('#favBtn').html('<span id="favorite" class=" glyphicon glyphicon-heart"></span>');
+					} else if (data.status == 'removed') {
+						$('#favBtn').attr('title', 'add to favourites');
+						$('#favBtn').removeAttr('style');
+						$('#favBtn').html('<span id="favorite" class="glyphicon glyphicon-heart-empty"></span>');
+					} else {
+						// TODO
+					}
 				}
 			});
 		});

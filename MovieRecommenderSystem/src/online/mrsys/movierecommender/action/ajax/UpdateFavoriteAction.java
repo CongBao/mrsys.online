@@ -45,7 +45,7 @@ public class UpdateFavoriteAction extends BaseAction {
             setStatus(ADDED);
         } else {
             favorite = userManager.getFavoriteByUserAndMovie(userBean.getId(), movieBean.getId());
-            userManager.deleteFavorite(favorite.getId());
+            userManager.deleteFavorite(userBean.getId(), movieBean.getId());
             setStatus(REMOVED);
         }
         return SUCCESS;

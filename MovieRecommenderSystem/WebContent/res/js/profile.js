@@ -16,6 +16,48 @@ if (typeof jQuery === 'undefined') {
 		$('#tabs a[href="' + $(location).attr('hash') + '"]').tab('show');
 	});
 	
+	// favourites
+	$(function () {
+		$('#favorite > div').each(function () {
+			var $imdb = $(this).attr('id').substr(3);
+			$.ajax({
+				cache: false,
+				type: 'get',
+				url: 'https://www.omdbapi.com',
+				data: { 'i': $imdb },
+				success: function (data, statusText) {
+					$('#favtitle' + $imdb).text(data.Title);
+					$('#favimg' + $imdb).attr('src', data.Poster);
+					$('#favimg' + $imdb).attr('alt', data.Title);
+					$('#favimg' + $imdb).css('width', '100px');
+					$('#favinfo' + $imdb).text('Released on: ' + data.Released);
+					$('#favplot' + $imdb).text(data.Plot);
+				}
+			});
+		});
+	});
+	
+	// recommendations
+	$(function () {
+		$('#recommend > div').each(function () {
+			var $imdb = $(this).attr('id').substr(3);
+			$.ajax({
+				cache: false,
+				type: 'get',
+				url: 'https://www.omdbapi.com',
+				data: { 'i': $imdb },
+				success: function (data, statusText) {
+					$('#rectitle' + $imdb).text(data.Title);
+					$('#recimg' + $imdb).attr('src', data.Poster);
+					$('#recimg' + $imdb).attr('alt', data.Title);
+					$('#recimg' + $imdb).css('width', '100px');
+					$('#recinfo' + $imdb).text('Released on: ' + data.Released);
+					$('#recplot' + $imdb).text(data.Plot);
+				}
+			});
+		});
+	});
+	
 	$(function () {
 		var email = false;
 		$('#newEmail').blur(function () {

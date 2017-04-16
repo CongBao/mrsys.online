@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
@@ -12,37 +13,27 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
 @Table(name = "favorite")
+@IdClass(Favorite.class)
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Favorite implements Cloneable, Serializable {
 
-    private static final long serialVersionUID = -1813983000014482330L;
+    private static final long serialVersionUID = -8069690169913677424L;
 
     @Id
-	@Column(name = "favorite_id")
-	private Integer id;
-	
-	@Column(name = "user_id")
+    @Column(name = "user_id")
 	private Integer userId;
 	
+    @Id
 	@Column(name = "movie_id")
 	private Integer movieId;
 	
 	public Favorite() {
 	}
 
-	public Favorite(Integer id, Integer userId, Integer movieId) {
+	public Favorite(Integer userId, Integer movieId) {
 		super();
-		this.id = id;
 		this.userId = userId;
 		this.movieId = movieId;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public Integer getUserId() {
@@ -94,7 +85,7 @@ public class Favorite implements Cloneable, Serializable {
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        return new Favorite(getId(), getUserId(), getMovieId());
+        return new Favorite(getUserId(), getMovieId());
     }
 	
 }

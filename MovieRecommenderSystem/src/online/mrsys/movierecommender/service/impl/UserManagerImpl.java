@@ -246,7 +246,6 @@ public class UserManagerImpl implements UserManager {
         List<Favorite> favorites = getFavoritesByUser(userBean.getId());
         favorites.forEach(item -> {
             FavoriteBean favoriteBean = new FavoriteBean();
-            favoriteBean.setId(item.getId());
             favoriteBean.setUser(userBean);
             favoriteBean.setMovie(movieManager.getMovieBeanById(item.getMovieId()));
             favoriteBeans.add(favoriteBean);
@@ -264,7 +263,6 @@ public class UserManagerImpl implements UserManager {
         Favorite favorite = getFavoriteByUserAndMovie(userBean.getId(), movieBean.getId());
         if (favorite != null) {
             FavoriteBean favoriteBean = new FavoriteBean();
-            favoriteBean.setId(favorite.getId());
             favoriteBean.setUser(userBean);
             favoriteBean.setMovie(movieBean);
             return favoriteBean;
@@ -283,8 +281,8 @@ public class UserManagerImpl implements UserManager {
     }
 
     @Override
-    public void deleteFavorite(Integer id) {
-        favoriteDao.delete(Favorite.class, id);
+    public void deleteFavorite(Integer userId, Integer movieId) {
+        favoriteDao.delete(getFavoriteByUserAndMovie(userId, movieId));
     }
 
     @Override

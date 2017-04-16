@@ -272,7 +272,7 @@ public interface UserManager {
      *            the favorite record to be deleted
      * @return if the delete is successful
      */
-    void deleteFavorite(Integer id);
+    void deleteFavorite(Integer userId, Integer movieId);
 
     /**
      * Recommend a list of movies to users.

@@ -5,29 +5,19 @@ import java.io.Serializable;
 import online.mrsys.movierecommender.util.Serializer;
 
 public class FavoriteBean implements Serializable {
-
-    private static final long serialVersionUID = 6010668177765006438L;
     
-    private Integer id;
+    private static final long serialVersionUID = -4206053491351201065L;
+    
     private UserBean user;
     private MovieBean movie;
     
     public FavoriteBean() {
     }
     
-    public FavoriteBean(Integer id, UserBean user, MovieBean movie) {
+    public FavoriteBean(UserBean user, MovieBean movie) {
         super();
-        this.id = id;
         this.user = user;
         this.movie = movie;
-    }
-    
-    public Integer getId() {
-        return id;
-    }
-    
-    public void setId(Integer id) {
-        this.id = id;
     }
     
     public UserBean getUser() {
@@ -50,12 +40,11 @@ public class FavoriteBean implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((movie == null) ? 0 : movie.hashCode());
         result = prime * result + ((user == null) ? 0 : user.hashCode());
         return result;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -65,11 +54,6 @@ public class FavoriteBean implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         FavoriteBean other = (FavoriteBean) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
         if (movie == null) {
             if (other.movie != null)
                 return false;
@@ -82,7 +66,7 @@ public class FavoriteBean implements Serializable {
             return false;
         return true;
     }
-    
+
     @Override
     public String toString() {
         return new String(Serializer.serialize(this));

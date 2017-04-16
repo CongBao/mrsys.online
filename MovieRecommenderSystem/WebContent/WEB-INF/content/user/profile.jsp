@@ -94,19 +94,19 @@
 	            <div role="tabpanel" class="tab-pane fade" id="favorite">
 	              <s:if test="#session.favorites != null">
 	                  <s:iterator value="#session.favorites" id="fav">
-	                    <div class="panel panel-defalut" id="<s:property value="#fav.imdb"/>">
+	                    <div class="panel panel-default" id="fav<s:property value="#fav.movie.imdb"/>">
 	                        <div class="panel-heading">
-                                <h3 class="panel-title">N/A</h3>
+                                <h3 class="panel-title" id="favtitle<s:property value="#fav.movie.imdb"/>">N/A</h3>
                             </div>
                             <div class="panel-body">
                                 <div class="media">
                                     <div class="media-left">
-                                        <img alt="N/A" src="N/A">
+                                        <img id="favimg<s:property value="#fav.movie.imdb"/>" alt="N/A" src="N/A">
                                     </div>
                                     <div class="media-body">
-                                        <h4 class="media-heading">N/A</h4>
-                                        <p>N/A</p>
-                                        <a class="btn btn-default" href="/movie/<s:property value="#fav.id"/>">Learn more »</a>
+                                        <h4 class="media-heading" id="favinfo<s:property value="#fav.movie.imdb"/>">N/A</h4>
+                                        <p id="favplot<s:property value="#fav.movie.imdb"/>">N/A</p>
+                                        <a class="btn btn-default" href="/movie/<s:property value="#fav.movie.id"/>">Learn more »</a>
                                     </div>
                                 </div>
                             </div>
@@ -120,18 +120,18 @@
 	            <div role="tabpanel" class="tab-pane fade" id="recommend">
 	              <s:if test="#session.recommendations != null">
 		              <s:iterator value="#session.recommendations" id="rec">
-		                <div class="panel panel-default" id="<s:property value="#rec.imdb"/>">
+		                <div class="panel panel-default" id="rec<s:property value="#rec.imdb"/>">
 		                    <div class="panel-heading">
-		                        <h3 class="panel-title">N/A</h3>
+		                        <h3 class="panel-title" id="rectitle<s:property value="#rec.imdb"/>">N/A</h3>
 		                    </div>
 		                    <div class="panel-body">
 		                        <div class="media">
 		                            <div class="media-left">
-		                                <img alt="N/A" src="N/A">
+		                                <img id="recimg<s:property value="#rec.imdb"/>" alt="N/A" src="N/A">
 		                            </div>
 		                            <div class="media-body">
-		                                <h4 class="media-heading">N/A</h4>
-		                                <p>N/A</p>
+		                                <h4 class="media-heading" id="recinfo<s:property value="#rec.imdb"/>">N/A</h4>
+		                                <p id="recplot<s:property value="#rec.imdb"/>">N/A</p>
 		                                <a class="btn btn-default" href="/movie/<s:property value="#rec.id"/>">Learn more »</a>
 		                            </div>
 		                        </div>
