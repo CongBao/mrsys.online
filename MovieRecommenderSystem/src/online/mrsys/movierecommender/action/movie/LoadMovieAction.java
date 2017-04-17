@@ -55,10 +55,10 @@ public class LoadMovieAction extends BaseAction {
             }
             // ratings by other users
             List<Rating> ratings = movieManager.getRatingsByMovie(movieManager.getMovieById(Integer.parseInt(getId())));
-            Map<Long, Integer> ratingMap = new HashMap<>();
+            Map<Long, Integer> ratingMap = new HashMap<>();System.out.println("Total: " + ratingMap.size());
             for (Rating rating : ratings) {
-                Integer num = ratingMap.get(Math.round((double) rating.getRating()));
-                ratingMap.put(Math.round((double) rating.getRating()), num == null ? 0 : num + 1);
+                Integer num = ratingMap.get(Math.round(rating.getRating().doubleValue()));
+                ratingMap.put(Math.round(rating.getRating().doubleValue()), num == null ? 1 : num + 1);
             }
             ratingMap.put(-1L, ratings.size());
             actionContext.getSession().put(WebConstant.RATING_MAP, ratingMap);

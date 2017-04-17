@@ -29,7 +29,7 @@ public class LoadProfileAction extends BaseAction {
     }
 
     @Override
-    public String execute() throws Exception {// TODO load favorite, recommendation list
+    public String execute() throws Exception {
         ActionContext actionContext = ActionContext.getContext();
         UserBean userBean = (UserBean) actionContext.getSession().get(WebConstant.USER);
         if (userBean == null) {

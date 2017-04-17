@@ -11,7 +11,9 @@ if (typeof jQuery === 'undefined') {
 (function (win, doc, $, undefined) {
 	
 	$(function () {
-		$('#searchBtn').click(redirect);
+		$('#searchBtn').click(function () {
+			redirect();
+		});
 		$('#search').bind('keypress', function (e) {
 			if (e.keyCode == '13') {
 				redirect();
