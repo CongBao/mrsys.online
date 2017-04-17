@@ -55,7 +55,7 @@ public class LoadMovieAction extends BaseAction {
             }
             // ratings by other users
             List<Rating> ratings = movieManager.getRatingsByMovie(movieManager.getMovieById(Integer.parseInt(getId())));
-            Map<Long, Integer> ratingMap = new HashMap<>();System.out.println("Total: " + ratingMap.size());
+            Map<Long, Integer> ratingMap = new HashMap<>();
             for (Rating rating : ratings) {
                 Integer num = ratingMap.get(Math.round(rating.getRating().doubleValue()));
                 ratingMap.put(Math.round(rating.getRating().doubleValue()), num == null ? 1 : num + 1);
