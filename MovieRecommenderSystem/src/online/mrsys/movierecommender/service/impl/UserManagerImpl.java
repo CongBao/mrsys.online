@@ -24,6 +24,7 @@ import online.mrsys.movierecommender.service.MovieManager;
 import online.mrsys.movierecommender.service.UserManager;
 import online.mrsys.movierecommender.util.MovieRecommender;
 import online.mrsys.movierecommender.util.PasswordValidator;
+import online.mrsys.movierecommender.util.PathLoader;
 import online.mrsys.movierecommender.vo.FavoriteBean;
 import online.mrsys.movierecommender.vo.MovieBean;
 import online.mrsys.movierecommender.vo.RoleBean;
@@ -131,7 +132,7 @@ public class UserManagerImpl implements UserManager {
     @Override
     public User updateAccount(User origin, String account) throws Exception {
         if (!isUserExist(origin)) {
-            final User change = (User) origin.clone();
+            final User change = origin;
             change.setAccount(account);
             change.setPassword(PasswordValidator.calculate(origin.getPassword(), account));
             userDao.update(change);
@@ -142,7 +143,7 @@ public class UserManagerImpl implements UserManager {
 
     @Override
     public User updatePassword(User origin, String password) throws Exception {
-        final User change = (User) origin.clone();
+        final User change = origin;
         change.setPassword(PasswordValidator.calculate(password, origin.getAccount()));
         userDao.update(change);
         return change;
@@ -150,7 +151,7 @@ public class UserManagerImpl implements UserManager {
 
     @Override
     public User updateEmail(User origin, String email) throws Exception {
-        final User change = (User) origin.clone();
+        final User change = origin;
         change.setEmail(email);
         userDao.update(change);
         return change;
@@ -158,7 +159,7 @@ public class UserManagerImpl implements UserManager {
 
     @Override
     public User updateMailVerifyState(User origin, boolean verified) throws Exception {
-        final User change = (User) origin.clone();
+        final User change = origin;
         change.setMailVerified(verified);
         userDao.update(change);
         return change;
@@ -166,7 +167,7 @@ public class UserManagerImpl implements UserManager {
     
     @Override
     public User updateRecommendation(User origin, byte[] recommend) throws Exception {
-        final User change = (User) origin.clone();
+        final User change = origin;
         change.setRecommendation(recommend);
         userDao.update(change);
         return change;
@@ -174,7 +175,7 @@ public class UserManagerImpl implements UserManager {
 
     @Override
     public User updateRole(User origin, Role role) throws Exception {
-        final User change = (User) origin.clone();
+        final User change = origin;
         change.setRole(role);
         userDao.update(change);
         return change;
@@ -283,8 +284,8 @@ public class UserManagerImpl implements UserManager {
     }
 
     @Override
-    public void recommendMovies() throws MqttException, FileNotFoundException {
-        final File file = new File("/tmp/mrsys.online/user.buf");
+    public void recommendMovies() throws MqttException, IOException {
+        File file = new File(PathLoader.fetch(PathLoader.USER_BUF));
         if (!file.exists()) {
             throw new FileNotFoundException("Cannot find file " + file.getAbsolutePath());
         }

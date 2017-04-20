@@ -25,6 +25,7 @@ today = time.strftime("%Y-%m-%d", time.localtime())
 
 # calculate the similarity between two users - no problem
 def getSimilarity(user1, user2):
+    """
     sum_x = 0.0
     sum_y = 0.0
     sum_xy = 0.0
@@ -47,7 +48,6 @@ def getSimilarity(user1, user2):
                 rating1.append(key1[1])
                 rating2.append(key2[1])
     return (1 - spatial.distance.cosine(rating1, rating2))
-    """
 
 
 #
@@ -95,7 +95,7 @@ def getNeighborSimilarity(user_id, users_dic, movie_dic):
                 neighbors.append(neighbor_id)
                 i = i + 1  # count the number of neighbors in total
         counter = counter + 1  # how many movies are finished
-        logging.info(counter, "/", movie_num)
+        logging.info(str(counter) + "/" + str(movie_num))
     logging.info(str(i) + " neighbors found in total.")
     neighbors_dist = []  # calculate the distance between the user and each neighbor of him/her
     for neighbor_id in neighbors:
@@ -114,7 +114,7 @@ def recommend(userid):
     # firstly, find the K nearest neighbors
     temp = time.clock()
     neighbors = getNeighborSimilarity(userid, user_to_rating_dic, movie_to_user_dic)
-    logging.info(time.clock() - temp, "used to find all the neighbors.")
+    logging.info(str(time.clock() - temp) + "used to find all the neighbors.")
     # secondly, estimate the target user's ratingsS
     recommend_dic = {}  # neighbors is the list of [similarity, neighbor_id]
     similarity_dic = {}
@@ -135,9 +135,9 @@ def recommend(userid):
     result_list = sorted(recommend_dic.items(), lambda x, y: cmp(x[1], y[1]), reverse=True)
     result_name = 'res/' + today + '/' + str(userid) + '.result'
     result = file(result_name, 'wb+')
-    list_length = min(len(result), 1000)
+    list_length = min(len(result_list), 1000)
     for i in range(list_length):
-        result.write(str(int((result[i])[0])) + '\n')
+        result.write(str(int((result_list[i])[0])) + '\n')
     result.close()
     logging.info("The result of User " + str(userid) + " has been written to the file " + result_name)
     return result_list
@@ -158,7 +158,7 @@ if __name__ == '__main__':
         os.mkdir('res/' + today)
     if not os.path.exists('log'):
         os.mkdir('log')
-    LOG_FILE = 'log/' + today + '.log'
+    LOG_FILE = 'log/py-' + today + '.log'
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
     file_handler = logging.FileHandler(LOG_FILE,mode='a')
@@ -175,7 +175,7 @@ if __name__ == '__main__':
     try:
         command = sys.argv[1]
     except IndexError:
-        command = today + '@7#'
+        command = today + '@87854#'
     given_date = command.split('@')[0]
     target_users = re.findall('(\d+)#', command)
     if given_date != time.strftime("%Y-%m-%d", time.localtime()):
@@ -185,7 +185,7 @@ if __name__ == '__main__':
 
     # read data
     logging.info('Start to read ratings.')
-    file_name = "data/ratings_after_2000.csv"
+    file_name = "data/ratings2000.csv"
     ratings = getRatings(file_name)
     # logging.info(str(time.clock() - start_time) + "used to read the ratings.")
     # generate dictionaries

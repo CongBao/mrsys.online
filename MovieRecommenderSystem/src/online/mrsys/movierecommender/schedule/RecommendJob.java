@@ -37,7 +37,7 @@ public class RecommendJob extends QuartzJobBean {
             } catch (Exception e) {
                 logger.log(Level.SEVERE, null, e);
             }
-		    logger.log(Level.INFO, "Recommending job completed, next time: ", ctx.getNextFireTime());
+		    logger.log(Level.INFO, "Recommending job completed, next time: {0}", ctx.getNextFireTime());
 		    isRunning = false;
 		}
 	}

@@ -16,6 +16,8 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
+import online.mrsys.movierecommender.util.PathLoader;
+
 public class CleanZombiesJob extends QuartzJobBean {
     
     private static final Logger logger = Logger.getLogger(CleanZombiesJob.class.getName());
@@ -27,9 +29,15 @@ public class CleanZombiesJob extends QuartzJobBean {
         if (!isRunning) {
             isRunning = true;
             logger.log(Level.INFO, "Start cleaning zombies job");
-            final File file = new File("/tmp/mrsys.online/user.buf");
+            File file = null;
+            try {
+                file = new File(PathLoader.fetch(PathLoader.USER_BUF));
+            } catch (IOException e) {
+                logger.log(Level.SEVERE, "Error when loading file", e);
+                return;
+            }
             if (!file.exists()) {
-                logger.log(Level.WARNING, "File not found: ", file.getAbsolutePath());
+                logger.log(Level.WARNING, "File not found: {0}", file.getAbsolutePath());
                 return;
             }
             Properties prop = new Properties();
@@ -51,7 +59,7 @@ public class CleanZombiesJob extends QuartzJobBean {
             } catch (IOException e) {
                 logger.log(Level.SEVERE, "Error when writing file", e);
             }
-            logger.log(Level.INFO, "Cleaning zombies job completed, next time: ", ctx.getNextFireTime());
+            logger.log(Level.INFO, "Cleaning zombies job completed, next time: {0}", ctx.getNextFireTime());
             isRunning = false;
         }
     }

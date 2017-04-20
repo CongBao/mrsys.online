@@ -12,6 +12,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -91,8 +94,9 @@ public class MovieRecommender {
         new Thread(() -> {
             connect();
             subscribe();
+            setTimeout(10000); // 10s
             // publish request with user id list
-            // format: date!user1#user2#...
+            // format: date@user1#user2#...
             final String date = formatter.format(new Date());
             final StringBuilder sb = new StringBuilder();
             sb.append(date);
@@ -151,13 +155,30 @@ public class MovieRecommender {
     }
 
     private void disconnect() {
-        try {
-            logger.log(Level.INFO, "Disconnecting from {0} ...", Protocol.BROKER);
-            client.disconnect();
-            logger.log(Level.INFO, "Disconnected");
-        } catch (MqttException e) {
-            logger.log(Level.SEVERE, "Error when disconnected from " + Protocol.BROKER, e);
+        if (client.isConnected()) {
+            try {
+                logger.log(Level.INFO, "Disconnecting from {0} ...", Protocol.BROKER);
+                client.disconnect();
+                logger.log(Level.INFO, "Disconnected");
+            } catch (MqttException e) {
+                logger.log(Level.SEVERE, "Error when disconnected from " + Protocol.BROKER, e);
+            }
         }
+    }
+    
+    private void setTimeout(long delay) {
+        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+        executor.schedule(new Runnable() {
+            @Override
+            public void run() {
+                if (client.isConnected()) {
+                    logger.log(Level.WARNING, "The scheduling is timeout");
+                    cleanBroker();
+                    disconnect();
+                }
+                executor.shutdown();
+            }
+        }, delay, TimeUnit.MILLISECONDS);
     }
 
     private void cleanBroker() {
@@ -177,7 +198,7 @@ public class MovieRecommender {
         message.setRetained(true);
         try {
             client.publish(Protocol.TOPIC, message);
-            logger.log(Level.INFO, "Start publishing topic: {0}", Protocol.TOPIC);
+            logger.log(Level.INFO, "Start publishing content: {0}, with protocol: {1}", new Object[] { content, protocol });
         } catch (MqttException e) {
             logger.log(Level.SEVERE, "Error when try to publish topic: " + Protocol.TOPIC, e);
         }
@@ -209,9 +230,10 @@ public class MovieRecommender {
             logger.log(Level.INFO, "Result received: {0}", content);
             String[] module = content.split("@");
             String date = module[0];
-            if (!date.equalsIgnoreCase(formatter.format(new Date()))) {
-                logger.log(Level.WARNING, "The date of recieved results is {0}, but today is {1}",
-                        new Object[] { date, formatter.format(new Date()) });
+            final long oneDay = 24 * 60 * 60 * 1000;
+            if (!date.equalsIgnoreCase(formatter.format(new Date(new Date().getTime() - oneDay)))) {
+                logger.log(Level.WARNING, "The date of recieved results is {0}, but yesterday is {1}",
+                        new Object[] { date, formatter.format(new Date(new Date().getTime() - oneDay)) });
                 return;
             }
             String user = module[1];
@@ -249,7 +271,7 @@ public class MovieRecommender {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
                 }
-                publish(Protocol.CONFIRM, "OK");
+                publish(Protocol.CONFIRM, recomList.size() + " results received");
                 cleanBroker();
                 disconnect();
                 isRuning = false;
@@ -263,9 +285,14 @@ public class MovieRecommender {
          * @return a list of updated ratings
          */
         public List<String> getDataBuffer() {
-            final File file = new File("/tmp/mrsys.online/data.buf");
+            File file = null;
+            try {
+                file = new File(PathLoader.fetch(PathLoader.DATA_BUF));
+            } catch (IOException e) {
+                logger.log(Level.SEVERE, "Error when loading file", e);
+            }
             if (!file.exists()) {
-                logger.log(Level.INFO, "No buffer file");
+                logger.log(Level.INFO, "File not found: {0}", file.getAbsolutePath());;
                 return null;
             }
             final List<String> updates = new ArrayList<>();

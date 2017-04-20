@@ -1,12 +1,15 @@
 package online.mrsys.mrsysmanager;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.text.DateFormat;
@@ -15,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -63,15 +67,21 @@ import online.mrsys.common.remote.Protocol;
  */
 public class Scheduler {
 
+    public static final String PROP_FILE = "scheduler.properties";
+
     private static final Logger logger = Logger.getLogger(Scheduler.class.getName());
     private static final DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
     private static final String clientId = "Scheduler";
 
-    private final MqttClient client;
-    private final MqttConnectOptions options;
+    private static String logPath;
+    private static String dataFile;
+    private static String resultPath;
 
     private static Process process;
+
+    private final MqttClient client;
+    private final MqttConnectOptions options;
 
     public Scheduler() throws MqttException {
         client = new MqttClient(Protocol.BROKER, clientId, new MemoryPersistence());
@@ -113,6 +123,26 @@ public class Scheduler {
     }
 
     /**
+     * Auto disconnect from MQTT broker after timeout.
+     * 
+     * @param delay
+     *            the delay time to call {@link #disconnect()}
+     */
+    public void setTimeout(long delay) {
+        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+        executor.schedule(new Runnable() {
+            @Override
+            public void run() {
+                if (client.isConnected()) {
+                    logger.log(Level.WARNING, "The scheduling is timeout");
+                    disconnect();
+                }
+                executor.shutdown();
+            }
+        }, delay, TimeUnit.MILLISECONDS);
+    }
+
+    /**
      * Publish a topic to the topic assigned in {@link Protocol}.
      * 
      * @param protocol
@@ -128,7 +158,8 @@ public class Scheduler {
         message.setRetained(true);
         try {
             client.publish(Protocol.TOPIC, message);
-            logger.log(Level.INFO, "Start publishing topic: {0}", Protocol.TOPIC);
+            logger.log(Level.INFO, "Start publishing content: {0}, with protocol: {1}",
+                    new Object[] { content, protocol });
         } catch (MqttException e) {
             logger.log(Level.SEVERE, "Error when try to publish topic: " + Protocol.TOPIC, e);
         }
@@ -168,8 +199,9 @@ public class Scheduler {
             // content format: date@user1#user2#...
             logger.log(Level.INFO, "Request received: {0}", content);
             userList = content;
-            final String date = formatter.format(new Date());
-            final File dir = new File("res/" + date);
+            final long oneDay = 24 * 60 * 60 * 1000;
+            final String date = formatter.format(new Date(new Date().getTime() - oneDay));
+            final File dir = new File(resultPath + date);
             final File[] files = dir.listFiles((FilenameFilter) (d, name) -> name.endsWith(Protocol.RES_SUFFIX));
             for (File file : files) {
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));) {
@@ -225,8 +257,10 @@ public class Scheduler {
             if (updatedRatings != null && updatedRatings.size() > 0) {
                 updateLocalFile(Protocol.UPDATE_PREFIX, updatedRatings);
             }
+            final String date = formatter.format(new Date());
+            new File(resultPath + date).mkdirs();
             final String[] cmd = { "/bin/bash", "-c", "python recommend.py " + userList };
-            logger.log(Level.INFO, "Start running python script, command: {0}", cmd);
+            logger.log(Level.INFO, "Start running python script, command: {0}", cmd[2]);
             try {
                 process = Runtime.getRuntime().exec(cmd);
             } catch (IOException e) {
@@ -244,7 +278,7 @@ public class Scheduler {
          *            a list of updates
          */
         public void updateLocalFile(String protocol, List<String> toUpdate) {
-            File file = new File("data/ratings.csv");
+            File file = new File(dataFile);
             if (!file.exists()) {
                 logger.log(Level.WARNING, "File not exist: {0}", file.getAbsolutePath());
                 return;
@@ -265,7 +299,7 @@ public class Scheduler {
                     logger.log(Level.SEVERE, "Error when opening file", e);
                 }
             } else if (protocol.equals(Protocol.UPDATE_PREFIX)) {
-                File tmp = new File("data/ratings.csv.tmp");
+                File tmp = new File(dataFile + ".tmp");
                 if (!file.renameTo(tmp)) {
                     logger.log(Level.SEVERE, "Error when renaming file: {0}", file.getAbsolutePath());
                     return;
@@ -330,8 +364,8 @@ public class Scheduler {
     private static void initLogger() {
         try {
             final String date = formatter.format(new Date());
-            new File("log/").mkdirs();
-            final String path = "log/" + Protocol.SYS_NAME + "-" + date + ".log";
+            new File(logPath).mkdirs();
+            final String path = logPath + Protocol.SYS_NAME + "-" + date + ".log";
             new File(path).createNewFile();
             final FileHandler fh = new FileHandler(path, true);
             fh.setLevel(Level.ALL);
@@ -339,6 +373,22 @@ public class Scheduler {
             logger.addHandler(fh);
         } catch (SecurityException | IOException e) {
             logger.log(Level.SEVERE, null, e);
+        }
+    }
+
+    private static void loadProperties() throws IOException {
+        File file = new File(PROP_FILE);
+        if (!file.exists()) {
+            throw new FileNotFoundException("Cannot find property file: " + PROP_FILE);
+        }
+        Properties prop = new Properties();
+        InputStream in = new BufferedInputStream(new FileInputStream(file));
+        prop.load(in);
+        logPath = prop.getProperty("LogPath");
+        dataFile = prop.getProperty("DataFile");
+        resultPath = prop.getProperty("ResultPath");
+        if (logPath == null || dataFile == null || resultPath == null) {
+            throw new IOException("Property value cannot be null");
         }
     }
 
@@ -376,15 +426,24 @@ public class Scheduler {
      *            command line arguments
      */
     public static void main(String[] args) {
+        try {
+            loadProperties();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
         initLogger();
         String scheduleTime = "06:00:00";
+        long period = 24 * 60 * 60 * 1000; // one day
         if (args.length > 0) {
             scheduleTime = args[0];
         }
-        final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-        final long oneDay = 24 * 60 * 60 * 1000;
+        if (args.length > 1) {
+            period = Long.parseLong(args[1]);
+        }
+        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
         long initDelay = getTimeMillis(scheduleTime) - System.currentTimeMillis();
-        initDelay = initDelay > 0 ? initDelay : oneDay + initDelay;
+        initDelay = initDelay > 0 ? initDelay : period + initDelay;
         logger.log(Level.INFO, "Mrsys scheduler will start at {0}, {1} from now",
                 new Object[] { scheduleTime, formatTime(initDelay) });
         executor.scheduleAtFixedRate(new Runnable() {
@@ -397,11 +456,12 @@ public class Scheduler {
                     Scheduler scheduler = new Scheduler();
                     scheduler.connect();
                     scheduler.subscribe();
+                    scheduler.setTimeout(10000); // 10s
                 } catch (MqttException e) {
                     logger.log(Level.SEVERE, "Error when initializing scheduler", e);
                 }
             }
-        }, initDelay, oneDay, TimeUnit.MILLISECONDS);
+        }, initDelay, period, TimeUnit.MILLISECONDS);
     }
 
 }

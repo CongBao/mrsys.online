@@ -25,6 +25,10 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	
+	<listener>
+	    <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+	</listener>
+	
 	<error-page>
 		<error-code>404</error-code>
 		<location>/res/html/PageNotFound.html</location>

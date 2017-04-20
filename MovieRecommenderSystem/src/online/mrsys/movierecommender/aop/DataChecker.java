@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 
 import online.mrsys.common.remote.Protocol;
 import online.mrsys.movierecommender.domain.Rating;
+import online.mrsys.movierecommender.util.PathLoader;
 
 /**
  * A class monitoring the save and update actions of {@link Rating} entities using AOP.
@@ -50,7 +51,7 @@ public class DataChecker {
         sb.append(rating.getRating());
         bufferData(sb.toString());
         bufferUser(rating.getUser().getId().toString());
-        logger.log(Level.INFO, "New rating record has been written into buffer");
+        logger.log(Level.INFO, "New rating record has written into buffer");
     }
 
     /**
@@ -74,14 +75,21 @@ public class DataChecker {
         sb.append(rating.getRating());
         bufferData(sb.toString());
         bufferUser(rating.getUser().getId().toString());
-        logger.log(Level.INFO, "Updates of rating record have been written into buffer");
+        logger.log(Level.INFO, "Updates of rating record have written into buffer");
     }
 
     private void bufferData(String content) {
-        new File("/tmp/mrsys.online/").mkdirs();
-        final File file = new File("/tmp/mrsys.online/data.buf");
+        File file = null;
+        try {
+            file = new File(PathLoader.fetch(PathLoader.DATA_BUF));
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Error when loading file", e);
+            return;
+        }
         if (!file.exists()) {
+            logger.log(Level.WARNING, "File not found: {0}", file.getAbsolutePath());
             try {
+                logger.log(Level.INFO, "Creating file: {0}", file.getAbsolutePath());
                 file.createNewFile();
             } catch (IOException e) {
                 logger.log(Level.SEVERE, "Error when creating file", e);
@@ -96,10 +104,17 @@ public class DataChecker {
     }
     
     private void bufferUser(String user) {
-        new File("/tmp/mrsys.online/").mkdirs();
-        final File file = new File("/tmp/mrsys.online/user.buf");
+        File file = null;
+        try {
+            file = new File(PathLoader.fetch(PathLoader.USER_BUF));
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Error when loading file", e);
+            return;
+        }
         if (!file.exists()) {
+            logger.log(Level.WARNING, "File not found: {0}", file.getAbsolutePath());
             try {
+                logger.log(Level.INFO, "Creating file: {0}", file.getAbsolutePath());
                 file.createNewFile();
             } catch (IOException e) {
                 logger.log(Level.SEVERE, "Error when creating file", e);

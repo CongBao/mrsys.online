@@ -1,7 +1,10 @@
 package online.mrsys.movierecommender.action.user;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
@@ -50,8 +53,17 @@ public class LoadProfileAction extends BaseAction {
             if (obj != null) {
                 @SuppressWarnings("unchecked")
                 List<String> recomList = (List<String>) obj;
-                List<MovieBean> movieBeans = new ArrayList<>(recomList.size() + 1);
-                recomList.forEach(item -> movieBeans.add(movieManager.getMovieBeanById(Integer.parseInt(item))));
+                Set<Integer> accessed = new HashSet<>();
+                List<MovieBean> movieBeans = new ArrayList<>();
+                Random random = new Random();
+                for (int i = 0; i < 10; i++) {
+                    Integer next = random.nextInt(recomList.size());
+                    if (accessed.add(next)) {
+                        movieBeans.add(movieManager.getMovieBeanById(Integer.parseInt(recomList.get(next))));
+                    } else {
+                        i--;
+                    }
+                }
                 actionContext.getSession().put(WebConstant.RECOMMENDATIONS, movieBeans);
             } else {
                 actionContext.getSession().put(WebConstant.RECOMMENDATIONS, null);
