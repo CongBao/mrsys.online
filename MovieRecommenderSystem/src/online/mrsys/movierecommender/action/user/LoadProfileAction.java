@@ -56,7 +56,8 @@ public class LoadProfileAction extends BaseAction {
                 Set<Integer> accessed = new HashSet<>();
                 List<MovieBean> movieBeans = new ArrayList<>();
                 Random random = new Random();
-                for (int i = 0; i < 10; i++) {
+                int len = recomList.size() >= 10 ? 10 : recomList.size();
+                for (int i = 0; i < len; i++) {
                     Integer next = random.nextInt(recomList.size());
                     if (accessed.add(next)) {
                         movieBeans.add(movieManager.getMovieBeanById(Integer.parseInt(recomList.get(next))));
