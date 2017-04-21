@@ -94,7 +94,7 @@ public class MovieRecommender {
         new Thread(() -> {
             connect();
             subscribe();
-            setTimeout(10000); // 10s
+            setTimeout(100000); // 100s
             // publish request with user id list
             // format: date@user1#user2#...
             final String date = formatter.format(new Date());

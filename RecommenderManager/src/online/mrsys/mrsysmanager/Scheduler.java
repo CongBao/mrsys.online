@@ -456,7 +456,7 @@ public class Scheduler {
                     Scheduler scheduler = new Scheduler();
                     scheduler.connect();
                     scheduler.subscribe();
-                    scheduler.setTimeout(10000); // 10s
+                    scheduler.setTimeout(100000); // 100s
                 } catch (MqttException e) {
                     logger.log(Level.SEVERE, "Error when initializing scheduler", e);
                 }
