@@ -139,6 +139,7 @@ def recommend(userid):
     for i in range(list_length):
         result.write(str(int((result_list[i])[0])) + '\n')
     result.close()
+    logging.info("Recommendation for user " + str(userid) + " succeeded.")
     logging.info("The result of User " + str(userid) + " has been written to the file " + result_name)
     return result_list
     # return [i[0] for i in recommend_list]  # return movie ids according to their estimated ratings (high to low)
@@ -149,7 +150,6 @@ if __name__ == '__main__':
     start_time = time.clock()
     reload(sys)
     sys.setdefaultencoding('utf-8')
-    print "Program started."
 
     # prepare phase
     if not os.path.exists('res'):
@@ -175,6 +175,7 @@ if __name__ == '__main__':
     try:
         command = sys.argv[1]
     except IndexError:
+        logging.critical("No command received.")
         command = today + '@87854#'
     given_date = command.split('@')[0]
     target_users = re.findall('(\d+)#', command)
@@ -186,7 +187,10 @@ if __name__ == '__main__':
     # read data
     logging.info('Start to read ratings.')
     file_name = "data/ratings2000.csv"
-    ratings = getRatings(file_name)
+    try:
+        ratings = getRatings(file_name)
+    except Exception as e:
+        logging.exception(e)
     # logging.info(str(time.clock() - start_time) + "used to read the ratings.")
     # generate dictionaries
     user_to_rating_dic, movie_to_user_dic = getDictionaries(ratings)
@@ -197,6 +201,10 @@ if __name__ == '__main__':
         target_user = int(target_users[i])
         start_time = time.clock()
         logging.info("Start to generate the recommendation list for user " + str(target_user))
-        recommend_list = recommend(target_user)
+        try:
+            recommend_list = recommend(target_user)
+        except Exception as e:
+            logging.exception(e)
+            logging.error("Recommendation for user " + str(target_user) + " failed.")
         logging.info(str(time.clock() - start_time) + " seconds used in total.")
         i += 1
