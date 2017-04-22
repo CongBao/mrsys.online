@@ -22,5 +22,7 @@ public interface Protocol {
 
     String NEW_PREFIX = "new";
     String UPDATE_PREFIX = "update";
+    
+    String NULL = "null";
 
 }

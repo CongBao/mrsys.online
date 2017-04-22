@@ -62,6 +62,7 @@ import online.mrsys.common.remote.Protocol;
  * </ol>
  * 
  * @since JDK1.8
+ * @version 1.0
  * @author Cong Bao
  *
  */
@@ -79,6 +80,10 @@ public class Scheduler {
     private static String resultPath;
 
     private static Process process;
+    
+    private static String scheduleTime = "23:32:00";
+    private static String nextTime;
+    private static long period = 24 * 60 * 60 * 1000; // one day;
 
     private final MqttClient client;
     private final MqttConnectOptions options;
@@ -115,6 +120,7 @@ public class Scheduler {
                     logger.log(Level.INFO, "Disconnecting from {0} ...", Protocol.BROKER);
                     client.disconnect();
                     logger.log(Level.INFO, "Disconnected");
+                    logger.log(Level.INFO, "Next schedule time: {0}", nextTime);
                 } catch (MqttException e) {
                     logger.log(Level.SEVERE, "Error when disconnected from " + Protocol.BROKER, e);
                 }
@@ -198,11 +204,21 @@ public class Scheduler {
         public void onRequested(String content) {
             // content format: date@user1#user2#...
             logger.log(Level.INFO, "Request received: {0}", content);
+            if (content.equals(Protocol.NULL)) {
+                logger.log(Level.WARNING, "No users will be recommended");
+                disconnect();
+                return;
+            }
             userList = content;
             final long oneDay = 24 * 60 * 60 * 1000;
             final String date = formatter.format(new Date(new Date().getTime() - oneDay));
             final File dir = new File(resultPath + date);
             final File[] files = dir.listFiles((FilenameFilter) (d, name) -> name.endsWith(Protocol.RES_SUFFIX));
+            if (files == null || files.length < 1) {
+                logger.log(Level.WARNING, "No result files found in {0}", dir.getAbsoluteFile());
+                publish(Protocol.RESULT, Protocol.NULL);
+                return;
+            }
             for (File file : files) {
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));) {
                     // format: date@user@record1#record2#...
@@ -433,8 +449,6 @@ public class Scheduler {
             return;
         }
         initLogger();
-        String scheduleTime = "06:00:00";
-        long period = 24 * 60 * 60 * 1000; // one day
         if (args.length > 0) {
             scheduleTime = args[0];
         }
@@ -460,6 +474,7 @@ public class Scheduler {
                 } catch (MqttException e) {
                     logger.log(Level.SEVERE, "Error when initializing scheduler", e);
                 }
+                nextTime = new SimpleDateFormat("dd/MM/yy HH:mm:ss").format(new Date(getTimeMillis(scheduleTime) + period));
             }
         }, initDelay, period, TimeUnit.MILLISECONDS);
     }
