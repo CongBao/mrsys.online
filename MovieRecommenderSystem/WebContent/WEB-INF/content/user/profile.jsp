@@ -121,7 +121,7 @@
 		              <s:iterator value="#session.recommendations" id="rec">
 		                <div class="panel panel-default" id="rec<s:property value="#rec.imdb"/>">
 		                    <div class="panel-heading">
-		                        <h3 class="panel-title" id="rectitle<s:property value="#rec.imdb"/>">N/A</h3>
+		                        <h3 class="panel-title" id="rectitle<s:property value="#rec.imdb"/>"><s:property value="#rec.neighbours"/></h3>
 		                    </div>
 		                    <div class="panel-body">
 		                        <div class="media">

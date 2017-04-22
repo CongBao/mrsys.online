@@ -55,6 +55,7 @@ import online.mrsys.movierecommender.service.UserManager;
  * </ol>
  * 
  * @since JDK1.8
+ * @version 1.1
  * @author Cong Bao
  *
  */
@@ -91,10 +92,17 @@ public class MovieRecommender {
      *            a list of users to be recommended in next 24 hours
      */
     public void recommend(List<User> next) {
+        scheduling = true;
         new Thread(() -> {
             connect();
             subscribe();
             setTimeout(100000); // 100s
+            if (next == null || next.size() < 1) {
+                logger.log(Level.WARNING, "No users will be recommended");
+                publish(Protocol.REQUEST, Protocol.NULL);
+                disconnect();
+                return;
+            }
             // publish request with user id list
             // format: date@user1#user2#...
             final String date = formatter.format(new Date());
@@ -115,6 +123,8 @@ public class MovieRecommender {
         }
         if (recomList.size() > 0) {
             updateDatabase(recomList);
+        } else {
+            logger.log(Level.INFO, "Nothing to update in database");
         }
     }
 
@@ -155,15 +165,19 @@ public class MovieRecommender {
     }
 
     private void disconnect() {
+        cleanBroker();
         if (client.isConnected()) {
-            try {
-                logger.log(Level.INFO, "Disconnecting from {0} ...", Protocol.BROKER);
-                client.disconnect();
-                logger.log(Level.INFO, "Disconnected");
-            } catch (MqttException e) {
-                logger.log(Level.SEVERE, "Error when disconnected from " + Protocol.BROKER, e);
-            }
+            new Thread(() -> {
+                try {
+                    logger.log(Level.INFO, "Disconnecting from {0} ...", Protocol.BROKER);
+                    client.disconnect();
+                    logger.log(Level.INFO, "Disconnected");
+                } catch (MqttException e) {
+                    logger.log(Level.SEVERE, "Error when disconnected from " + Protocol.BROKER, e);
+                }
+            }).start();
         }
+        scheduling = false;
     }
     
     private void setTimeout(long delay) {
@@ -173,7 +187,6 @@ public class MovieRecommender {
             public void run() {
                 if (client.isConnected()) {
                     logger.log(Level.WARNING, "The scheduling is timeout");
-                    cleanBroker();
                     disconnect();
                 }
                 executor.shutdown();
@@ -223,11 +236,16 @@ public class MovieRecommender {
          * 
          * @param content
          *            the content of this message with format
-         *            date@user_id@(movie_id#)+
+         *            date@user_id@(movie_id&neighbour_num#)+
          */
         public void onResulted(String content) {
             // content format: date@user_id@movie_id1#movie_id2#...
             logger.log(Level.INFO, "Result received: {0}", content);
+            if (content.equals(Protocol.NULL)) {
+                logger.log(Level.WARNING, "No results received");
+                receiveComplete();
+                return;
+            }
             String[] module = content.split("@");
             String date = module[0];
             final long oneDay = 24 * 60 * 60 * 1000;
@@ -263,20 +281,25 @@ public class MovieRecommender {
                         break;
                     }
                 }
-                List<String> data = getDataBuffer();
-                if (data != null && !data.isEmpty()) {
-                    data.forEach(item -> publish(Protocol.UPDATE, item));
-                }
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                }
-                publish(Protocol.CONFIRM, recomList.size() + " results received");
-                cleanBroker();
-                disconnect();
+                receiveComplete();
                 isRuning = false;
-                scheduling = false;
             }).start();
+        }
+        
+        /**
+         * When the results receiving completed.
+         */
+        public void receiveComplete() {
+            List<String> data = getDataBuffer();
+            if (data != null && !data.isEmpty()) {
+                data.forEach(item -> publish(Protocol.UPDATE, item));
+            }
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+            }
+            publish(Protocol.CONFIRM, recomList.size() + " results received");
+            disconnect();
         }
 
         /**

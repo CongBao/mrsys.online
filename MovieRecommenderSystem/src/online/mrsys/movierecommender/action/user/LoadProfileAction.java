@@ -1,10 +1,7 @@
 package online.mrsys.movierecommender.action.user;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
-import java.util.Set;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
@@ -17,6 +14,11 @@ import online.mrsys.movierecommender.vo.FavoriteBean;
 import online.mrsys.movierecommender.vo.MovieBean;
 import online.mrsys.movierecommender.vo.UserBean;
 
+/**
+ * @version 1.1
+ * @author Cong Bao
+ *
+ */
 public class LoadProfileAction extends BaseAction {
 
     private static final long serialVersionUID = -4961780923283262163L;
@@ -53,17 +55,15 @@ public class LoadProfileAction extends BaseAction {
             if (obj != null) {
                 @SuppressWarnings("unchecked")
                 List<String> recomList = (List<String>) obj;
-                Set<Integer> accessed = new HashSet<>();
                 List<MovieBean> movieBeans = new ArrayList<>();
-                Random random = new Random();
                 int len = recomList.size() >= 10 ? 10 : recomList.size();
                 for (int i = 0; i < len; i++) {
-                    Integer next = random.nextInt(recomList.size());
-                    if (accessed.add(next)) {
-                        movieBeans.add(movieManager.getMovieBeanById(Integer.parseInt(recomList.get(next))));
-                    } else {
-                        i--;
-                    }
+                    String[] recom = recomList.get(i).split("&");
+                    Integer movieId = Integer.parseInt(recom[0]);
+                    Integer neighbours = Integer.parseInt(recom[1]);
+                    MovieBean movieBean = movieManager.getMovieBeanById(movieId);
+                    movieBean.setNeighbours(neighbours);
+                    movieBeans.add(movieBean);
                 }
                 actionContext.getSession().put(WebConstant.RECOMMENDATIONS, movieBeans);
             } else {

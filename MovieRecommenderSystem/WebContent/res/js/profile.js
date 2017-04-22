@@ -1,5 +1,5 @@
 /*!
- * profile.js
+ * profile.js v1.1
  * Author: Cong Bao
  * Date: 14 April, 2017
  */
@@ -47,7 +47,8 @@ if (typeof jQuery === 'undefined') {
 				url: 'https://www.omdbapi.com',
 				data: { 'i': $imdb },
 				success: function (data, statusText) {
-					$('#rectitle' + $imdb).text(data.Title);
+					var $neighbour = $('#rectitle' + $imdb).text();
+					$('#rectitle' + $imdb).html(data.Title + '<i class="pull-right">according to <b>' + $neighbour  + '</b> similar users\' ratings</i>');
 					$('#recimg' + $imdb).attr('src', data.Poster);
 					$('#recimg' + $imdb).attr('alt', data.Title);
 					$('#recimg' + $imdb).css('width', '100px');

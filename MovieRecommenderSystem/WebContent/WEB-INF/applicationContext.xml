@@ -41,7 +41,7 @@
      
     <bean id="cronTriggerRecommend"
           class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"
-          p:cronExpression="0 0 6 * * ?">
+          p:cronExpression="0 32 23 * * ?">
         <property name="jobDetail">
             <bean class="org.springframework.scheduling.quartz.JobDetailFactoryBean"
                   p:jobClass="online.mrsys.movierecommender.schedule.RecommendJob"

@@ -147,7 +147,7 @@ def recommend(userid):
             result.write(str(int(movie_id)))
             result.write('&' + str(count_dic[movie_id]) + '\n')
             movie_count += 1
-            if movie_count >= 1000:
+            if movie_count >= 100:
                 break
     result.close()
     logging.info("Recommendation for user " + str(userid) + " succeeded.")

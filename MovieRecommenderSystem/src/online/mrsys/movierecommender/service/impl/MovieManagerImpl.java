@@ -16,6 +16,11 @@ import online.mrsys.movierecommender.vo.MovieBean;
 import online.mrsys.movierecommender.vo.RatingBean;
 import online.mrsys.movierecommender.vo.UserBean;
 
+/**
+ * @version 1.1
+ * @author Cong Bao
+ *
+ */
 public class MovieManagerImpl implements MovieManager {
 
 	private MovieDao movieDao;
@@ -116,7 +121,7 @@ public class MovieManagerImpl implements MovieManager {
 	public MovieBean getMovieBeanById(int id) {
 		final Movie movie = getMovieById(id);
 		if (movie != null) {
-			return new MovieBean(movie.getId(), movie.getImdb(), movie.getYear(), movie.getTitle());
+			return new MovieBean(movie.getId(), movie.getImdb(), movie.getYear(), movie.getTitle(), null);
 		}
 		return null;
 	}
@@ -130,7 +135,7 @@ public class MovieManagerImpl implements MovieManager {
 	public MovieBean getMovieBeanByImdb(String imdb) {
 		final Movie movie = movieDao.findByImdb(imdb);
 		if (movie != null) {
-			return new MovieBean(movie.getId(), movie.getImdb(), movie.getYear(), movie.getTitle());
+			return new MovieBean(movie.getId(), movie.getImdb(), movie.getYear(), movie.getTitle(), null);
 		}
 		return null;
 	}
