@@ -25,20 +25,21 @@ today = time.strftime("%Y-%m-%d", time.localtime())
 
 # calculate the similarity between two users - no problem
 def getSimilarity(user1, user2):
-    """
+    count = 0
     sum_x = 0.0
     sum_y = 0.0
     sum_xy = 0.0
     for key1 in user1:
         for key2 in user2:
             if key1[0] == key2[0]:
+                count += 1
                 sum_xy += key1[1] * key2[1]
                 sum_y += key2[1] * key2[1]
                 sum_x += key1[1] * key1[1]
     if sum_xy == 0.0:
         return 0
     sx_sy = math.sqrt(sum_x * sum_y)
-    return sum_xy / sx_sy
+    return sum_xy / sx_sy, count
     """
     rating1 = []
     rating2 = []
@@ -48,6 +49,7 @@ def getSimilarity(user1, user2):
                 rating1.append(key1[1])
                 rating2.append(key2[1])
     return (1 - spatial.distance.cosine(rating1, rating2))
+    """
 
 
 #
@@ -98,11 +100,14 @@ def getNeighborSimilarity(user_id, users_dic, movie_dic):
         logging.info(str(counter) + "/" + str(movie_num))
     logging.info(str(i) + " neighbors found in total.")
     neighbors_dist = []  # calculate the distance between the user and each neighbor of him/her
+    neighbors_count = []
     for neighbor_id in neighbors:
-        dist = getSimilarity(users_dic[user_id], users_dic[neighbor_id])
-        neighbors_dist.append([dist, neighbor_id])  # add the id-distance entry to the new dictionary
+        dist, count = getSimilarity(users_dic[user_id], users_dic[neighbor_id])
+        if dist < 1:
+            neighbors_count.append([count, neighbor_id])
+            neighbors_dist.append([dist, neighbor_id])  # add the id-distance entry to the new dictionary
     neighbors_dist.sort(reverse=True)  # sort the dictionary
-    return neighbors_dist  # the list of [similarity, neighbor_id]
+    return neighbors_dist[:1000]  # the list of [similarity, neighbor_id]
 
 
 def getRatings(file_name):
@@ -121,8 +126,7 @@ def recommend(userid):
     count_dic = {}  # the number of neighbors that contributed to the estimation of each movie's rating
     for neighbor in neighbors:  # neighbors is the list of [similarity, neighbor_id]
         neighbor_user_id = neighbor[1]
-        movies = user_to_rating_dic[
-            neighbor_user_id]  # the list of this neighbor, each element in this array is (movie_id, rating_value)
+        movies = user_to_rating_dic[neighbor_user_id]
         for movie in movies:
             if movie[0] not in recommend_dic:
                 recommend_dic[movie[0]] = neighbor[0] * movie[1]
@@ -143,7 +147,7 @@ def recommend(userid):
     target_user_rated_movies = [movie[0] for movie in user_to_rating_dic[target_user]]
     for i in range(list_length):
         movie_id = result_list[i][0]
-        if not movie_id in target_user_rated_movies and count_dic[movie_id] >= 100:
+        if movie_id not in target_user_rated_movies and count_dic[movie_id] >= 10:
             result.write(str(int(movie_id)))
             result.write('&' + str(count_dic[movie_id]) + '\n')
             movie_count += 1
@@ -188,7 +192,7 @@ if __name__ == '__main__':
         command = sys.argv[1]
     except IndexError:
         logging.critical("No command received.")
-        command = today + '@87854#'
+        command = today + '@87852#88888#'
     given_date = command.split('@')[0]
     target_users = re.findall('(\d+)#', command)
     if given_date != time.strftime("%Y-%m-%d", time.localtime()):
