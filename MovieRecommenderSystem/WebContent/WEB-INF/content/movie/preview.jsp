@@ -141,7 +141,7 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="form-group text-center">
-                            <button id="ratingBtn" type="button" class="btn btn-lg btn-default btn-block" <s:if test="#session.rating != null">disabled="disabled"</s:if>>Submit Your Rating</button>
+                            <button id="ratingBtn" type="button" class="btn btn-lg btn-default btn-block" <s:if test="#session.rating != null || #session.user == null">disabled="disabled"</s:if>>Submit Your Rating</button>
                             <p id="ratingFeed">Rating succeeds! Thank you!</p>
                         </div>
                     </div>
