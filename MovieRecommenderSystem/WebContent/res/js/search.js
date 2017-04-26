@@ -1,7 +1,7 @@
 /*!
- * search.js
+ * search.js v1.1
  * Author: Jinke He
- * Date: 115 April, 2017
+ * Date: 19 April, 2017
  */
 
 if (typeof jQuery === 'undefined') {
@@ -18,20 +18,25 @@ if (typeof jQuery === 'undefined') {
 	    }
 	}); 
 
-    function getParam(name) {
+	function getParam(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); 
-        var r = window.location.search.substr(1).match(reg);
+        var r = win.location.search.substr(1).match(reg);
         if (r != null) {
             return unescape(r[2]);
         } else {
             return null;
         }
     }
-    
+
     var content = [];
    
-   
     function loadPage(num){
+       /* if (getParam('page') != null){
+            window.location.search = "?s=" + getParam('s') + "&page="+num;
+        }*/
+        //($(".pagination > li")[1]).attr("class","active");
+        $(".active").attr('class','');
+        $("#li-"+num).attr('class','active');
         var start_index = (num-1) * 10;
         if ((num) * 10 - 1 > content.length - 1){
             var end_index = content.length - 1;
@@ -71,27 +76,31 @@ if (typeof jQuery === 'undefined') {
             });
         }
         $('#loading').hide();
+        
         // there's no next page
-        if (end_index == content.length - 1){
-            $("#next").attr("href","#main");
+        if (num == page_num){
+            $("#next").click(function(){
+                loadPage(num);
+            });
         } else {
             $("#next").click(function(){
-                console.log(num+1)
                 loadPage(num+1);
             });
         }
         // there's no previous page
-        if (start_index == 0){
-            $("#previous").attr("href","#main");
+        if (num == 1){
+            $("#previous").click(function(){
+                loadPage(1);
+            });
         } else {
             $("#previous").click(function(){
                 loadPage(num-1);
             });
         }
- 
     }
  
     var finished = false;
+    var page_num = 1;
     function gather(title){
         var query = "https://www.omdbapi.com";
         var page = 1;
@@ -114,11 +123,36 @@ if (typeof jQuery === 'undefined') {
             });
             page += 1;
         }
-        var page = 1;        
+        page_num = Math.ceil(content.length/10); 
+        $(".pagination").html('<li id="li-previous"><a id="previous" href="#" aria-label="Previous"> <span aria-hidden="true">«</span> </a></li>');
+        var p = 1;
+        for (p=1; p<=page_num; p++){
+            $(".pagination").append('<li id="li-' + p + '" class=""><a class="" id="' + 'page-' + p +'" href="#">' + p + '</a></li>');
+        }
+        $("#page-1").click(function(){
+            loadPage(1);
+        });
+         $("#page-2").click(function(){
+            loadPage(2);
+        });
+         $("#page-3").click(function(){
+            loadPage(3);
+        });
+         $("#page-4").click(function(){
+            loadPage(4);
+        });
+         $("#page-5").click(function(){
+            loadPage(5);
+        });
+        $("#page-6").click(function(){
+            loadPage(6);
+        });
+        $(".pagination").append('<li id="li-next"><a id="next" href="#" aria-label="Next"><span aria-hidden="true">»</span> </a> </li>');
         loadPage(1);
     }
     
     function search(){
+        content = [];
         var page = getParam('page')==null? 1 : parseInt(getParam('page'))
         $(".media-list").html('');
         var count = 0;

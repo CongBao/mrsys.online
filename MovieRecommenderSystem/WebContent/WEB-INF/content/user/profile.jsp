@@ -10,6 +10,7 @@
 <meta name="author" content="Cong Bao">
 <meta name="author" content="Jinke He">
 <title>${sessionScope.user.account}</title>
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/res/img/icon.png"/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/res/css/bootstrap.min.css"/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/res/css/normal.css"/>
 <script type="text/javascript" src="${pageContext.request.contextPath}/res/js/jquery-3.2.0.min.js"></script>
@@ -75,6 +76,7 @@
 	                                    <th>Email</th>
 	                                    <td>${sessionScope.user.email}</td>
 	                                </tr>
+	                                <!-- 
 	                                <tr>
 	                                    <th>Email Verification State</th>
 	                                    <td>
@@ -85,6 +87,7 @@
 	                                      </s:else>
 	                                    </td>
 	                                </tr>
+	                                -->
 	                            </tbody>
 	                        </table>
 	                    </div>

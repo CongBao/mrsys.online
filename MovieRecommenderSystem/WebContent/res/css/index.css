@@ -20,6 +20,14 @@ body {
     z-index: 1;
 }
 
+.carousel-caption a {
+	color: #fff;
+}
+
+.carousel-caption a:hover {
+	color: #fff;
+}
+
 #steps-container {
     padding-top: 100px;
     padding-bottom: 100px;

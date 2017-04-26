@@ -20,7 +20,7 @@ if (typeof jQuery === 'undefined') {
 			}
 		});
 		var redirect = function () {
-			$(location).attr('href', '/search?s=' + $('#search').val() + '&page=1');
+			$(location).attr('href', '/search?s=' + $('#search').val());
 		}
 	});
 

@@ -9,6 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="author" content="Cong Bao">
 <title>Error</title>
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/res/img/icon.png"/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/res/css/bootstrap.min.css"/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/res/css/normal.css"/>
 <script type="text/javascript" src="${pageContext.request.contextPath}/res/js/jquery-3.2.0.min.js"></script>

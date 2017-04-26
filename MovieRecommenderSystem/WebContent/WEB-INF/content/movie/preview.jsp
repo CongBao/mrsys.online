@@ -8,6 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="author" content="Jinke He">
 <title>Preview</title>
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/res/img/icon.png"/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/res/css/bootstrap.min.css"/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/res/css/star-rating.min.css"/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/res/css/header.css"/>

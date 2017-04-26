@@ -8,6 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="author" content="Cong Bao">
 <title>Index</title>
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/res/img/icon.png"/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/res/css/bootstrap.min.css"/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/res/css/timelify.css"/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/res/css/header.css"/>
@@ -40,42 +41,42 @@
                 <div class="item active">
                     <img class="index-img" src="${pageContext.request.contextPath}/res/img/index1.jpg">
                     <div class="carousel-caption">
-                        <h1>Interstellar</h1>
+                        <h1><a href="/movie/10190">Interstellar</a></h1>
                         <p>A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.</p>
                     </div>
                 </div>
                 <div class="item">
                     <img class="index-img" src="${pageContext.request.contextPath}/res/img/index2.jpg">
                     <div class="carousel-caption">
-                        <h1>Dracula Untold</h1>
+                        <h1><a href="/movie/11018">Dracula Untold</a></h1>
                         <p>As his kingdom is being threatened by the Turks, young prince Vlad Tepes must become a monster feared by his own people in order to obtain the power needed to protect his own family, and the families of his kingdom.</p>
                     </div>
                 </div>
                 <div class="item">
                     <img class="index-img" src="${pageContext.request.contextPath}/res/img/index3.jpg">
                     <div class="carousel-caption">
-                        <h1>Gravity</h1>
+                        <h1><a href="/movie/9363">Gravity</a></h1>
                         <p>Two astronauts work together to survive after an accident which leaves them alone in space.</p>
                     </div>
                 </div>
                 <div class="item">
                     <img class="index-img" src="${pageContext.request.contextPath}/res/img/index4.jpg">
                     <div class="carousel-caption">
-                        <h1>Man of Steel</h1>
+                        <h1><a href="/movie/9019">Man of Steel</a></h1>
                         <p>Clark Kent, one of the last of an extinguished race disguised as an unremarkable human, is forced to reveal his identity when Earth is invaded by an army of survivors who threaten to bring the planet to the brink of destruction.</p>
                     </div>
                 </div>
                 <div class="item">
                     <img class="index-img" src="${pageContext.request.contextPath}/res/img/index5.jpg">
                     <div class="carousel-caption">
-                        <h1>Pacific Rim</h1>
+                        <h1><a href="/movie/9062">Pacific Rim</a></h1>
                         <p>As a war between humankind and monstrous sea creatures wages on, a former pilot and a trainee are paired up to drive a seemingly obsolete special weapon in a desperate effort to save the world from the apocalypse.</p>
                     </div>
                 </div>
                 <div class="item">
                     <img class="index-img" src="${pageContext.request.contextPath}/res/img/index6.jpg">
                     <div class="carousel-caption">
-                        <h1>Brave</h1>
+                        <h1><a href="/movie/7702">Brave</a></h1>
                         <p>Determined to make her own path in life, Princess Merida defies a custom that brings chaos to her kingdom. Granted one wish, Merida must rely on her bravery and her archery skills to undo a beastly curse.</p>
                     </div>
                 </div>

@@ -81,7 +81,7 @@ public class Scheduler {
 
     private static Process process;
     
-    private static String scheduleTime = "23:32:00";
+    private static String scheduleTime = "14:31:00";
     private static String nextTime;
     private static long period = 24 * 60 * 60 * 1000; // one day;
 
@@ -377,9 +377,8 @@ public class Scheduler {
 
     }
 
-    private static void initLogger() {
+    private static void initLogger(String date) {
         try {
-            final String date = formatter.format(new Date());
             new File(logPath).mkdirs();
             final String path = logPath + Protocol.SYS_NAME + "-" + date + ".log";
             new File(path).createNewFile();
@@ -448,7 +447,7 @@ public class Scheduler {
             e.printStackTrace();
             return;
         }
-        initLogger();
+        initLogger(formatter.format(new Date()));
         if (args.length > 0) {
             scheduleTime = args[0];
         }
@@ -463,6 +462,7 @@ public class Scheduler {
         executor.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
+                initLogger(formatter.format(new Date()));
                 if (process != null && process.isAlive()) {
                     process.destroy();
                 }
