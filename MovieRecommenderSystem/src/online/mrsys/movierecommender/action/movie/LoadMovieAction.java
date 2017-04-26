@@ -1,14 +1,9 @@
 package online.mrsys.movierecommender.action.movie;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.opensymphony.xwork2.ActionContext;
 
 import online.mrsys.movierecommender.action.base.BaseAction;
 import online.mrsys.movierecommender.action.base.WebConstant;
-import online.mrsys.movierecommender.domain.Rating;
 import online.mrsys.movierecommender.vo.FavoriteBean;
 import online.mrsys.movierecommender.vo.MovieBean;
 import online.mrsys.movierecommender.vo.RatingBean;
@@ -53,15 +48,6 @@ public class LoadMovieAction extends BaseAction {
                     actionContext.getSession().put(WebConstant.RATING, null);
                 }
             }
-            // ratings by other users
-            List<Rating> ratings = movieManager.getRatingsByMovie(movieManager.getMovieById(Integer.parseInt(getId())));
-            Map<Long, Integer> ratingMap = new HashMap<>();
-            for (Rating rating : ratings) {
-                Integer num = ratingMap.get(Math.round(rating.getRating().doubleValue()));
-                ratingMap.put(Math.round(rating.getRating().doubleValue()), num == null ? 1 : num + 1);
-            }
-            ratingMap.put(-1L, ratings.size());
-            actionContext.getSession().put(WebConstant.RATING_MAP, ratingMap);
             return SUCCESS;
         }
         actionContext.getSession().put(WebConstant.INTERCEPT, "Movie does not exist");

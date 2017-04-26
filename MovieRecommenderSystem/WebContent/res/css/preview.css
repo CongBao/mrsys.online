@@ -147,3 +147,8 @@ h4 {
 #favorite {
 	font-size: 2em;
 }
+
+#rateLoading {
+	width: 25px;
+	margin-left: 5px;
+}

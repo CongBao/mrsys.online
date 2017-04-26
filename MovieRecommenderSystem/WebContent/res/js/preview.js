@@ -11,7 +11,7 @@ if (typeof jQuery === 'undefined') {
 (function(win, doc, $, undefined) {
 
 	$(function () {
-		$('[data-toggle="tooltip"]').tooltip()
+		$('[data-toggle="tooltip"]').tooltip();
 	});
 	
 	$(function () {
@@ -33,13 +33,25 @@ if (typeof jQuery === 'undefined') {
 	});
 	
 	$(function () {
-		for (var i = 0; i < 5; i++) {
-			var $star = $('#' + (i + 1) + 'star');
-			var max = $star.attr('aria-valuemax');
-			var now = $star.attr('aria-valuenow');
-			$star.attr('style', 'width: ' + (now / max * 100) + '%;');
-			$star.children('span').text((now / max * 100) + '% Complete');
-		}
+		$('#rateLoading').show();
+		$.ajax({
+			cache: false,
+			type: 'post',
+			url: '/ajax/loadRatings',
+			data: { 'imdb': $('#movieId').val() },
+			success: function (data, statusText) {
+				console.log(data);
+				var map = data.ratingMap;
+				for (var i = 0; i < 5; i++) {
+					var $star = $('#' + (i + 1) + 'star');
+					$star.attr('aria-valuemax', map['-1']);
+					$star.attr('aria-valuenow', map[String(i + 1)]);
+					$star.attr('style', 'width: ' + (map[String(i + 1)] / map['-1'] * 100) + '%;');
+					$star.html('<span class="sr-only">' + (map[String(i + 1)] / map['-1'] * 100) + '%</span>')
+				}
+				$('#rateLoading').hide();
+			}
+		});
 	});
 	
 	$(function () {
@@ -50,7 +62,6 @@ if (typeof jQuery === 'undefined') {
 				url: '/ajax/updateFavorite',
 				data: {},
 				success: function (data, statusText) {
-					console.log(data);
 					if (data.status == 'added') {
 						$('#favBtn').attr('title', 'remove favourite');
 						$('#favBtn').attr('style', 'color: #f00;');

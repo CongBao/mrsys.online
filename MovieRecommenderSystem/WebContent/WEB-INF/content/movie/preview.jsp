@@ -41,14 +41,16 @@
                         <div class="col-md-10">
                             <h1 id="title">N/A</h1>
                         </div>
-                        <div class="col-md-2 text-right">
-                          <s:if test="#session.favorite == null">
-                            <button id="favBtn" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="add to favourites"><span id="favorite" class="glyphicon glyphicon-heart-empty"></span></button>
-                          </s:if>
-                          <s:else>
-                            <button id="favBtn" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="remove favourite" style="color: #f00;"><span id="favorite" class=" glyphicon glyphicon-heart"></span></button>
-                          </s:else>
-                        </div>
+                        <s:if test="#session.user != null">
+	                        <div class="col-md-2 text-right">
+	                          <s:if test="#session.favorite == null">
+	                            <button id="favBtn" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="add to favourites"><span id="favorite" class="glyphicon glyphicon-heart-empty"></span></button>
+	                          </s:if>
+	                          <s:else>
+	                            <button id="favBtn" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="remove favourite" style="color: #f00;"><span id="favorite" class=" glyphicon glyphicon-heart"></span></button>
+	                          </s:else>
+	                        </div>
+                        </s:if>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
@@ -84,13 +86,13 @@
             </div>
 
             <div class="col-md-6" id="r">
-                <h4>User Ratings</h4>
+                <h4>User Ratings<img id="rateLoading" alt="loading" src="${pageContext.request.contextPath}/res/img/loading.gif"></h4>
                 <div class="row">
                     <div class="col-md-2">5 star</div>
                     <div class="col-md-10">
                         <div class="progress">
-                            <div class="progress-bar progress-bar-warning" id="5star" role="progressbar" aria-valuenow="${sessionScope.ratingMap[5]}" aria-valuemin="0" aria-valuemax="${sessionScope.ratingMap[-1]}" style="width: 0%">
-                                <span class="sr-only">20% Complete</span>
+                            <div class="progress-bar progress-bar-warning" id="5star" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="" style="width: 0%">
+                                <span class="sr-only"></span>
                             </div>
                         </div>
                     </div>
@@ -99,8 +101,8 @@
                     <div class="col-md-2">4 star</div>
                     <div class="col-md-10">
                         <div class="progress">
-                            <div class="progress-bar progress-bar-warning" id="4star" role="progressbar" aria-valuenow="${sessionScope.ratingMap[4]}" aria-valuemin="0" aria-valuemax="${sessionScope.ratingMap[-1]}" style="width: 0%">
-                                <span class="sr-only">10% Complete</span>
+                            <div class="progress-bar progress-bar-warning" id="4star" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="" style="width: 0%">
+                                <span class="sr-only"></span>
                             </div>
                         </div>
                     </div>
@@ -109,8 +111,8 @@
                     <div class="col-md-2">3 star</div>
                     <div class="col-md-10">
                         <div class="progress">
-                            <div class="progress-bar progress-bar-warning" id="3star" role="progressbar" aria-valuenow="${sessionScope.ratingMap[3]}" aria-valuemin="0" aria-valuemax="${sessionScope.ratingMap[-1]}" style="width: 0%">
-                                <span class="sr-only">30% Complete</span>
+                            <div class="progress-bar progress-bar-warning" id="3star" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="" style="width: 0%">
+                                <span class="sr-only"></span>
                             </div>
                         </div>
                     </div>
@@ -119,8 +121,8 @@
                     <div class="col-md-2">2 star</div>
                     <div class="col-md-10">
                         <div class="progress">
-                            <div class="progress-bar progress-bar-warning" id="2star" role="progressbar" aria-valuenow="${sessionScope.ratingMap[2]}" aria-valuemin="0" aria-valuemax="${sessionScope.ratingMap[-1]}" style="width: 0%">
-                                <span class="sr-only">20% Complete</span>
+                            <div class="progress-bar progress-bar-warning" id="2star" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="" style="width: 0%">
+                                <span class="sr-only"></span>
                             </div>
                         </div>
                     </div>
@@ -129,8 +131,8 @@
                     <div class="col-md-2">1 star</div>
                     <div class="col-md-10">
                         <div class="progress">
-                            <div class="progress-bar progress-bar-warning" id="1star" role="progressbar" aria-valuenow="${sessionScope.ratingMap[1]}" aria-valuemin="0" aria-valuemax="${sessionScope.ratingMap[-1]}" style="width: 0%">
-                                <span class="sr-only">10% Complete</span>
+                            <div class="progress-bar progress-bar-warning" id="1star" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="" style="width: 0%">
+                                <span class="sr-only"></span>
                             </div>
                         </div>
                     </div>

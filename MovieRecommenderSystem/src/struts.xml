@@ -151,6 +151,13 @@
             </result>
         </action>
         
+        <action name="loadRatings" class="online.mrsys.movierecommender.action.ajax.LoadRatingsAction">
+            <result type="json">
+                <param name="noCache">true</param>
+                <param name="excludeNullProperties">true</param>
+            </result>
+        </action>
+        
     </package>
 	
 	<package name="movie" extends="root" namespace="/movie">
