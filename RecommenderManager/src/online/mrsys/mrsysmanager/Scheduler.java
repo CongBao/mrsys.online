@@ -81,7 +81,7 @@ public class Scheduler {
 
     private static Process process;
     
-    private static String scheduleTime = "14:31:00";
+    private static String scheduleTime = "05:00:00";
     private static String nextTime;
     private static long period = 24 * 60 * 60 * 1000; // one day;
 
