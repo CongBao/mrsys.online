@@ -208,15 +208,23 @@
 	    <default-interceptor-ref name="adminStack"/>
 	    
 	    <action name="addMovie" class="online.mrsys.movierecommender.action.admin.AddMovieAction">
-	        <result>/WEB-INF/content/admin/console.jsp</result>
+	        <result name="success">/WEB-INF/content/admin/console.jsp</result>
+            <result name="error">/WEB-INF/content/admin/console.jsp</result>
 	    </action>
 	    
 	    <action name="deleteMovie" class="online.mrsys.movierecommender.action.admin.DeleteMovieAction">
-	        <result>/WEB-INF/content/admin/console.jsp</result>
+	        <result name="success">/WEB-INF/content/admin/console.jsp</result>
+            <result name="error">/WEB-INF/content/admin/console.jsp</result>
 	    </action>
 	    
 	    <action name="upgradeUser" class="online.mrsys.movierecommender.action.admin.UpgradeUserAction">
-	        <result>/WEB-INF/content/admin/console.jsp</result>
+	        <result name="success">/WEB-INF/content/admin/console.jsp</result>
+            <result name="error">/WEB-INF/content/admin/console.jsp</result>
+	    </action>
+	    
+	    <action name="updateSchedule" class="online.mrsys.movierecommender.action.admin.UpdateScheduleAction">
+	        <result name="success">/WEB-INF/content/admin/console.jsp</result>
+	        <result name="error">/WEB-INF/content/admin/console.jsp</result>
 	    </action>
 	    
 	    <action name="*">

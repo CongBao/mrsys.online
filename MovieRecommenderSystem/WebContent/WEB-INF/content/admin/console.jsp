@@ -8,6 +8,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="author" content="Zekun Wang">
+<meta name="author" content="Cong Bao">
 <title>Console</title>
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/res/img/icon.png"/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/res/css/bootstrap.min.css"/>
@@ -32,6 +33,11 @@
                 <li role="presentation">
                     <a href="#user" aria-controls="user" role="tab" data-toggle="tab">
                         <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;User Manager
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a href="#schedule" aria-controls="schedule" role="tab" data-toggle="tab">
+                        <span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;&nbsp;Schedule Manager
                     </a>
                 </li>
             </ul>
@@ -127,6 +133,41 @@
                         </div>
                     </div>
                 </div>
+                <div role="tabpanel" class="tab-pane fade" id="schedule">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Update Schedule Time</h3>
+                        </div>
+                        <div class="panel-body">
+                            <form class="form-horizontal" method="post" action="updateSchedule">
+                                <div class="form-group">
+                                    <label for="hour" class="col-sm-2 control-label">Hour</label>
+                                    <div class="col-sm-2">
+                                        <input type="number" class="form-control" id="hour" placeholder="hour" name="hour" required>
+                                    </div>
+                                    <label for="min" class="col-sm-2 control-label">Minute</label>
+                                    <div class="col-sm-2">
+                                        <input type="number" class="form-control" id="min" placeholder="minute" name="minute" required>
+                                    </div>
+                                    <label for="sec" class="col-sm-2 control-label">Second</label>
+                                    <div class="col-sm-2">
+                                        <input type="number" class="form-control" id="sec" placeholder="second" name="second" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" id="upScheBtn" value="submit" class="btn btn-primary">Update</button>
+                                        <button type="reset" id="upScheResetBtn" value="reset" class="btn btn-default">Reset</button>
+                                        <label style="color: red;">&nbsp;
+                                            <s:if test="#session.intercept != null">${sessionScope.intercept_3}</s:if>
+                                            <%session.setAttribute(WebConstant.INTERCEPT_3, null);%>
+                                        </label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -136,6 +177,7 @@
 (function (win, doc, $, undefined) {
     $(function () {
         $('#navbar').attr('class', 'navbar navbar-static-top');
+        $('#tabs a[href="' + $(location).attr('hash') + '"]').tab('show');
     });
 })(window, document, jQuery);
 </script>

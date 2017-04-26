@@ -1,7 +1,7 @@
 /*!
  * profile.js v1.1
  * Author: Cong Bao
- * Date: 14 April, 2017
+ * Date: 22 April, 2017
  */
 
 if (typeof jQuery === 'undefined') {

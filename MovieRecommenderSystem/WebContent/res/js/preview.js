@@ -1,7 +1,8 @@
 /*!
- * preview.js
+ * preview.js v1.1
  * Author: Jinke He
- * Date: 10 April, 2017
+ * Author: Cong Bao
+ * Date: 26 April, 2017
  */
 
 if (typeof jQuery === 'undefined') {
@@ -40,7 +41,6 @@ if (typeof jQuery === 'undefined') {
 			url: '/ajax/loadRatings',
 			data: { 'imdb': $('#movieId').val() },
 			success: function (data, statusText) {
-				console.log(data);
 				var map = data.ratingMap;
 				for (var i = 0; i < 5; i++) {
 					var $star = $('#' + (i + 1) + 'star');
