@@ -21,16 +21,16 @@ import online.mrsys.movierecommender.vo.UserBean;
  */
 public class LoadProfileAction extends BaseAction {
 
-    private static final long serialVersionUID = -4961780923283262163L;
+    private static final long serialVersionUID = 1085858305190846218L;
     
-    private String account;
+    private String id;
 
-    public String getAccount() {
-        return account;
+    public String getId() {
+        return id;
     }
 
-    public void setAccount(String account) {
-        this.account = account;
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override
@@ -39,6 +39,9 @@ public class LoadProfileAction extends BaseAction {
         UserBean userBean = (UserBean) actionContext.getSession().get(WebConstant.USER);
         if (userBean == null) {
             return Action.LOGIN;
+        }
+        if (!userBean.getId().equals(Integer.parseInt(getId()))) {
+            return WebConstant.REJECT;
         }
         // load favorites
         List<FavoriteBean> favoriteBeans = userManager.getFavoriteBeansByUserBean(userBean, movieManager);

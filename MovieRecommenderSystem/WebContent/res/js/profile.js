@@ -27,7 +27,7 @@ if (typeof jQuery === 'undefined') {
 				data: { 'i': $imdb },
 				success: function (data, statusText) {
 					$('#favtitle' + $imdb).text(data.Title);
-					$('#favimg' + $imdb).attr('src', data.Poster);
+					$('#favimg' + $imdb).attr('src', data.Poster.replace(/https?/, 'https'));
 					$('#favimg' + $imdb).attr('alt', data.Title);
 					$('#favimg' + $imdb).css('width', '100px');
 					$('#favinfo' + $imdb).text('Released on: ' + data.Released);
@@ -49,7 +49,7 @@ if (typeof jQuery === 'undefined') {
 				success: function (data, statusText) {
 					var $neighbour = $('#rectitle' + $imdb).text();
 					$('#rectitle' + $imdb).html(data.Title + '<i class="pull-right">according to <b>' + $neighbour  + '</b> similar users\' ratings</i>');
-					$('#recimg' + $imdb).attr('src', data.Poster);
+					$('#recimg' + $imdb).attr('src', data.Poster.replace(/https?/, 'https'));
 					$('#recimg' + $imdb).attr('alt', data.Title);
 					$('#recimg' + $imdb).css('width', '100px');
 					$('#recinfo' + $imdb).text('Released on: ' + data.Released);

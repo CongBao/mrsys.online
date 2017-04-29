@@ -86,7 +86,8 @@ if (typeof jQuery === 'undefined') {
 		    					data: { 'i': value },
 		    					success: function (data, statusText) {
 		    						if (data.Poster != 'N/A') {
-		    							var $box = $('<div class="box" id="' + key + '"><a href="movie/' + key + '"><img src="' + data.Poster + '"></a></div>');
+		    							var poster = data.Poster.replace(/https?/, 'https');
+		    							var $box = $('<div class="box" id="' + key + '"><a href="movie/' + key + '"><img src="' + poster + '"></a></div>');
 			    						$('#masonry').append($box);
 		    	    					$box.imagesLoaded(function () {
 			    							$('#masonry').masonry('appended', $box);

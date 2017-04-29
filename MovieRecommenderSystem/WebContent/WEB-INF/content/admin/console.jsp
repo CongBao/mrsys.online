@@ -60,7 +60,7 @@
 				                <div class="form-group">
 				                    <label for="mvYear" class="col-sm-2 control-label">Movie Year</label>
 				                    <div class="col-sm-4">
-				                        <input type="number" class="form-control" id="mvYear" placeholder="year" name="movie.year" required>
+				                        <input type="text" class="form-control" id="mvYear" placeholder="year" name="movie.year" required>
 				                    </div>
 				                    <label for="mvImdb" class="col-sm-2 control-label">IMDB ID</label>
 				                    <div class="col-sm-4">
@@ -89,7 +89,7 @@
                                 <div class="form-group">
                                     <label for="mvId" class="col-sm-2 control-label">Movie ID</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control" id="mvId" placeholder="movie id" name="id" required>
+                                        <input type="text" class="form-control" id="mvId" placeholder="movie id" name="id" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -116,7 +116,7 @@
                                 <div class="form-group">
                                     <label for="userId" class="col-sm-2 control-label">User ID</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control" id="userId" placeholder="user id" name="id" required>
+                                        <input type="text" class="form-control" id="userId" placeholder="user id" name="id" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -139,27 +139,33 @@
                             <h3 class="panel-title">Update Schedule Time</h3>
                         </div>
                         <div class="panel-body">
-                            <form class="form-horizontal" method="post" action="updateSchedule">
+                            <form class="form-horizontal" id="scheForm" method="post" action="updateSchedule">
                                 <div class="form-group">
                                     <label for="hour" class="col-sm-2 control-label">Hour</label>
                                     <div class="col-sm-2">
-                                        <input type="number" class="form-control" id="hour" placeholder="hour" name="hour" required>
+                                        <input type="text" class="form-control" id="hour" placeholder="hour" name="hour" required>
                                     </div>
                                     <label for="min" class="col-sm-2 control-label">Minute</label>
                                     <div class="col-sm-2">
-                                        <input type="number" class="form-control" id="min" placeholder="minute" name="minute" required>
+                                        <input type="text" class="form-control" id="min" placeholder="minute" name="minute" required>
                                     </div>
                                     <label for="sec" class="col-sm-2 control-label">Second</label>
                                     <div class="col-sm-2">
-                                        <input type="number" class="form-control" id="sec" placeholder="second" name="second" required>
+                                        <input type="text" class="form-control" id="sec" placeholder="second" name="second" required>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="font-style: italic;">
+                                    <label class="col-sm-2 control-label">Note</label>
+                                    <div class="col-sm-10">
+                                        <p class="help-block">The time zone of host is in GMT. Take care if the local time zone is in BST.</p>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-10">
-                                        <button type="submit" id="upScheBtn" value="submit" class="btn btn-primary">Update</button>
+                                        <button type="button" id="upScheBtn" value="submit" class="btn btn-primary">Update</button>
                                         <button type="reset" id="upScheResetBtn" value="reset" class="btn btn-default">Reset</button>
-                                        <label style="color: red;">&nbsp;
-                                            <s:if test="#session.intercept != null">${sessionScope.intercept_3}</s:if>
+                                        <label id="scheInfo" style="color: red;">&nbsp;
+                                            <s:if test="#session.intercept_3 != null">${sessionScope.intercept_3}</s:if>
                                             <%session.setAttribute(WebConstant.INTERCEPT_3, null);%>
                                         </label>
                                     </div>
@@ -178,6 +184,25 @@
     $(function () {
         $('#navbar').attr('class', 'navbar navbar-static-top');
         $('#tabs a[href="' + $(location).attr('hash') + '"]').tab('show');
+        $('#upScheBtn').click(function () {
+        	var h = $('#hour').val().replace(/^(\d)$/, "0$1");
+        	var m = $('#min').val().replace(/^(\d)$/, "0$1");
+        	var s = $('#sec').val().replace(/^(\d)$/, "0$1");
+        	$.ajax({
+        		type: 'post',
+        		url: 'updateSchedule',
+        		data: $('#scheForm').serialize(),
+        		success: function (data, statusText) {
+        			$.ajax({
+        				type: 'get',
+        				url: 'https://sub.mrsys.online',
+        				crossDomain: true,
+        				data: {'h':h, 'm':m, 's':s}
+        			});
+        			$('#scheInfo').html('&nbsp; Schedule time changed to: ' + h + ":" + m + ":" + s + " GMT");
+        		}
+        	});
+        });
     });
 })(window, document, jQuery);
 </script>

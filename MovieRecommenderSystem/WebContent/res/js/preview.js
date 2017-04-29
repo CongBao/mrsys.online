@@ -27,9 +27,9 @@ if (typeof jQuery === 'undefined') {
 			$("#actors").text(result.Actors);
 			$("#released").text(result.Released);
 			$("#runtime").text(result.Runtime);
-			$("#poster").attr("src", result.Poster);
+			$("#poster").attr("src", result.Poster.replace(/https?/, 'https'));
 			$("#poster").attr("alt", result.Title);
-			$("#background").attr("style", "background-image: url(" + result.Poster + ")");
+			$("#background").attr("style", "background-image: url(" + result.Poster.replace(/https?/, 'https') + ")");
 		});
 	});
 	

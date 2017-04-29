@@ -50,7 +50,7 @@ if (typeof jQuery === 'undefined') {
         }
         for (var i=start_index; i<=end_index; i++){
             var imdbID = content[i].imdbID;
-            var poster = content[i].Poster;
+            var poster = content[i].Poster.replace(/https?/, 'https');
             var item = '<li class="media" id="'+imdbID+'"><div class="media-left"><a><img class="media-object" src=' + poster + ' alt=' + poster + '></a></div><div class="media-body" style="padding-left: 100px"><h1 class="media-heading" style="font-size: 32px"><a id="link-' + imdbID + '" href="N/A">'+content[i].Title+'</a></h1><h4 class="movie-info">YEAR</h4><p class="info-content" id="year-'+imdbID+'"></p><h4 class="movie-info">GENRE</h4><p  class="info-content" id="genre-'+imdbID+'"></p><h4 class="movie-info">ACTORS</h4><p  class="info-content" id="actors-'+imdbID+'"></p><h4 class="movie-info">Plot</h4><p  class="info-content" id="plot-'+imdbID+'"></p></div></li>';
             $(".media-list").append(item);
             $(".media-list").append('<HR>');

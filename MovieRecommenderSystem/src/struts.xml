@@ -197,8 +197,12 @@
 		</action>
 		
 		<action name="*" class="online.mrsys.movierecommender.action.user.LoadProfileAction">
-		    <param name="account">{1}</param>
+		    <param name="id">{1}</param>
 		    <result name="success">/WEB-INF/content/user/profile.jsp</result>
+		    <result name="login" type="redirectAction">
+                <param name="actionName">index</param>
+                <param name="namespace">/</param>
+            </result>
 		</action>
 		
 	</package>

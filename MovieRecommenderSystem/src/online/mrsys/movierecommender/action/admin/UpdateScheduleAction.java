@@ -65,7 +65,7 @@ public class UpdateScheduleAction extends BaseAction {
             actionContext.getSession().put(WebConstant.INTERCEPT_3, "Invalid cron expression");
             return ERROR;
         }
-        actionContext.getSession().put(WebConstant.INTERCEPT_3, "Schedule time has changed to " + trigger.getStartTime());
+        actionContext.getSession().put(WebConstant.INTERCEPT_3, "Schedule time has changed. Next time: " + trigger.getNextFireTime());
         return SUCCESS;
     }
     
