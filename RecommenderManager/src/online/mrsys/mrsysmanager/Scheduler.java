@@ -305,8 +305,8 @@ public class Scheduler {
                     toUpdate.forEach(item -> {
                         String res = item.replaceAll("#", ",");
                         try {
-                            writer.write(res);
                             writer.newLine();
+                            writer.write(res);
                         } catch (IOException e) {
                             logger.log(Level.SEVERE, "Error when writing file", e);
                         }
