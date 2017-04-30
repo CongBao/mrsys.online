@@ -16,6 +16,23 @@ if (typeof jQuery === 'undefined') {
 		$('#tabs a[href="' + $(location).attr('hash') + '"]').tab('show');
 	});
 	
+	$(function() {
+		$("#hoverBtn").css("top", win.screen.availHeight / 2 - 100 + "px");
+		$(win).scroll(function() {
+			if($(win).scrollTop() >= 100){
+				$("#hoverBtn").fadeIn(300);
+			} else {
+				$("#hoverBtn").fadeOut(300);
+			}
+		});
+		$("#hoverBtn .upBtn").click(function() {
+			$("html, body").animate({scrollTop: "0px"}, 800);
+		});
+		$("#hoverBtn .downBtn").click(function() {
+			$("html, body").animate({scrollTop: doc.body.clientHeight + "px"}, 800);
+		});
+	});
+	
 	// favourites
 	$(function () {
 		$('#favorite > div').each(function () {

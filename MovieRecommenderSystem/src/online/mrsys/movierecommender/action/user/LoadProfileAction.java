@@ -59,7 +59,7 @@ public class LoadProfileAction extends BaseAction {
                 @SuppressWarnings("unchecked")
                 List<String> recomList = (List<String>) obj;
                 List<MovieBean> movieBeans = new ArrayList<>();
-                int len = recomList.size() >= 10 ? 10 : recomList.size();
+                int len = recomList.size() >= 50 ? 50 : recomList.size();
                 for (int i = 0; i < len; i++) {
                     String[] recom = recomList.get(i).split("&");
                     Integer movieId = Integer.parseInt(recom[0]);

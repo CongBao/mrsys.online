@@ -248,16 +248,14 @@ public class MovieRecommender {
                 String[] module = record.split("@");
                 if (module.length < 3) {
                     logger.log(Level.WARNING, "Result list of {0} is empty", record);
-                    receiveComplete();
-                    return;
+                    continue;
                 }
                 String date = module[0];
                 final long oneDay = 24 * 60 * 60 * 1000;
                 if (!date.equalsIgnoreCase(formatter.format(new Date(new Date().getTime() - oneDay)))) {
                     logger.log(Level.WARNING, "The date of recieved results is {0}, but yesterday is {1}",
                             new Object[] { date, formatter.format(new Date(new Date().getTime() - oneDay)) });
-                    receiveComplete();
-                    return;
+                    continue;
                 }
                 String user = module[1];
                 String[] movies = module[2].split("#");

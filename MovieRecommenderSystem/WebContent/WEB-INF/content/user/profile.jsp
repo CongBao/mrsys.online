@@ -20,6 +20,21 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+<style type="text/css">
+    #hoverBtn {
+        position: fixed;
+        right: 10%;
+        display: none;
+    }
+    #hoverBtn .upBtn {
+        margin: 5px;
+        color: #6c6c6c;
+    }
+    #hoverBtn .downBtn {
+        margin: 5px;
+        color: #6c6c6c;
+    }
+</style>
 </head>
 <body>
 <%@include file="../header.jsp"%>
@@ -235,6 +250,15 @@
             </div>
         </div>
     </div>
+</div>
+<div id="hoverBtn">
+    <button class="upBtn btn btn-default btn-lg">
+        <span class="glyphicon  glyphicon glyphicon-chevron-up"></span>
+    </button>
+    <br>
+    <button class="downBtn btn btn-default btn-lg">
+        <span class="glyphicon  glyphicon  glyphicon glyphicon-chevron-down"></span>
+    </button>
 </div>
 <%@include file="../footer.jsp"%>
 </body>
