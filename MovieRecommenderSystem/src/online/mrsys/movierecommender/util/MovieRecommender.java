@@ -96,7 +96,7 @@ public class MovieRecommender {
         new Thread(() -> {
             connect();
             subscribe();
-            setTimeout(5 * 60 * 1000); // 5min
+            setTimeout(100000); // 100s
             if (next == null || next.size() < 1) {
                 logger.log(Level.WARNING, "No users will be recommended");
                 publish(Protocol.REQUEST, Protocol.NULL);
@@ -228,62 +228,42 @@ public class MovieRecommender {
 
     private class Handler implements MqttCallback {
 
-        private int timeout = 1000;
-        private boolean isRuning = false;
-
         /**
          * When a message starts with {@link Protocol.RESULT} received.
          * 
          * @param content
          *            the content of this message with format
-         *            date@user_id@(movie_id&neighbour_num#)+
+         *            (date@user_id@(movie_id&neighbour_num#)+%)+
          */
         public void onResulted(String content) {
-            // content format: date@user_id@movie_id1#movie_id2#...
+            // content format: (date@user_id@movie_id1#movie_id2#...%)+
             logger.log(Level.INFO, "Result received: {0}", content);
             if (content.equals(Protocol.NULL)) {
                 logger.log(Level.WARNING, "No results received");
                 receiveComplete();
                 return;
             }
-            String[] module = content.split("@");
-            String date = module[0];
-            final long oneDay = 24 * 60 * 60 * 1000;
-            if (!date.equalsIgnoreCase(formatter.format(new Date(new Date().getTime() - oneDay)))) {
-                logger.log(Level.WARNING, "The date of recieved results is {0}, but yesterday is {1}",
-                        new Object[] { date, formatter.format(new Date(new Date().getTime() - oneDay)) });
-                return;
-            }
-            String user = module[1];
-            String[] movies = module[2].split("#");
-            recomList.put(user, Arrays.asList(movies));
-            timeout = 1000;
-            countdown();
-        }
-
-        /**
-         * This method is used to check whether the results have been fetched
-         * completely. The default timeout is 1 second.
-         */
-        public void countdown() {
-            if (isRuning) {
-                return;
-            }
-            isRuning = true;
-            new Thread(() -> {
-                while (true) {
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                    }
-                    timeout -= 100;
-                    if (timeout <= 0) {
-                        break;
-                    }
+            String[] users = content.split("%");
+            for (String record : users) {
+                String[] module = record.split("@");
+                if (module.length < 3) {
+                    logger.log(Level.WARNING, "Result list of {0} is empty", record);
+                    receiveComplete();
+                    return;
                 }
-                receiveComplete();
-                isRuning = false;
-            }).start();
+                String date = module[0];
+                final long oneDay = 24 * 60 * 60 * 1000;
+                if (!date.equalsIgnoreCase(formatter.format(new Date(new Date().getTime() - oneDay)))) {
+                    logger.log(Level.WARNING, "The date of recieved results is {0}, but yesterday is {1}",
+                            new Object[] { date, formatter.format(new Date(new Date().getTime() - oneDay)) });
+                    receiveComplete();
+                    return;
+                }
+                String user = module[1];
+                String[] movies = module[2].split("#");
+                recomList.put(user, Arrays.asList(movies));
+            }
+            receiveComplete();
         }
         
         /**
@@ -292,7 +272,13 @@ public class MovieRecommender {
         public void receiveComplete() {
             List<String> data = getDataBuffer();
             if (data != null && !data.isEmpty()) {
-                data.forEach(item -> publish(Protocol.UPDATE, item));
+                // ((new|update)user_id#movie_id#rating%)+
+                final StringBuilder sb = new StringBuilder();
+                for (String item : data) {
+                    sb.append(item);
+                    sb.append("%");
+                }
+                publish(Protocol.UPDATE, sb.toString());
             }
             try {
                 Thread.sleep(100);

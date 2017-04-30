@@ -81,7 +81,7 @@ public class Scheduler {
 
     private static Process process;
     
-    private static String scheduleTime = "19:40:00";
+    private static String scheduleTime = "20:45:00";
     private static String nextTime;
     private static long period = 24 * 60 * 60 * 1000; // one day;
 
@@ -199,7 +199,7 @@ public class Scheduler {
          * When a message starts with {@link Protocol.REQUEST} received.
          * 
          * @param content
-         *            the content of this message with format date@(user_id#)+
+         *            the content of this message with format (date@user_id@(movie_id&neighbour_num#)+%)+
          */
         public void onRequested(String content) {
             // content format: date@user1#user2#...
@@ -219,23 +219,24 @@ public class Scheduler {
                 publish(Protocol.RESULT, Protocol.NULL);
                 return;
             }
+            final StringBuilder sb = new StringBuilder();
+            // format: (date@user@record1#record2#...%)+
             for (File file : files) {
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));) {
-                    // format: date@user@record1#record2#...
-                    final StringBuilder sb = new StringBuilder();
                     sb.append(date);
                     sb.append("@");
                     sb.append(file.getName().replaceFirst(Protocol.RES_SUFFIX, ""));
                     sb.append("@");
-                    reader.lines().forEach(line -> {
+                    reader.lines().forEachOrdered(line -> {
                         sb.append(line);
                         sb.append("#");
                     });
-                    publish(Protocol.RESULT, sb.toString());
+                    sb.append("%");
                 } catch (IOException e) {
                     logger.log(Level.SEVERE, null, e);
                 }
             }
+            publish(Protocol.RESULT, sb.toString());
         }
 
         /**
@@ -243,19 +244,19 @@ public class Scheduler {
          * 
          * @param content
          *            the content of this message with format
-         *            (new|update)user_id#movie_id#rating
+         *            ((new|update)user_id#movie_id#rating%)+
          */
         public void onUpdated(String content) {
-            // content format: (new|update)user_id#movie_id#rating
+            // content format: ((new|update)user_id#movie_id#rating%)+
             logger.log(Level.INFO, "Update received: {0}", content);
-            if (content.startsWith(Protocol.NEW_PREFIX)) {
-                content = content.replaceFirst(Protocol.NEW_PREFIX, "");
-                newRatings = new ArrayList<>();
-                newRatings.add(content);
-            } else if (content.startsWith(Protocol.UPDATE_PREFIX)) {
-                content = content.replaceFirst(Protocol.UPDATE_PREFIX, "");
-                updatedRatings = new ArrayList<>();
-                updatedRatings.add(content);
+            for (String str : content.split("%")) {
+                if (str.startsWith(Protocol.NEW_PREFIX)) {
+                    str = str.replaceFirst(Protocol.NEW_PREFIX, "");
+                    newRatings.add(str);
+                } else if (str.startsWith(Protocol.UPDATE_PREFIX)) {
+                    str = str.replaceFirst(Protocol.UPDATE_PREFIX, "");
+                    updatedRatings.add(str);
+                }
             }
         }
 
@@ -470,7 +471,7 @@ public class Scheduler {
                     Scheduler scheduler = new Scheduler();
                     scheduler.connect();
                     scheduler.subscribe();
-                    scheduler.setTimeout(5 * 60 * 1000); // 5min
+                    scheduler.setTimeout(100000); // 100s
                 } catch (MqttException e) {
                     logger.log(Level.SEVERE, "Error when initializing scheduler", e);
                 }
