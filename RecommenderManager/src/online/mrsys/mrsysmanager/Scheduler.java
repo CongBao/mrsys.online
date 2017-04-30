@@ -81,7 +81,7 @@ public class Scheduler {
 
     private static Process process;
     
-    private static String scheduleTime = "05:00:00";
+    private static String scheduleTime = "19:40:00";
     private static String nextTime;
     private static long period = 24 * 60 * 60 * 1000; // one day;
 
@@ -192,8 +192,8 @@ public class Scheduler {
     private class Handler implements MqttCallback {
 
         private String userList;
-        private List<String> newRatings;
-        private List<String> updatedRatings;
+        private List<String> newRatings = new ArrayList<>();
+        private List<String> updatedRatings = new ArrayList<>();
 
         /**
          * When a message starts with {@link Protocol.REQUEST} received.
@@ -305,8 +305,8 @@ public class Scheduler {
                     toUpdate.forEach(item -> {
                         String res = item.replaceAll("#", ",");
                         try {
-                            writer.newLine();
                             writer.write(res);
+                            writer.newLine();
                         } catch (IOException e) {
                             logger.log(Level.SEVERE, "Error when writing file", e);
                         }
@@ -470,7 +470,7 @@ public class Scheduler {
                     Scheduler scheduler = new Scheduler();
                     scheduler.connect();
                     scheduler.subscribe();
-                    scheduler.setTimeout(100000); // 100s
+                    scheduler.setTimeout(5 * 60 * 1000); // 5min
                 } catch (MqttException e) {
                     logger.log(Level.SEVERE, "Error when initializing scheduler", e);
                 }

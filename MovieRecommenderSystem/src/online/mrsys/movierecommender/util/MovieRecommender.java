@@ -96,7 +96,7 @@ public class MovieRecommender {
         new Thread(() -> {
             connect();
             subscribe();
-            setTimeout(100000); // 100s
+            setTimeout(5 * 60 * 1000); // 5min
             if (next == null || next.size() < 1) {
                 logger.log(Level.WARNING, "No users will be recommended");
                 publish(Protocol.REQUEST, Protocol.NULL);
