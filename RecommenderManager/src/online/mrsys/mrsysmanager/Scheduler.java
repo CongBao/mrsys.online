@@ -81,7 +81,7 @@ public class Scheduler {
 
     private static Process process;
     
-    private static String scheduleTime = "20:45:00";
+    private static String scheduleTime = "05:00:00";
     private static String nextTime;
     private static long period = 24 * 60 * 60 * 1000; // one day;
 
@@ -89,7 +89,7 @@ public class Scheduler {
     private final MqttConnectOptions options;
 
     public Scheduler() throws MqttException {
-        client = new MqttClient(Protocol.BROKER, clientId, new MemoryPersistence());
+        client = new MqttClient("tcp://localhost:1883", clientId, new MemoryPersistence());
         client.setCallback(new Handler());
         options = new MqttConnectOptions();
         options.setAutomaticReconnect(true);

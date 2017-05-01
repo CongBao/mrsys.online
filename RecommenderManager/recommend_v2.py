@@ -25,21 +25,20 @@ today = time.strftime("%Y-%m-%d", time.localtime())
 
 # calculate the similarity between two users - no problem
 def getSimilarity(user1, user2):
-    count = 0
+    """
     sum_x = 0.0
     sum_y = 0.0
     sum_xy = 0.0
     for key1 in user1:
         for key2 in user2:
             if key1[0] == key2[0]:
-                count += 1
                 sum_xy += key1[1] * key2[1]
                 sum_y += key2[1] * key2[1]
                 sum_x += key1[1] * key1[1]
     if sum_xy == 0.0:
         return 0
     sx_sy = math.sqrt(sum_x * sum_y)
-    return sum_xy / sx_sy, count
+    return sum_xy / sx_sy
     """
     rating1 = []
     rating2 = []
@@ -49,8 +48,6 @@ def getSimilarity(user1, user2):
                 rating1.append(key1[1])
                 rating2.append(key2[1])
     return (1 - spatial.distance.cosine(rating1, rating2))
-    """
-
 
 #
 #   create the data structures
@@ -78,7 +75,6 @@ def getDictionaries(ratings):
     del ratings
     return user_rate_dic, movie_to_user  # return these two dictionaries
 
-
 #
 #   Find the nearest neighbors
 #   Input: the id of the specific user, all the data of users, all th data of movies
@@ -100,11 +96,9 @@ def getNeighborSimilarity(user_id, users_dic, movie_dic):
         logging.info(str(counter) + "/" + str(movie_num))
     logging.info(str(i) + " neighbors found in total.")
     neighbors_dist = []  # calculate the distance between the user and each neighbor of him/her
-    neighbors_count = []
     for neighbor_id in neighbors:
-        dist, count = getSimilarity(users_dic[user_id], users_dic[neighbor_id])
+        dist = getSimilarity(users_dic[user_id], users_dic[neighbor_id])
         if dist < 1:
-            neighbors_count.append([count, neighbor_id])
             neighbors_dist.append([dist, neighbor_id])  # add the id-distance entry to the new dictionary
     neighbors_dist.sort(reverse=True)  # sort the dictionary
     return neighbors_dist[:1000]  # the list of [similarity, neighbor_id]
@@ -112,7 +106,6 @@ def getNeighborSimilarity(user_id, users_dic, movie_dic):
 
 def getRatings(file_name):
     return np.loadtxt(file_name, dtype=float, delimiter=",")
-
 
 # by default, K=5
 def recommend(userid):
@@ -151,14 +144,13 @@ def recommend(userid):
             result.write(str(int(movie_id)))
             result.write('&' + str(count_dic[movie_id]) + '\n')
             movie_count += 1
-            if movie_count >= 100:
+            if movie_count >= 50:
                 break
     result.close()
     logging.info("Recommendation for user " + str(userid) + " succeeded.")
     logging.info("The result of User " + str(userid) + " has been written to the file " + result_name)
     return result_list
     # return [i[0] for i in recommend_list]  # return movie ids according to their estimated ratings (high to low)
-
 
 # the main function
 if __name__ == '__main__':
@@ -224,3 +216,8 @@ if __name__ == '__main__':
             logging.error("Recommendation for user " + str(target_user) + " failed.")
         logging.info(str(time.clock() - start_time) + " seconds used in total.")
         i += 1
+
+    # finish recommendation
+    logging.info('Recommendation finished.')
+    if (os.path.exists('/home/Scheduler/demo.py')):
+	os.system('python demo.py '+command)

@@ -12,9 +12,11 @@
 <title>Console</title>
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/res/img/icon.png"/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/res/css/bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/res/css/bootstrap-toggle.min.css"/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/res/css/normal.css"/>
 <script type="text/javascript" src="${pageContext.request.contextPath}/res/js/jquery-3.2.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/res/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/res/js/bootstrap-toggle.min.js"></script>
 </head>
 <body>
 <%@include file="../header.jsp"%>
@@ -154,10 +156,22 @@
                                         <input type="text" class="form-control" id="sec" placeholder="second" name="second" required>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <label class="checkbox-inline">
+                                            <input id="demoCk" type="checkbox" data-toggle="toggle">
+                                            Fetch Results Immediately
+                                        </label>
+                                    </div>
+                                </div>
                                 <div class="form-group" style="font-style: italic;">
                                     <label class="col-sm-2 control-label">Note</label>
                                     <div class="col-sm-10">
-                                        <p class="help-block">The time zone of host is in GMT. Take care if the local time zone is in BST.</p>
+                                        <p class="help-block">
+                                            The time zone of host is in GMT. Take care if the local time zone is in BST.<br>
+                                            If the option "Fetch Results Immediately" is on, recommendation lists will be updated as soon as the recommendation algorithm completed.
+                                            It is not recommended to turn on this option in peak hours as it may increase network traffic.
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -193,11 +207,15 @@
         		url: 'updateSchedule',
         		data: $('#scheForm').serialize(),
         		success: function (data, statusText) {
+        			var request = {'h':h, 'm':m, 's':s};
+        			if ($('#demoCk').is(':checked')) {
+        				request = {'h':h, 'm':m, 's':s, 'demo':'true'};
+        			}
         			$.ajax({
         				type: 'get',
         				url: 'https://sub.mrsys.online',
         				crossDomain: true,
-        				data: {'h':h, 'm':m, 's':s}
+        				data: request
         			});
         			$('#scheInfo').html('&nbsp; Schedule time changed to: ' + h + ":" + m + ":" + s + " GMT");
         		}
