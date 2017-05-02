@@ -65,6 +65,9 @@ public class LoadProfileAction extends BaseAction {
                     Integer movieId = Integer.parseInt(recom[0]);
                     Integer neighbours = Integer.parseInt(recom[1]);
                     MovieBean movieBean = movieManager.getMovieBeanById(movieId);
+                    if (movieBean == null) {
+                        continue;
+                    }
                     movieBean.setNeighbours(neighbours);
                     movieBeans.add(movieBean);
                 }
