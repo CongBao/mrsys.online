@@ -194,10 +194,9 @@ public interface MovieManager {
     /**
      * Delete a rating record in database.
      * 
-     * @param rating
-     *            the rating record to be deleted
-     * @return if the delete is successful
+     * @param id
+     *            the id of rating record to be deleted
      */
-    boolean deleteRating(Rating rating);
+    void deleteRating(Integer id);
 
 }

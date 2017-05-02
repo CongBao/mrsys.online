@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,7 +40,7 @@ public class Movie implements Cloneable, Serializable {
 	@Column(name = "title", nullable = false, length = 256)
 	private String title;
 	
-	@ManyToMany(targetEntity = User.class)
+	@ManyToMany(targetEntity = User.class, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
 	@JoinTable(name = "favorite",
 	           joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "movie_id"),
 	           inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"))

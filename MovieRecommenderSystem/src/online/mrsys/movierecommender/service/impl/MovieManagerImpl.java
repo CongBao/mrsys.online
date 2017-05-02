@@ -194,12 +194,8 @@ public class MovieManagerImpl implements MovieManager {
 	}
 
 	@Override
-	public boolean deleteRating(Rating rating) {
-		if (isRatingExist(rating)) {
-			ratingDao.delete(rating);
-			return true;
-		}
-		return false;
+	public void deleteRating(Integer id) {
+	    ratingDao.delete(Rating.class, id);
 	}
 
 }

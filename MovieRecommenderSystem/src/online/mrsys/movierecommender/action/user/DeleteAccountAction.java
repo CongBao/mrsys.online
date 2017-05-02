@@ -1,5 +1,7 @@
 package online.mrsys.movierecommender.action.user;
 
+import java.util.List;
+
 import javax.servlet.http.Cookie;
 
 import org.apache.struts2.ServletActionContext;
@@ -8,6 +10,7 @@ import com.opensymphony.xwork2.ActionContext;
 
 import online.mrsys.movierecommender.action.base.BaseAction;
 import online.mrsys.movierecommender.action.base.WebConstant;
+import online.mrsys.movierecommender.domain.Rating;
 
 public class DeleteAccountAction extends BaseAction {
 
@@ -26,6 +29,10 @@ public class DeleteAccountAction extends BaseAction {
     @Override
     public String execute() throws Exception {
         ActionContext actionContext = ActionContext.getContext();
+        List<Rating> ratings = movieManager.getRatingsByUser(userManager.getUserById(getId()));
+        for (Rating rating : ratings) {
+            movieManager.deleteRating(rating.getId());
+        }
         userManager.deleteUser(getId());
         actionContext.getSession().put(WebConstant.USER, null);
         Cookie[] cookies = ServletActionContext.getRequest().getCookies();
