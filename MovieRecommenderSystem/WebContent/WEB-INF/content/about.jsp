@@ -34,8 +34,18 @@
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
 	                <h2><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;About our team</h2>
-	                <p>We are COMP214 team1 </p>
-	                <p>Team member:Cong Bao, Jinke He, Yuan Zhu, Zekun Wang, Xiang Li, Hongchi Chen</p>
+	                <p>We are COMP214 Artificial Intelligence Group Project T1 </p>
+	                <p>
+                        All contributors in this project are:
+                        <ul>
+                            <li>Cong Bao [<a href="mailto:C.Bao2@student.liverpool.ac.uk">C.Bao2@student.liverpool.ac.uk</a>]</li>
+                            <li>Hongchi Chen [<a href="mailto:H.Chen40@student.liverpool.ac.uk">H.Chen40@student.liverpool.ac.uk</a>]</li>
+                            <li>Jinke He [<a href="mailto:J.He26@student.liverpool.ac.uk">J.He26@student.liverpool.ac.uk</a>]</li>
+                            <li>Xiang Li [<a href="mailto:X.Li126@student.liverpool.ac.uk">X.Li126@student.liverpool.ac.uk</a>]</li>
+                            <li>Zekun Wang [<a href="mailto:Z.Wang120@student.liverpool.ac.uk">Z.Wang120@student.liverpool.ac.uk</a>]</li>
+                            <li>Yuan Zhu [<a href="mailto:Y.Zhu58@student.liverpool.ac.uk">Y.Zhu58@student.liverpool.ac.uk</a>]</li>
+                        </ul>
+                    </p>
                 </div>
             </div>
             <div class="row">

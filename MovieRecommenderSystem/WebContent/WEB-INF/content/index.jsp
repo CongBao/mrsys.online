@@ -7,7 +7,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="author" content="Cong Bao">
-<title>Index</title>
+<title>MRSYS.ONLINE</title>
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/res/img/icon.png"/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/res/css/bootstrap.min.css"/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/res/css/timelify.css"/>
@@ -110,7 +110,10 @@
                 </ul>
                 <ul class="timeline-items">
                     <li class="is-hidden timeline-item">
-                        <h3><a href="/user/${sessionScope.user.account}#recommend">Step 3: Check your recommendation list</a></h3>
+                        <h3>
+                            <s:if test="#session.user != null"><a href="/user/${sessionScope.user.id}#recommend">Step 3: Check your recommendation list</a></s:if>
+                            <s:else><a href="" data-toggle="modal" data-target="#loginModal">Step 3: Check your recommendation list</a></s:else>
+                        </h3>
                     </li>
                 </ul>
             </div>

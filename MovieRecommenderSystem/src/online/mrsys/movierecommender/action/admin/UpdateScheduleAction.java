@@ -1,15 +1,14 @@
 package online.mrsys.movierecommender.action.admin;
 
 import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.quartz.TriggerKey;
 import org.quartz.impl.StdScheduler;
 import org.quartz.impl.triggers.CronTriggerImpl;
 
-import com.opensymphony.xwork2.ActionContext;
-
 import online.mrsys.movierecommender.action.base.BaseAction;
-import online.mrsys.movierecommender.action.base.WebConstant;
 
 public class UpdateScheduleAction extends BaseAction {
 
@@ -55,17 +54,16 @@ public class UpdateScheduleAction extends BaseAction {
 
     @Override
     public String execute() throws Exception {
-        ActionContext actionContext = ActionContext.getContext();
         TriggerKey key = new TriggerKey("cronTriggerRecommend");
         CronTriggerImpl trigger = (CronTriggerImpl) getScheduler().getTrigger(key);
         try {
             trigger.setCronExpression(getSecond() + " " + getMinute() + " " + getHour() + " * * ?");
             getScheduler().rescheduleJob(key, trigger);
         } catch (ParseException e) {
-            actionContext.getSession().put(WebConstant.INTERCEPT_3, "Invalid cron expression");
+            Logger.getLogger(UpdateScheduleAction.class.getName()).log(Level.SEVERE, "Invalid cron expression");
             return ERROR;
         }
-        actionContext.getSession().put(WebConstant.INTERCEPT_3, "Schedule time has changed. Next time: " + trigger.getNextFireTime());
+        Logger.getLogger(UpdateScheduleAction.class.getName()).log(Level.INFO, "Schedule time has changed. Next time: {0}", trigger.getNextFireTime());
         return SUCCESS;
     }
     

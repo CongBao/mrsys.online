@@ -168,9 +168,8 @@
                                     <label class="col-sm-2 control-label">Note</label>
                                     <div class="col-sm-10">
                                         <p class="help-block">
-                                            The time zone of host is in GMT. Take care if the local time zone is in BST.<br>
-                                            If the option "Fetch Results Immediately" is on, recommendation lists will be updated as soon as the recommendation algorithm completed.
-                                            It is not recommended to turn on this option in peak hours as it may increase network traffic.
+                                            If the option "Fetch Results Immediately" is on, recommendation lists will be updated as soon as the recommendation algorithm completed for one time.
+                                            This function is used to test or demonstrate, and not recommended to turn on as it may increase network traffic.
                                         </p>
                                     </div>
                                 </div>
@@ -217,7 +216,7 @@
         				crossDomain: true,
         				data: request
         			});
-        			$('#scheInfo').html('&nbsp; Schedule time changed to: ' + h + ":" + m + ":" + s + " GMT");
+        			$('#scheInfo').html('&nbsp; Schedule time changed to: ' + h + ":" + m + ":" + s + " BST");
         		}
         	});
         });
