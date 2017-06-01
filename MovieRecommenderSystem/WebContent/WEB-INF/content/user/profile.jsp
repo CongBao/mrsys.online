@@ -157,7 +157,7 @@
 		              </s:iterator>
 		          </s:if>
 		          <s:else>
-		              <h2 class="text-center">Sorry, recommendation list is not available now.</h2>
+		              <h2 class="text-center">Sorry, recommendation list is not available now.<br>The list will be updated the next day after your first rating.</h2>
 		          </s:else>
 	            </div>
 	            <div role="tabpanel" class="tab-pane fade" id="setting">

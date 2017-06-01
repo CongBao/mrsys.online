@@ -41,7 +41,7 @@ if (typeof jQuery === 'undefined') {
 				cache: false,
 				type: 'get',
 				url: 'https://www.omdbapi.com',
-				data: { 'i': $imdb },
+				data: { 'apikey': 'c352df74', 'i': $imdb },
 				success: function (data, statusText) {
 					$('#favtitle' + $imdb).text(data.Title);
 					$('#favimg' + $imdb).attr('src', data.Poster.replace(/https?/, 'https'));
@@ -62,7 +62,7 @@ if (typeof jQuery === 'undefined') {
 				cache: false,
 				type: 'get',
 				url: 'https://www.omdbapi.com',
-				data: { 'i': $imdb },
+				data: { 'apikey': 'c352df74', 'i': $imdb },
 				success: function (data, statusText) {
 					var $neighbour = $('#rectitle' + $imdb).text();
 					$('#rectitle' + $imdb).html(data.Title + '<i class="pull-right">according to <b>' + $neighbour  + '</b> similar users\' ratings</i>');

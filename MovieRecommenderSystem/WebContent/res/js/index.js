@@ -41,6 +41,7 @@ if (typeof jQuery === 'undefined') {
         $(win).resize(function () {
             $container.masonry('bindResize');
         });
+        // (T_T)/ (-_-)#
         /*$(win).resize(function () {
             $container.masonry('destroy');
             $container.masonry({
@@ -82,11 +83,11 @@ if (typeof jQuery === 'undefined') {
 		    					cache: false,
 		    					type: 'get',
 		    					url: 'https://www.omdbapi.com',
-		    					data: { 'i': value },
-		    					success: function (res, statusText) {
-		    						if (res.Poster != 'N/A') {
-		    							// var poster = data.Poster.replace(/https?/, 'https');
-		    							var $box = $('<div class="box" id="' + key + '"><a href="movie/' + key + '"><img src="' + res.Poster + '"></a></div>');
+		    					data: { 'apikey': 'c352df74', 'i': value },
+		    					success: function (data, statusText) {
+		    						if (data.Poster != 'N/A') {
+									// var poster = data.Poster.replace(/https?/, 'https');
+		    							var $box = $('<div class="box" id="' + key + '"><a href="movie/' + key + '"><img src="' + data.Poster + '"></a></div>');
 			    						$('#masonry').append($box);
 		    	    					$box.imagesLoaded(function () {
 			    							$('#masonry').masonry('appended', $box);
@@ -104,7 +105,7 @@ if (typeof jQuery === 'undefined') {
     		cache: false,
     		type: 'get',
     		url: 'https://www.omdbapi.com',
-    		data: { i: src },
+    		data: { 'apikey': 'c352df74', 'i': src },
     		success: function (data, statusText) {
     			$('#masonry > .box:first > a > img').attr('src', data.Poster);
     		}

@@ -17,7 +17,7 @@ if (typeof jQuery === 'undefined') {
 	
 	$(function () {
 		var movieId = $('#movieId').val();
-		var query = "https://www.omdbapi.com/?i=" + movieId + "&plot=full";
+		var query = "https://www.omdbapi.com/?apikey=c352df74&i=" + movieId + "&plot=full";
 		$.getJSON(query, function(result) {
 			$("title").text(result.Title);
 			$("#title").text(result.Title);
@@ -27,9 +27,9 @@ if (typeof jQuery === 'undefined') {
 			$("#actors").text(result.Actors);
 			$("#released").text(result.Released);
 			$("#runtime").text(result.Runtime);
-			$("#poster").attr("src", result.Poster.replace(/https?/, 'https'));
+			$("#poster").attr("src", result.Poster);
 			$("#poster").attr("alt", result.Title);
-			$("#background").attr("style", "background-image: url(" + result.Poster.replace(/https?/, 'https') + ")");
+			$("#background").attr("style", "background-image: url(" + result.Poster + ")");
 		});
 	});
 	

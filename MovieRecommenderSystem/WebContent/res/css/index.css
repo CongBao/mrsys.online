@@ -5,8 +5,8 @@
  */
 
 body {
-	background: url(http://localhost:18080/res/img/bg.jpg);
-	background-size: cover;
+    background: url(https://www.mrsys.online/res/img/bg.jpg);
+    background-size: cover;
     background-attachment: fixed;
     color: #fff;
 }
@@ -82,7 +82,7 @@ body {
 }
 
 #movies-container {
-    background: url(http://localhost:18080/res/img/film.jpg);
+    background: url(https://www.mrsys.online/res/img/film.jpg);
     background-size: contain;
     padding-top: 100px;
     padding-bottom: 100px;
