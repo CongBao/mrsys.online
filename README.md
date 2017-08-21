@@ -1,5 +1,7 @@
 # mrsys.online
 
+__Please Note: Since the Year 2 Project has completed and our server was expired, this project's URL is no longer accessible.__
+
 [mrsys.online](https://www.mrsys.online/) is a web site for the Movie Recommender System.
 
 This is a group project in the second year of BSC Artificial Intelligence at University of Liverpool.
